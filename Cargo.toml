@@ -1,0 +1,20 @@
+[package]
+name = "ast-grep-test"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+clap = "4.5.23"
+log = "0.4"
+ctrlc = "3.4.5"
+anyhow = "1.0.95"
+clap-verbosity-flag = "3.0.2"
+console = "0.16.2"
+env_logger = "0.11.8"
+tempfile = "3.24.0"
+regex = "1.12.2"
+duct = "1.1.1"
+thiserror = "2.0.17"
+walkdir = "2.5.0"
