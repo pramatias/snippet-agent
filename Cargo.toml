@@ -23,7 +23,7 @@ regex = "1.12.2"
 duct = "1.1.1"
 thiserror = "2.0.17"
 walkdir = "2.5.0"
-syntax_queries = { package = "snippet-agent-syntax-queries", path = "snippet-agent-syntax-queries" }
+syntax_queries = { package = "snippet-agent-syntax-queries", path = "snippet-agent-syntax-queries", version = "0.1.0" }
 
 directories = "6.0.0"
 
