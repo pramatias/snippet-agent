@@ -1,0 +1,4514 @@
+#+title: One Parse
+#+SETUPFILE: /home/emporas/org_files/website/org-html-themes/org/theme-readtheorg.setup
+
+#+begin_src rust
+Method:
+Matches: 256
+
+--- Match #1 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/language.rs
+
+DS structure: Tsx
+Impl signature: impl Language for Tsx
+Type identifiers: TypeIdentifiers { type_variables: None, concrete_types: {"Language", "Tsx"} }
+
+Method name: build_pattern
+Method signature: fn build_pattern(&self, builder: &PatternBuilder) -> Result<Pattern, PatternError>
+Method body (preview):
+fn build_pattern(&self, builder: &PatternBuilder) -> Result<Pattern, PatternError> {
+      builder.build(|src| StrDoc::try_new(src, self.clone()))..
+
+Impl body (preview):
+impl Language for Tsx {
+    fn kind_to_id(&self, kind: &str) -> u16 {..
+
+--- Match #2 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/language.rs
+
+DS structure: Tsx
+Impl signature: impl Language for Tsx
+Type identifiers: TypeIdentifiers { type_variables: None, concrete_types: {"Language", "Tsx"} }
+
+Method name: field_to_id
+Method signature: fn field_to_id(&self, field: &str) -> Option<u16>
+Method body (preview):
+fn field_to_id(&self, field: &str) -> Option<u16> {
+      self..
+
+Impl body (preview):
+impl Language for Tsx {
+    fn kind_to_id(&self, kind: &str) -> u16 {..
+
+--- Match #3 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/language.rs
+
+DS structure: Tsx
+Impl signature: impl LanguageExt for Tsx
+Type identifiers: TypeIdentifiers { type_variables: None, concrete_types: {"Tsx", "LanguageExt"} }
+
+Method name: get_ts_language
+Method signature: fn get_ts_language(&self) -> TSLanguage
+Method body (preview):
+fn get_ts_language(&self) -> TSLanguage {
+      tree_sitter_typescript::LANGUAGE_TSX.into()..
+
+Impl body (preview):
+impl LanguageExt for Tsx {
+    fn get_ts_language(&self) -> TSLanguage {..
+
+--- Match #4 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/language.rs
+
+DS structure: Tsx
+Impl signature: impl Language for Tsx
+Type identifiers: TypeIdentifiers { type_variables: None, concrete_types: {"Language", "Tsx"} }
+
+Method name: kind_to_id
+Method signature: fn kind_to_id(&self, kind: &str) -> u16
+Method body (preview):
+fn kind_to_id(&self, kind: &str) -> u16 {
+      let ts_lang: TSLanguage = tree_sitter_typescript::LANGUAGE_TSX.into();..
+
+Impl body (preview):
+impl Language for Tsx {
+    fn kind_to_id(&self, kind: &str) -> u16 {..
+
+--- Match #5 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/match_tree/mod.rs
+
+DS structure: ComputeEnd
+Impl signature: impl<'t, D: Doc> Aggregator<'t, D> for ComputeEnd
+Type identifiers: TypeIdentifiers { type_variables: Some({"D": {"Doc"}}), concrete_types: {"ComputeEnd", "Aggregator", "Doc"} }
+
+Method name: match_ellipsis
+Method signature: fn match_ellipsis(
+    &mut self,
+    _var: Option<&str>,
+    nodes: Vec<Node<'t, D>>,
+    _skipped: usize,
+  ) -> Option<()>
+Method body (preview):
+fn match_ellipsis(
+    &mut self,..
+
+Impl body (preview):
+impl<'t, D: Doc> Aggregator<'t, D> for ComputeEnd {
+  fn match_terminal(&mut self, node: &Node<'t, D>) -> Option<()> {..
+
+--- Match #6 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/match_tree/mod.rs
+
+DS structure: Cow
+Impl signature: impl<'t, D: Doc> Aggregator<'t, D> for Cow<'_, MetaVarEnv<'t, D>>
+Type identifiers: TypeIdentifiers { type_variables: Some({"D": {"Doc"}}), concrete_types: {"MetaVarEnv", "Aggregator", "Cow", "Doc"} }
+
+Method name: match_ellipsis
+Method signature: fn match_ellipsis(
+    &mut self,
+    var: Option<&str>,
+    nodes: Vec<Node<'t, D>>,
+    skipped_anonymous: usize,
+  ) -> Option<()>
+Method body (preview):
+fn match_ellipsis(
+    &mut self,..
+
+Impl body (preview):
+impl<'t, D: Doc> Aggregator<'t, D> for Cow<'_, MetaVarEnv<'t, D>> {
+  fn match_terminal(&mut self, _: &Node<'t, D>) -> Option<()> {..
+
+--- Match #7 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/match_tree/mod.rs
+
+DS structure: ComputeEnd
+Impl signature: impl<'t, D: Doc> Aggregator<'t, D> for ComputeEnd
+Type identifiers: TypeIdentifiers { type_variables: Some({"D": {"Doc"}}), concrete_types: {"Aggregator", "ComputeEnd", "Doc"} }
+
+Method name: match_meta_var
+Method signature: fn match_meta_var(&mut self, _: &MetaVariable, node: &Node<'t, D>) -> Option<()>
+Method body (preview):
+fn match_meta_var(&mut self, _: &MetaVariable, node: &Node<'t, D>) -> Option<()> {
+    self.0 = node.range().end;..
+
+Impl body (preview):
+impl<'t, D: Doc> Aggregator<'t, D> for ComputeEnd {
+  fn match_terminal(&mut self, node: &Node<'t, D>) -> Option<()> {..
+
+--- Match #8 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/match_tree/mod.rs
+
+DS structure: Cow
+Impl signature: impl<'t, D: Doc> Aggregator<'t, D> for Cow<'_, MetaVarEnv<'t, D>>
+Type identifiers: TypeIdentifiers { type_variables: Some({"D": {"Doc"}}), concrete_types: {"Cow", "MetaVarEnv", "Aggregator", "Doc"} }
+
+Method name: match_meta_var
+Method signature: fn match_meta_var(&mut self, var: &MetaVariable, node: &Node<'t, D>) -> Option<()>
+Method body (preview):
+fn match_meta_var(&mut self, var: &MetaVariable, node: &Node<'t, D>) -> Option<()> {
+    match_leaf_meta_var(var, node, self)..
+
+Impl body (preview):
+impl<'t, D: Doc> Aggregator<'t, D> for Cow<'_, MetaVarEnv<'t, D>> {
+  fn match_terminal(&mut self, _: &Node<'t, D>) -> Option<()> {..
+
+--- Match #9 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/match_tree/mod.rs
+
+DS structure: ComputeEnd
+Impl signature: impl<'t, D: Doc> Aggregator<'t, D> for ComputeEnd
+Type identifiers: TypeIdentifiers { type_variables: Some({"D": {"Doc"}}), concrete_types: {"Doc", "Aggregator", "ComputeEnd"} }
+
+Method name: match_terminal
+Method signature: fn match_terminal(&mut self, node: &Node<'t, D>) -> Option<()>
+Method body (preview):
+fn match_terminal(&mut self, node: &Node<'t, D>) -> Option<()> {
+    self.0 = node.range().end;..
+
+Impl body (preview):
+impl<'t, D: Doc> Aggregator<'t, D> for ComputeEnd {
+  fn match_terminal(&mut self, node: &Node<'t, D>) -> Option<()> {..
+
+--- Match #10 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/match_tree/mod.rs
+
+DS structure: Cow
+Impl signature: impl<'t, D: Doc> Aggregator<'t, D> for Cow<'_, MetaVarEnv<'t, D>>
+Type identifiers: TypeIdentifiers { type_variables: Some({"D": {"Doc"}}), concrete_types: {"Aggregator", "Cow", "Doc", "MetaVarEnv"} }
+
+Method name: match_terminal
+Method signature: fn match_terminal(&mut self, _: &Node<'t, D>) -> Option<()>
+Method body (preview):
+fn match_terminal(&mut self, _: &Node<'t, D>) -> Option<()> {
+    Some(())..
+
+Impl body (preview):
+impl<'t, D: Doc> Aggregator<'t, D> for Cow<'_, MetaVarEnv<'t, D>> {
+  fn match_terminal(&mut self, _: &Node<'t, D>) -> Option<()> {..
+
+--- Match #11 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/match_tree/strictness.rs
+
+DS structure: MatchStrictness
+Impl signature: impl FromStr for MatchStrictness
+Type identifiers: TypeIdentifiers { type_variables: None, concrete_types: {"MatchStrictness", "FromStr"} }
+
+Method name: from_str
+Method signature: fn from_str(s: &str) -> Result<Self, Self::Err>
+Method body (preview):
+fn from_str(s: &str) -> Result<Self, Self::Err> {
+    match s {..
+
+Impl body (preview):
+impl FromStr for MatchStrictness {
+  type Err = &'static str;..
+
+--- Match #12 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/match_tree/strictness.rs
+
+DS structure: MatchStrictness
+Impl signature: impl MatchStrictness
+Type identifiers: TypeIdentifiers { type_variables: None, concrete_types: {"MatchStrictness"} }
+
+Method name: match_terminal
+Method signature: pub(crate) fn match_terminal(
+    &self,
+    is_named: bool,
+    text: &str,
+    goal_kind: u16,
+    candidate: &Node<impl Doc>,
+  ) -> MatchOneNode
+Method body (preview):
+pub(crate) fn match_terminal(
+    &self,..
+
+Impl body (preview):
+impl MatchStrictness {
+  pub(crate) fn should_skip_kind(&self) -> bool {..
+
+--- Match #13 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/match_tree/strictness.rs
+
+DS structure: MatchStrictness
+Impl signature: impl MatchStrictness
+Type identifiers: TypeIdentifiers { type_variables: None, concrete_types: {"MatchStrictness"} }
+
+Method name: should_skip_cand_for_metavar
+Method signature: pub(crate) fn should_skip_cand_for_metavar<D: Doc>(&self, candidate: &Node<D>) -> bool
+Method body (preview):
+pub(crate) fn should_skip_cand_for_metavar<D: Doc>(&self, candidate: &Node<D>) -> bool {
+    use MatchStrictness as M;..
+
+Impl body (preview):
+impl MatchStrictness {
+  pub(crate) fn should_skip_kind(&self) -> bool {..
+
+--- Match #14 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/match_tree/strictness.rs
+
+DS structure: MatchStrictness
+Impl signature: impl MatchStrictness
+Type identifiers: TypeIdentifiers { type_variables: None, concrete_types: {"MatchStrictness"} }
+
+Method name: should_skip_comment
+Method signature: fn should_skip_comment(&self) -> bool
+Method body (preview):
+fn should_skip_comment(&self) -> bool {
+    use MatchStrictness as M;..
+
+Impl body (preview):
+impl MatchStrictness {
+  pub(crate) fn should_skip_kind(&self) -> bool {..
+
+--- Match #15 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/match_tree/strictness.rs
+
+DS structure: MatchStrictness
+Impl signature: impl MatchStrictness
+Type identifiers: TypeIdentifiers { type_variables: None, concrete_types: {"MatchStrictness"} }
+
+Method name: should_skip_goal
+Method signature: pub(crate) fn should_skip_goal<'p>(
+    &self,
+    goal_children: &mut Peekable<impl Iterator<Item = &'p PatternNode>>,
+  ) -> bool
+Method body (preview):
+pub(crate) fn should_skip_goal<'p>(
+    &self,..
+
+Impl body (preview):
+impl MatchStrictness {
+  pub(crate) fn should_skip_kind(&self) -> bool {..
+
+--- Match #16 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/match_tree/strictness.rs
+
+DS structure: MatchStrictness
+Impl signature: impl MatchStrictness
+Type identifiers: TypeIdentifiers { type_variables: None, concrete_types: {"MatchStrictness"} }
+
+Method name: should_skip_kind
+Method signature: pub(crate) fn should_skip_kind(&self) -> bool
+Method body (preview):
+pub(crate) fn should_skip_kind(&self) -> bool {
+    use MatchStrictness as M;..
+
+Impl body (preview):
+impl MatchStrictness {
+  pub(crate) fn should_skip_kind(&self) -> bool {..
+
+--- Match #17 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/match_tree/strictness.rs
+
+DS structure: MatchStrictness
+Impl signature: impl MatchStrictness
+Type identifiers: TypeIdentifiers { type_variables: None, concrete_types: {"MatchStrictness"} }
+
+Method name: should_skip_trailing
+Method signature: pub(crate) fn should_skip_trailing<D: Doc>(&self, candidate: &Node<D>) -> bool
+Method body (preview):
+pub(crate) fn should_skip_trailing<D: Doc>(&self, candidate: &Node<D>) -> bool {
+    use MatchStrictness as M;..
+
+Impl body (preview):
+impl MatchStrictness {
+  pub(crate) fn should_skip_kind(&self) -> bool {..
+
+--- Match #18 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/matcher.rs
+
+DS structure: str
+Impl signature: impl Matcher for str
+Type identifiers: TypeIdentifiers { type_variables: None, concrete_types: {"Matcher"} }
+
+Method name: get_match_len
+Method signature: fn get_match_len<D: Doc>(&self, node: Node<'_, D>) -> Option<usize>
+Method body (preview):
+fn get_match_len<D: Doc>(&self, node: Node<'_, D>) -> Option<usize> {
+    let pattern = Pattern::new(self, node.lang().clone());..
+
+Impl body (preview):
+impl Matcher for str {
+  fn match_node_with_env<'tree, D: Doc>(..
+
+--- Match #19 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/matcher.rs
+
+DS structure: T
+Impl signature: impl<T> Matcher for &T
+where
+  T: Matcher + ?Sized,
+Type identifiers: TypeIdentifiers { type_variables: Some({"T": {"Matcher"}}), concrete_types: {"Matcher", "Sized"} }
+
+Method name: get_match_len
+Method signature: fn get_match_len<D: Doc>(&self, node: Node<'_, D>) -> Option<usize>
+Method body (preview):
+fn get_match_len<D: Doc>(&self, node: Node<'_, D>) -> Option<usize> {
+    (**self).get_match_len(node)..
+
+Impl body (preview):
+impl<T> Matcher for &T
+where..
+
+--- Match #20 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/matcher.rs
+
+DS structure: str
+Impl signature: impl Matcher for str
+Type identifiers: TypeIdentifiers { type_variables: None, concrete_types: {"Matcher"} }
+
+Method name: match_node_with_env
+Method signature: fn match_node_with_env<'tree, D: Doc>(
+    &self,
+    node: Node<'tree, D>,
+    env: &mut Cow<MetaVarEnv<'tree, D>>,
+  ) -> Option<Node<'tree, D>>
+Method body (preview):
+fn match_node_with_env<'tree, D: Doc>(
+    &self,..
+
+Impl body (preview):
+impl Matcher for str {
+  fn match_node_with_env<'tree, D: Doc>(..
+
+--- Match #21 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/matcher.rs
+
+DS structure: T
+Impl signature: impl<T> Matcher for &T
+where
+  T: Matcher + ?Sized,
+Type identifiers: TypeIdentifiers { type_variables: Some({"T": {"Matcher"}}), concrete_types: {"Sized", "Matcher"} }
+
+Method name: match_node_with_env
+Method signature: fn match_node_with_env<'tree, D: Doc>(
+    &self,
+    node: Node<'tree, D>,
+    env: &mut Cow<MetaVarEnv<'tree, D>>,
+  ) -> Option<Node<'tree, D>>
+Method body (preview):
+fn match_node_with_env<'tree, D: Doc>(
+    &self,..
+
+Impl body (preview):
+impl<T> Matcher for &T
+where..
+
+--- Match #22 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/matcher.rs
+
+DS structure: MatchAll
+Impl signature: impl Matcher for MatchAll
+Type identifiers: TypeIdentifiers { type_variables: None, concrete_types: {"Matcher", "MatchAll"} }
+
+Method name: match_node_with_env
+Method signature: fn match_node_with_env<'tree, D: Doc>(
+    &self,
+    node: Node<'tree, D>,
+    _env: &mut Cow<MetaVarEnv<'tree, D>>,
+  ) -> Option<Node<'tree, D>>
+Method body (preview):
+fn match_node_with_env<'tree, D: Doc>(
+    &self,..
+
+Impl body (preview):
+impl Matcher for MatchAll {
+  fn match_node_with_env<'tree, D: Doc>(..
+
+--- Match #23 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/matcher.rs
+
+DS structure: MatchNone
+Impl signature: impl Matcher for MatchNone
+Type identifiers: TypeIdentifiers { type_variables: None, concrete_types: {"MatchNone", "Matcher"} }
+
+Method name: match_node_with_env
+Method signature: fn match_node_with_env<'tree, D: Doc>(
+    &self,
+    _node: Node<'tree, D>,
+    _env: &mut Cow<MetaVarEnv<'tree, D>>,
+  ) -> Option<Node<'tree, D>>
+Method body (preview):
+fn match_node_with_env<'tree, D: Doc>(
+    &self,..
+
+Impl body (preview):
+impl Matcher for MatchNone {
+  fn match_node_with_env<'tree, D: Doc>(..
+
+--- Match #24 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/matcher.rs
+
+DS structure: T
+Impl signature: impl<T> Matcher for &T
+where
+  T: Matcher + ?Sized,
+Type identifiers: TypeIdentifiers { type_variables: Some({"T": {"Matcher"}}), concrete_types: {"Matcher", "Sized"} }
+
+Method name: potential_kinds
+Method signature: fn potential_kinds(&self) -> Option<BitSet>
+Method body (preview):
+fn potential_kinds(&self) -> Option<BitSet> {
+    (**self).potential_kinds()..
+
+Impl body (preview):
+impl<T> Matcher for &T
+where..
+
+--- Match #25 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/matcher.rs
+
+DS structure: MatchAll
+Impl signature: impl Matcher for MatchAll
+Type identifiers: TypeIdentifiers { type_variables: None, concrete_types: {"MatchAll", "Matcher"} }
+
+Method name: potential_kinds
+Method signature: fn potential_kinds(&self) -> Option<BitSet>
+Method body (preview):
+fn potential_kinds(&self) -> Option<BitSet> {
+    // return None to match anything..
+
+Impl body (preview):
+impl Matcher for MatchAll {
+  fn match_node_with_env<'tree, D: Doc>(..
+
+--- Match #26 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/matcher.rs
+
+DS structure: MatchNone
+Impl signature: impl Matcher for MatchNone
+Type identifiers: TypeIdentifiers { type_variables: None, concrete_types: {"MatchNone", "Matcher"} }
+
+Method name: potential_kinds
+Method signature: fn potential_kinds(&self) -> Option<BitSet>
+Method body (preview):
+fn potential_kinds(&self) -> Option<BitSet> {
+    // matches nothing..
+
+Impl body (preview):
+impl Matcher for MatchNone {
+  fn match_node_with_env<'tree, D: Doc>(..
+
+--- Match #27 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/matcher/kind.rs
+
+DS structure: KindMatcher
+Impl signature: impl KindMatcher
+Type identifiers: TypeIdentifiers { type_variables: None, concrete_types: {"KindMatcher"} }
+
+Method name: error_matcher
+Method signature: pub fn error_matcher() -> Self
+Method body (preview):
+pub fn error_matcher() -> Self {
+    Self::from_id(TS_BUILTIN_SYM_ERROR)..
+
+Impl body (preview):
+impl KindMatcher {
+  pub fn new<L: Language>(node_kind: &str, lang: L) -> Self {..
+
+--- Match #28 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/matcher/kind.rs
+
+DS structure: KindMatcher
+Impl signature: impl KindMatcher
+Type identifiers: TypeIdentifiers { type_variables: None, concrete_types: {"KindMatcher"} }
+
+Method name: from_id
+Method signature: pub fn from_id(kind: KindId) -> Self
+Method body (preview):
+pub fn from_id(kind: KindId) -> Self {
+    Self { kind }..
+
+Impl body (preview):
+impl KindMatcher {
+  pub fn new<L: Language>(node_kind: &str, lang: L) -> Self {..
+
+--- Match #29 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/matcher/kind.rs
+
+DS structure: KindMatcher
+Impl signature: impl KindMatcher
+Type identifiers: TypeIdentifiers { type_variables: None, concrete_types: {"KindMatcher"} }
+
+Method name: is_invalid
+Method signature: pub fn is_invalid(&self) -> bool
+Method body (preview):
+pub fn is_invalid(&self) -> bool {
+    self.kind == TS_BUILTIN_SYM_END..
+
+Impl body (preview):
+impl KindMatcher {
+  pub fn new<L: Language>(node_kind: &str, lang: L) -> Self {..
+
+--- Match #30 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/matcher/kind.rs
+
+DS structure: KindMatcher
+Impl signature: impl Matcher for KindMatcher
+Type identifiers: TypeIdentifiers { type_variables: None, concrete_types: {"KindMatcher", "Matcher"} }
+
+Method name: match_node_with_env
+Method signature: fn match_node_with_env<'tree, D: Doc>(
+    &self,
+    node: Node<'tree, D>,
+    _env: &mut Cow<MetaVarEnv<'tree, D>>,
+  ) -> Option<Node<'tree, D>>
+Method body (preview):
+fn match_node_with_env<'tree, D: Doc>(
+    &self,..
+
+Impl body (preview):
+impl Matcher for KindMatcher {
+  fn match_node_with_env<'tree, D: Doc>(..
+
+--- Match #31 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/matcher/kind.rs
+
+DS structure: KindMatcher
+Impl signature: impl KindMatcher
+Type identifiers: TypeIdentifiers { type_variables: None, concrete_types: {"KindMatcher"} }
+
+Method name: new
+Method signature: pub fn new<L: Language>(node_kind: &str, lang: L) -> Self
+Method body (preview):
+pub fn new<L: Language>(node_kind: &str, lang: L) -> Self {
+    Self {..
+
+Impl body (preview):
+impl KindMatcher {
+  pub fn new<L: Language>(node_kind: &str, lang: L) -> Self {..
+
+--- Match #32 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/matcher/kind.rs
+
+DS structure: KindMatcher
+Impl signature: impl Matcher for KindMatcher
+Type identifiers: TypeIdentifiers { type_variables: None, concrete_types: {"Matcher", "KindMatcher"} }
+
+Method name: potential_kinds
+Method signature: fn potential_kinds(&self) -> Option<BitSet>
+Method body (preview):
+fn potential_kinds(&self) -> Option<BitSet> {
+    let mut set = BitSet::new();..
+
+Impl body (preview):
+impl Matcher for KindMatcher {
+  fn match_node_with_env<'tree, D: Doc>(..
+
+--- Match #33 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/matcher/kind.rs
+
+DS structure: KindMatcher
+Impl signature: impl KindMatcher
+Type identifiers: TypeIdentifiers { type_variables: None, concrete_types: {"KindMatcher"} }
+
+Method name: try_new
+Method signature: pub fn try_new<L: Language>(node_kind: &str, lang: L) -> Result<Self, KindMatcherError>
+Method body (preview):
+pub fn try_new<L: Language>(node_kind: &str, lang: L) -> Result<Self, KindMatcherError> {
+    let s = Self::new(node_kind, lang);..
+
+Impl body (preview):
+impl KindMatcher {
+  pub fn new<L: Language>(node_kind: &str, lang: L) -> Self {..
+
+--- Match #34 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/matcher/node_match.rs
+
+DS structure: NodeMatch
+Impl signature: impl<'tree, D: Doc> Borrow<Node<'tree, D>> for NodeMatch<'tree, D>
+Type identifiers: TypeIdentifiers { type_variables: Some({"D": {"Doc"}}), concrete_types: {"Node", "NodeMatch", "Doc", "Borrow"} }
+
+Method name: borrow
+Method signature: fn borrow(&self) -> &Node<'tree, D>
+Method body (preview):
+fn borrow(&self) -> &Node<'tree, D> {
+    &self.0..
+
+Impl body (preview):
+impl<'tree, D: Doc> Borrow<Node<'tree, D>> for NodeMatch<'tree, D> {
+  fn borrow(&self) -> &Node<'tree, D> {..
+
+--- Match #35 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/matcher/node_match.rs
+
+DS structure: NodeMatch
+Impl signature: impl<'tree, D: Doc> Deref for NodeMatch<'tree, D>
+Type identifiers: TypeIdentifiers { type_variables: Some({"D": {"Doc"}}), concrete_types: {"NodeMatch", "Doc", "Deref"} }
+
+Method name: deref
+Method signature: fn deref(&self) -> &Self::Target
+Method body (preview):
+fn deref(&self) -> &Self::Target {
+    &self.0..
+
+Impl body (preview):
+impl<'tree, D: Doc> Deref for NodeMatch<'tree, D> {
+  type Target = Node<'tree, D>;..
+
+--- Match #36 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/matcher/node_match.rs
+
+DS structure: NodeMatch
+Impl signature: impl<'tree, D: Doc> From<Node<'tree, D>> for NodeMatch<'tree, D>
+Type identifiers: TypeIdentifiers { type_variables: Some({"D": {"Doc"}}), concrete_types: {"From", "Node", "Doc", "NodeMatch"} }
+
+Method name: from
+Method signature: fn from(node: Node<'tree, D>) -> Self
+Method body (preview):
+fn from(node: Node<'tree, D>) -> Self {
+    Self(node, MetaVarEnv::new())..
+
+Impl body (preview):
+impl<'tree, D: Doc> From<Node<'tree, D>> for NodeMatch<'tree, D> {
+  fn from(node: Node<'tree, D>) -> Self {..
+
+--- Match #37 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/matcher/node_match.rs
+
+DS structure: Node
+Impl signature: impl<'tree, D: Doc> From<NodeMatch<'tree, D>> for Node<'tree, D>
+Type identifiers: TypeIdentifiers { type_variables: Some({"D": {"Doc"}}), concrete_types: {"From", "Node", "Doc", "NodeMatch"} }
+
+Method name: from
+Method signature: fn from(node_match: NodeMatch<'tree, D>) -> Self
+Method body (preview):
+fn from(node_match: NodeMatch<'tree, D>) -> Self {
+    node_match.0..
+
+Impl body (preview):
+impl<'tree, D: Doc> From<NodeMatch<'tree, D>> for Node<'tree, D> {
+  fn from(node_match: NodeMatch<'tree, D>) -> Self {..
+
+--- Match #38 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/matcher/node_match.rs
+
+DS structure: NodeMatch
+Impl signature: impl<'tree, D: Doc> NodeMatch<'tree, D>
+Type identifiers: TypeIdentifiers { type_variables: Some({"D": {"Doc"}}), concrete_types: {"Doc", "NodeMatch"} }
+
+Method name: get_env
+Method signature: pub fn get_env(&self) -> &MetaVarEnv<'tree, D>
+Method body (preview):
+pub fn get_env(&self) -> &MetaVarEnv<'tree, D> {
+    &self.1..
+
+Impl body (preview):
+impl<'tree, D: Doc> NodeMatch<'tree, D> {
+  pub fn new(node: Node<'tree, D>, env: MetaVarEnv<'tree, D>) -> Self {..
+
+--- Match #39 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/matcher/node_match.rs
+
+DS structure: NodeMatch
+Impl signature: impl<'tree, D: Doc> NodeMatch<'tree, D>
+Type identifiers: TypeIdentifiers { type_variables: Some({"D": {"Doc"}}), concrete_types: {"NodeMatch", "Doc"} }
+
+Method name: get_env_mut
+Method signature: pub fn get_env_mut(&mut self) -> &mut MetaVarEnv<'tree, D>
+Method body (preview):
+pub fn get_env_mut(&mut self) -> &mut MetaVarEnv<'tree, D> {
+    &mut self.1..
+
+Impl body (preview):
+impl<'tree, D: Doc> NodeMatch<'tree, D> {
+  pub fn new(node: Node<'tree, D>, env: MetaVarEnv<'tree, D>) -> Self {..
+
+--- Match #40 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/matcher/node_match.rs
+
+DS structure: NodeMatch
+Impl signature: impl<'tree, D: Doc> NodeMatch<'tree, D>
+Type identifiers: TypeIdentifiers { type_variables: Some({"D": {"Doc"}}), concrete_types: {"NodeMatch", "Doc"} }
+
+Method name: get_node
+Method signature: pub fn get_node(&self) -> &Node<'tree, D>
+Method body (preview):
+pub fn get_node(&self) -> &Node<'tree, D> {
+    &self.0..
+
+Impl body (preview):
+impl<'tree, D: Doc> NodeMatch<'tree, D> {
+  pub fn new(node: Node<'tree, D>, env: MetaVarEnv<'tree, D>) -> Self {..
+
+--- Match #41 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/matcher/node_match.rs
+
+DS structure: NodeMatch
+Impl signature: impl<'tree, D: Doc> NodeMatch<'tree, D>
+Type identifiers: TypeIdentifiers { type_variables: Some({"D": {"Doc"}}), concrete_types: {"NodeMatch", "Doc"} }
+
+Method name: get_node_mut
+Method signature: pub(crate) unsafe fn get_node_mut(&mut self) -> &mut Node<'tree, D>
+Method body (preview):
+pub(crate) unsafe fn get_node_mut(&mut self) -> &mut Node<'tree, D> {
+    &mut self.0..
+
+Impl body (preview):
+impl<'tree, D: Doc> NodeMatch<'tree, D> {
+  pub fn new(node: Node<'tree, D>, env: MetaVarEnv<'tree, D>) -> Self {..
+
+--- Match #42 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/matcher/node_match.rs
+
+DS structure: NodeMatch
+Impl signature: impl<D: Doc> NodeMatch<'_, D>
+Type identifiers: TypeIdentifiers { type_variables: Some({"D": {"Doc"}}), concrete_types: {"Doc", "NodeMatch"} }
+
+Method name: make_edit
+Method signature: pub fn make_edit<M, R>(&self, matcher: &M, replacer: &R) -> Edit<D>
+  where
+    M: Matcher,
+    R: Replacer<D>,
+Method body (preview):
+pub fn make_edit<M, R>(&self, matcher: &M, replacer: &R) -> Edit<D>
+  where..
+
+Impl body (preview):
+impl<D: Doc> NodeMatch<'_, D> {
+  pub fn replace_by<R: Replacer<D>>(&self, replacer: R) -> Edit<D> {..
+
+--- Match #43 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/matcher/node_match.rs
+
+DS structure: NodeMatch
+Impl signature: impl<'tree, D: Doc> NodeMatch<'tree, D>
+Type identifiers: TypeIdentifiers { type_variables: Some({"D": {"Doc"}}), concrete_types: {"NodeMatch", "Doc"} }
+
+Method name: new
+Method signature: pub fn new(node: Node<'tree, D>, env: MetaVarEnv<'tree, D>) -> Self
+Method body (preview):
+pub fn new(node: Node<'tree, D>, env: MetaVarEnv<'tree, D>) -> Self {
+    Self(node, env)..
+
+Impl body (preview):
+impl<'tree, D: Doc> NodeMatch<'tree, D> {
+  pub fn new(node: Node<'tree, D>, env: MetaVarEnv<'tree, D>) -> Self {..
+
+--- Match #44 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/matcher/node_match.rs
+
+DS structure: NodeMatch
+Impl signature: impl<D: Doc> NodeMatch<'_, D>
+Type identifiers: TypeIdentifiers { type_variables: Some({"D": {"Doc"}}), concrete_types: {"Doc", "NodeMatch"} }
+
+Method name: replace_by
+Method signature: pub fn replace_by<R: Replacer<D>>(&self, replacer: R) -> Edit<D>
+Method body (preview):
+pub fn replace_by<R: Replacer<D>>(&self, replacer: R) -> Edit<D> {
+    let range = self.range();..
+
+Impl body (preview):
+impl<D: Doc> NodeMatch<'_, D> {
+  pub fn replace_by<R: Replacer<D>>(&self, replacer: R) -> Edit<D> {..
+
+--- Match #45 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/matcher/pattern.rs
+
+DS structure: PatternBuilder
+Impl signature: impl PatternBuilder<'_>
+Type identifiers: TypeIdentifiers { type_variables: None, concrete_types: {"PatternBuilder"} }
+
+Method name: build
+Method signature: pub fn build<D, F>(&self, parse: F) -> Result<Pattern, PatternError>
+  where
+    F: FnOnce(&str) -> Result<D, String>,
+    D: Doc,
+Method body (preview):
+pub fn build<D, F>(&self, parse: F) -> Result<Pattern, PatternError>
+  where..
+
+Impl body (preview):
+impl PatternBuilder<'_> {
+  pub fn build<D, F>(&self, parse: F) -> Result<Pattern, PatternError>..
+
+--- Match #46 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/matcher/pattern.rs
+
+DS structure: PatternBuilder
+Impl signature: impl PatternBuilder<'_>
+Type identifiers: TypeIdentifiers { type_variables: None, concrete_types: {"PatternBuilder"} }
+
+Method name: contextual
+Method signature: fn contextual<D: Doc>(&self, root: &Root<D>, selector: &str) -> Result<Pattern, PatternError>
+Method body (preview):
+fn contextual<D: Doc>(&self, root: &Root<D>, selector: &str) -> Result<Pattern, PatternError> {
+    let goal = root.root();..
+
+Impl body (preview):
+impl PatternBuilder<'_> {
+  pub fn build<D, F>(&self, parse: F) -> Result<Pattern, PatternError>..
+
+--- Match #47 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/matcher/pattern.rs
+
+DS structure: Pattern
+Impl signature: impl Pattern
+Type identifiers: TypeIdentifiers { type_variables: None, concrete_types: {"Pattern"} }
+
+Method name: contextual
+Method signature: pub fn contextual<L: Language>(
+    context: &str,
+    selector: &str,
+    lang: L,
+  ) -> Result<Self, PatternError>
+Method body (preview):
+pub fn contextual<L: Language>(
+    context: &str,..
+
+Impl body (preview):
+impl Pattern {
+  pub fn try_new<L: Language>(src: &str, lang: L) -> Result<Self, PatternError> {..
+
+--- Match #48 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/matcher/pattern.rs
+
+DS structure: Pattern
+Impl signature: impl Pattern
+Type identifiers: TypeIdentifiers { type_variables: None, concrete_types: {"Pattern"} }
+
+Method name: defined_vars
+Method signature: pub fn defined_vars(&self) -> HashSet<&str>
+Method body (preview):
+pub fn defined_vars(&self) -> HashSet<&str> {
+    let mut vars = HashSet::new();..
+
+Impl body (preview):
+impl Pattern {
+  pub fn has_error(&self) -> bool {..
+
+--- Match #49 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/matcher/pattern.rs
+
+DS structure: PatternNode
+Impl signature: impl PatternNode
+Type identifiers: TypeIdentifiers { type_variables: None, concrete_types: {"PatternNode"} }
+
+Method name: fixed_string
+Method signature: pub fn fixed_string(&self) -> Cow<'_, str>
+Method body (preview):
+pub fn fixed_string(&self) -> Cow<'_, str> {
+    match &self {..
+
+Impl body (preview):
+impl PatternNode {
+  // for skipping trivial nodes in goal after ellipsis..
+
+--- Match #50 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/matcher/pattern.rs
+
+DS structure: Pattern
+Impl signature: impl Pattern
+Type identifiers: TypeIdentifiers { type_variables: None, concrete_types: {"Pattern"} }
+
+Method name: fixed_string
+Method signature: pub fn fixed_string(&self) -> Cow<'_, str>
+Method body (preview):
+pub fn fixed_string(&self) -> Cow<'_, str> {
+    self.node.fixed_string()..
+
+Impl body (preview):
+impl Pattern {
+  pub fn has_error(&self) -> bool {..
+
+--- Match #51 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/matcher/pattern.rs
+
+DS structure: PatternNode
+Impl signature: impl std::fmt::Debug for PatternNode
+Type identifiers: TypeIdentifiers { type_variables: None, concrete_types: {"PatternNode", "Debug"} }
+
+Method name: fmt
+Method signature: fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result
+Method body (preview):
+fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+    match self {..
+
+Impl body (preview):
+impl std::fmt::Debug for PatternNode {
+  fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {..
+
+--- Match #52 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/matcher/pattern.rs
+
+DS structure: Pattern
+Impl signature: impl std::fmt::Debug for Pattern
+Type identifiers: TypeIdentifiers { type_variables: None, concrete_types: {"Debug", "Pattern"} }
+
+Method name: fmt
+Method signature: fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result
+Method body (preview):
+fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+    write!(f, "{:?}", self.node)..
+
+Impl body (preview):
+impl std::fmt::Debug for Pattern {
+  fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {..
+
+--- Match #53 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/matcher/pattern.rs
+
+DS structure: PatternNode
+Impl signature: impl<'r, D: Doc> From<Node<'r, D>> for PatternNode
+Type identifiers: TypeIdentifiers { type_variables: Some({"D": {"Doc"}}), concrete_types: {"PatternNode", "Doc", "From", "Node"} }
+
+Method name: from
+Method signature: fn from(node: Node<'r, D>) -> Self
+Method body (preview):
+fn from(node: Node<'r, D>) -> Self {
+    convert_node_to_pattern(node)..
+
+Impl body (preview):
+impl<'r, D: Doc> From<Node<'r, D>> for PatternNode {
+  fn from(node: Node<'r, D>) -> Self {..
+
+--- Match #54 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/matcher/pattern.rs
+
+DS structure: Pattern
+Impl signature: impl<'r, D: Doc> From<Node<'r, D>> for Pattern
+Type identifiers: TypeIdentifiers { type_variables: Some({"D": {"Doc"}}), concrete_types: {"Pattern", "Node", "Doc", "From"} }
+
+Method name: from
+Method signature: fn from(node: Node<'r, D>) -> Self
+Method body (preview):
+fn from(node: Node<'r, D>) -> Self {
+    Self {..
+
+Impl body (preview):
+impl<'r, D: Doc> From<Node<'r, D>> for Pattern {
+  fn from(node: Node<'r, D>) -> Self {..
+
+--- Match #55 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/matcher/pattern.rs
+
+DS structure: Pattern
+Impl signature: impl Matcher for Pattern
+Type identifiers: TypeIdentifiers { type_variables: None, concrete_types: {"Pattern", "Matcher"} }
+
+Method name: get_match_len
+Method signature: fn get_match_len<D: Doc>(&self, node: Node<'_, D>) -> Option<usize>
+Method body (preview):
+fn get_match_len<D: Doc>(&self, node: Node<'_, D>) -> Option<usize> {
+    let start = node.range().start;..
+
+Impl body (preview):
+impl Matcher for Pattern {
+  fn match_node_with_env<'tree, D: Doc>(..
+
+--- Match #56 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/matcher/pattern.rs
+
+DS structure: Pattern
+Impl signature: impl Pattern
+Type identifiers: TypeIdentifiers { type_variables: None, concrete_types: {"Pattern"} }
+
+Method name: has_error
+Method signature: pub fn has_error(&self) -> bool
+Method body (preview):
+pub fn has_error(&self) -> bool {
+    let kind = match &self.node {..
+
+Impl body (preview):
+impl Pattern {
+  pub fn has_error(&self) -> bool {..
+
+--- Match #57 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/matcher/pattern.rs
+
+DS structure: PatternNode
+Impl signature: impl PatternNode
+Type identifiers: TypeIdentifiers { type_variables: None, concrete_types: {"PatternNode"} }
+
+Method name: is_trivial
+Method signature: pub fn is_trivial(&self) -> bool
+Method body (preview):
+pub fn is_trivial(&self) -> bool {
+    match self {..
+
+Impl body (preview):
+impl PatternNode {
+  // for skipping trivial nodes in goal after ellipsis..
+
+--- Match #58 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/matcher/pattern.rs
+
+DS structure: Pattern
+Impl signature: impl Matcher for Pattern
+Type identifiers: TypeIdentifiers { type_variables: None, concrete_types: {"Matcher", "Pattern"} }
+
+Method name: match_node_with_env
+Method signature: fn match_node_with_env<'tree, D: Doc>(
+    &self,
+    node: Node<'tree, D>,
+    env: &mut Cow<MetaVarEnv<'tree, D>>,
+  ) -> Option<Node<'tree, D>>
+Method body (preview):
+fn match_node_with_env<'tree, D: Doc>(
+    &self,..
+
+Impl body (preview):
+impl Matcher for Pattern {
+  fn match_node_with_env<'tree, D: Doc>(..
+
+--- Match #59 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/matcher/pattern.rs
+
+DS structure: Pattern
+Impl signature: impl Pattern
+Type identifiers: TypeIdentifiers { type_variables: None, concrete_types: {"Pattern"} }
+
+Method name: new
+Method signature: pub fn new<L: Language>(src: &str, lang: L) -> Self
+Method body (preview):
+pub fn new<L: Language>(src: &str, lang: L) -> Self {
+    Self::try_new(src, lang).unwrap()..
+
+Impl body (preview):
+impl Pattern {
+  pub fn try_new<L: Language>(src: &str, lang: L) -> Result<Self, PatternError> {..
+
+--- Match #60 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/matcher/pattern.rs
+
+DS structure: Pattern
+Impl signature: impl Matcher for Pattern
+Type identifiers: TypeIdentifiers { type_variables: None, concrete_types: {"Matcher", "Pattern"} }
+
+Method name: potential_kinds
+Method signature: fn potential_kinds(&self) -> Option<bit_set::BitSet>
+Method body (preview):
+fn potential_kinds(&self) -> Option<bit_set::BitSet> {
+    // if strictness is Template, we can match any kind..
+
+Impl body (preview):
+impl Matcher for Pattern {
+  fn match_node_with_env<'tree, D: Doc>(..
+
+--- Match #61 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/matcher/pattern.rs
+
+DS structure: PatternBuilder
+Impl signature: impl PatternBuilder<'_>
+Type identifiers: TypeIdentifiers { type_variables: None, concrete_types: {"PatternBuilder"} }
+
+Method name: single
+Method signature: fn single<D: Doc>(&self, root: &Root<D>) -> Result<Pattern, PatternError>
+Method body (preview):
+fn single<D: Doc>(&self, root: &Root<D>) -> Result<Pattern, PatternError> {
+    let goal = root.root();..
+
+Impl body (preview):
+impl PatternBuilder<'_> {
+  pub fn build<D, F>(&self, parse: F) -> Result<Pattern, PatternError>..
+
+--- Match #62 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/matcher/pattern.rs
+
+DS structure: Pattern
+Impl signature: impl Pattern
+Type identifiers: TypeIdentifiers { type_variables: None, concrete_types: {"Pattern"} }
+
+Method name: single_matcher
+Method signature: fn single_matcher<D: Doc>(root: &Root<D>) -> Node<'_, D>
+Method body (preview):
+fn single_matcher<D: Doc>(root: &Root<D>) -> Node<'_, D> {
+    // debug_assert!(matches!(self.style, PatternStyle::Single));..
+
+Impl body (preview):
+impl Pattern {
+  pub fn try_new<L: Language>(src: &str, lang: L) -> Result<Self, PatternError> {..
+
+--- Match #63 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/matcher/pattern.rs
+
+DS structure: Pattern
+Impl signature: impl Pattern
+Type identifiers: TypeIdentifiers { type_variables: None, concrete_types: {"Pattern"} }
+
+Method name: try_new
+Method signature: pub fn try_new<L: Language>(src: &str, lang: L) -> Result<Self, PatternError>
+Method body (preview):
+pub fn try_new<L: Language>(src: &str, lang: L) -> Result<Self, PatternError> {
+    let processed = lang.pre_process_pattern(src);..
+
+Impl body (preview):
+impl Pattern {
+  pub fn try_new<L: Language>(src: &str, lang: L) -> Result<Self, PatternError> {..
+
+--- Match #64 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/matcher/pattern.rs
+
+DS structure: Pattern
+Impl signature: impl Pattern
+Type identifiers: TypeIdentifiers { type_variables: None, concrete_types: {"Pattern"} }
+
+Method name: with_strictness
+Method signature: pub fn with_strictness(mut self, strictness: MatchStrictness) -> Self
+Method body (preview):
+pub fn with_strictness(mut self, strictness: MatchStrictness) -> Self {
+    self.strictness = strictness;..
+
+Impl body (preview):
+impl Pattern {
+  pub fn try_new<L: Language>(src: &str, lang: L) -> Result<Self, PatternError> {..
+
+--- Match #65 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/matcher/text.rs
+
+DS structure: RegexMatcher
+Impl signature: impl Matcher for RegexMatcher
+Type identifiers: TypeIdentifiers { type_variables: None, concrete_types: {"Matcher", "RegexMatcher"} }
+
+Method name: match_node_with_env
+Method signature: fn match_node_with_env<'tree, D: Doc>(
+    &self,
+    node: Node<'tree, D>,
+    _env: &mut Cow<MetaVarEnv<'tree, D>>,
+  ) -> Option<Node<'tree, D>>
+Method body (preview):
+fn match_node_with_env<'tree, D: Doc>(
+    &self,..
+
+Impl body (preview):
+impl Matcher for RegexMatcher {
+  fn match_node_with_env<'tree, D: Doc>(..
+
+--- Match #66 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/matcher/text.rs
+
+DS structure: RegexMatcher
+Impl signature: impl Matcher for RegexMatcher
+Type identifiers: TypeIdentifiers { type_variables: None, concrete_types: {"RegexMatcher", "Matcher"} }
+
+Method name: potential_kinds
+Method signature: fn potential_kinds(&self) -> Option<BitSet>
+Method body (preview):
+fn potential_kinds(&self) -> Option<BitSet> {
+    None..
+
+Impl body (preview):
+impl Matcher for RegexMatcher {
+  fn match_node_with_env<'tree, D: Doc>(..
+
+--- Match #67 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/matcher/text.rs
+
+DS structure: RegexMatcher
+Impl signature: impl RegexMatcher
+Type identifiers: TypeIdentifiers { type_variables: None, concrete_types: {"RegexMatcher"} }
+
+Method name: try_new
+Method signature: pub fn try_new(text: &str) -> Result<Self, RegexMatcherError>
+Method body (preview):
+pub fn try_new(text: &str) -> Result<Self, RegexMatcherError> {
+    Ok(RegexMatcher {..
+
+Impl body (preview):
+impl RegexMatcher {
+  pub fn try_new(text: &str) -> Result<Self, RegexMatcherError> {..
+
+--- Match #68 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/meta_var.rs
+
+DS structure: MetaVarEnv
+Impl signature: impl<'t, D: Doc> MetaVarEnv<'t, D>
+Type identifiers: TypeIdentifiers { type_variables: Some({"D": {"Doc"}}), concrete_types: {"MetaVarEnv", "Doc"} }
+
+Method name: add_label
+Method signature: pub fn add_label(&mut self, label: &str, node: Node<'t, D>)
+Method body (preview):
+pub fn add_label(&mut self, label: &str, node: Node<'t, D>) {
+    self..
+
+Impl body (preview):
+impl<'t, D: Doc> MetaVarEnv<'t, D> {
+  pub fn new() -> Self {..
+
+--- Match #69 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/meta_var.rs
+
+DS structure: MetaVarEnv
+Impl signature: impl<D: Doc> Default for MetaVarEnv<'_, D>
+Type identifiers: TypeIdentifiers { type_variables: Some({"D": {"Doc"}}), concrete_types: {"Doc", "MetaVarEnv", "Default"} }
+
+Method name: default
+Method signature: fn default() -> Self
+Method body (preview):
+fn default() -> Self {
+    Self::new()..
+
+Impl body (preview):
+impl<D: Doc> Default for MetaVarEnv<'_, D> {
+  fn default() -> Self {..
+
+--- Match #70 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/meta_var.rs
+
+DS structure: HashMap
+Impl signature: impl<'tree, D: Doc> From<MetaVarEnv<'tree, D>> for HashMap<String, String>
+Type identifiers: TypeIdentifiers { type_variables: Some({"D": {"Doc"}}), concrete_types: {"HashMap", "String", "MetaVarEnv", "Doc", "From"} }
+
+Method name: from
+Method signature: fn from(env: MetaVarEnv<'tree, D>) -> Self
+Method body (preview):
+fn from(env: MetaVarEnv<'tree, D>) -> Self {
+    let mut ret = HashMap::new();..
+
+Impl body (preview):
+impl<'tree, D: Doc> From<MetaVarEnv<'tree, D>> for HashMap<String, String> {
+  fn from(env: MetaVarEnv<'tree, D>) -> Self {..
+
+--- Match #71 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/meta_var.rs
+
+DS structure: MetaVarEnv
+Impl signature: impl<'t, D: Doc> MetaVarEnv<'t, D>
+Type identifiers: TypeIdentifiers { type_variables: Some({"D": {"Doc"}}), concrete_types: {"MetaVarEnv", "Doc"} }
+
+Method name: get_labels
+Method signature: pub fn get_labels(&self, label: &str) -> Option<&Vec<Node<'t, D>>>
+Method body (preview):
+pub fn get_labels(&self, label: &str) -> Option<&Vec<Node<'t, D>>> {
+    self.multi_matched.get(label)..
+
+Impl body (preview):
+impl<'t, D: Doc> MetaVarEnv<'t, D> {
+  pub fn new() -> Self {..
+
+--- Match #72 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/meta_var.rs
+
+DS structure: MetaVarEnv
+Impl signature: impl<'t, D: Doc> MetaVarEnv<'t, D>
+Type identifiers: TypeIdentifiers { type_variables: Some({"D": {"Doc"}}), concrete_types: {"MetaVarEnv", "Doc"} }
+
+Method name: get_match
+Method signature: pub fn get_match(&self, var: &str) -> Option<&'_ Node<'t, D>>
+Method body (preview):
+pub fn get_match(&self, var: &str) -> Option<&'_ Node<'t, D>> {
+    self.single_matched.get(var)..
+
+Impl body (preview):
+impl<'t, D: Doc> MetaVarEnv<'t, D> {
+  pub fn new() -> Self {..
+
+--- Match #73 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/meta_var.rs
+
+DS structure: MetaVarEnv
+Impl signature: impl<'t, D: Doc> MetaVarEnv<'t, D>
+Type identifiers: TypeIdentifiers { type_variables: Some({"D": {"Doc"}}), concrete_types: {"MetaVarEnv", "Doc"} }
+
+Method name: get_matched_variables
+Method signature: pub fn get_matched_variables(&self) -> impl Iterator<Item = MetaVariable> + use<'_, 't, D>
+Method body (preview):
+pub fn get_matched_variables(&self) -> impl Iterator<Item = MetaVariable> + use<'_, 't, D> {
+    let single = self..
+
+Impl body (preview):
+impl<'t, D: Doc> MetaVarEnv<'t, D> {
+  pub fn new() -> Self {..
+
+--- Match #74 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/meta_var.rs
+
+DS structure: MetaVarEnv
+Impl signature: impl<'t, D: Doc> MetaVarEnv<'t, D>
+Type identifiers: TypeIdentifiers { type_variables: Some({"D": {"Doc"}}), concrete_types: {"Doc", "MetaVarEnv"} }
+
+Method name: get_multiple_matches
+Method signature: pub fn get_multiple_matches(&self, var: &str) -> Vec<Node<'t, D>>
+Method body (preview):
+pub fn get_multiple_matches(&self, var: &str) -> Vec<Node<'t, D>> {
+    self.multi_matched.get(var).cloned().unwrap_or_default()..
+
+Impl body (preview):
+impl<'t, D: Doc> MetaVarEnv<'t, D> {
+  pub fn new() -> Self {..
+
+--- Match #75 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/meta_var.rs
+
+DS structure: MetaVarEnv
+Impl signature: impl<'t, D: Doc> MetaVarEnv<'t, D>
+Type identifiers: TypeIdentifiers { type_variables: Some({"D": {"Doc"}}), concrete_types: {"MetaVarEnv", "Doc"} }
+
+Method name: get_transformed
+Method signature: pub fn get_transformed(&self, var: &str) -> Option<&Underlying<D>>
+Method body (preview):
+pub fn get_transformed(&self, var: &str) -> Option<&Underlying<D>> {
+    self.transformed_var.get(var)..
+
+Impl body (preview):
+impl<'t, D: Doc> MetaVarEnv<'t, D> {
+  pub fn new() -> Self {..
+
+--- Match #76 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/meta_var.rs
+
+DS structure: MetaVarEnv
+Impl signature: impl<'t, D: Doc> MetaVarEnv<'t, D>
+Type identifiers: TypeIdentifiers { type_variables: Some({"D": {"Doc"}}), concrete_types: {"Doc", "MetaVarEnv"} }
+
+Method name: get_var_bytes
+Method signature: pub fn get_var_bytes<'s>(
+    &'s self,
+    var: &MetaVariable,
+  ) -> Option<&'s [<D::Source as Content>::Underlying]>
+Method body (preview):
+pub fn get_var_bytes<'s>(
+    &'s self,..
+
+Impl body (preview):
+impl<'t, D: Doc> MetaVarEnv<'t, D> {
+  pub fn new() -> Self {..
+
+--- Match #77 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/meta_var.rs
+
+DS structure: MetaVarEnv
+Impl signature: impl<'t, D: Doc> MetaVarEnv<'t, D>
+Type identifiers: TypeIdentifiers { type_variables: Some({"D": {"Doc"}}), concrete_types: {"Doc", "MetaVarEnv"} }
+
+Method name: insert
+Method signature: pub fn insert(&mut self, id: &str, ret: Node<'t, D>) -> Option<&mut Self>
+Method body (preview):
+pub fn insert(&mut self, id: &str, ret: Node<'t, D>) -> Option<&mut Self> {
+    if self.match_variable(id, &ret) {..
+
+Impl body (preview):
+impl<'t, D: Doc> MetaVarEnv<'t, D> {
+  pub fn new() -> Self {..
+
+--- Match #78 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/meta_var.rs
+
+DS structure: MetaVarEnv
+Impl signature: impl<'t, D: Doc> MetaVarEnv<'t, D>
+Type identifiers: TypeIdentifiers { type_variables: Some({"D": {"Doc"}}), concrete_types: {"Doc", "MetaVarEnv"} }
+
+Method name: insert_multi
+Method signature: pub fn insert_multi(&mut self, id: &str, ret: Vec<Node<'t, D>>) -> Option<&mut Self>
+Method body (preview):
+pub fn insert_multi(&mut self, id: &str, ret: Vec<Node<'t, D>>) -> Option<&mut Self> {
+    if self.match_multi_var(id, &ret) {..
+
+Impl body (preview):
+impl<'t, D: Doc> MetaVarEnv<'t, D> {
+  pub fn new() -> Self {..
+
+--- Match #79 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/meta_var.rs
+
+DS structure: MetaVarEnv
+Impl signature: impl<'t, D: Doc> MetaVarEnv<'t, D>
+Type identifiers: TypeIdentifiers { type_variables: Some({"D": {"Doc"}}), concrete_types: {"MetaVarEnv", "Doc"} }
+
+Method name: insert_transformation
+Method signature: pub fn insert_transformation(&mut self, var: &MetaVariable, name: &str, slice: Underlying<D>)
+Method body (preview):
+pub fn insert_transformation(&mut self, var: &MetaVariable, name: &str, slice: Underlying<D>) {
+    let node = match var {..
+
+Impl body (preview):
+impl<'t, D: Doc> MetaVarEnv<'t, D> {
+  pub fn new() -> Self {..
+
+--- Match #80 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/meta_var.rs
+
+DS structure: MetaVarEnv
+Impl signature: impl<'t, D: Doc> MetaVarEnv<'t, D>
+Type identifiers: TypeIdentifiers { type_variables: Some({"D": {"Doc"}}), concrete_types: {"Doc", "MetaVarEnv"} }
+
+Method name: match_constraints
+Method signature: pub fn match_constraints<M: Matcher>(
+    &mut self,
+    var_matchers: &HashMap<MetaVariableID, M>,
+  ) -> bool
+Method body (preview):
+pub fn match_constraints<M: Matcher>(
+    &mut self,..
+
+Impl body (preview):
+impl<'t, D: Doc> MetaVarEnv<'t, D> {
+  pub fn new() -> Self {..
+
+--- Match #81 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/meta_var.rs
+
+DS structure: MetaVarEnv
+Impl signature: impl<'t, D: Doc> MetaVarEnv<'t, D>
+Type identifiers: TypeIdentifiers { type_variables: Some({"D": {"Doc"}}), concrete_types: {"Doc", "MetaVarEnv"} }
+
+Method name: match_multi_var
+Method signature: fn match_multi_var(&self, id: &str, cands: &[Node<'t, D>]) -> bool
+Method body (preview):
+fn match_multi_var(&self, id: &str, cands: &[Node<'t, D>]) -> bool {
+    let Some(nodes) = self.multi_matched.get(id) else {..
+
+Impl body (preview):
+impl<'t, D: Doc> MetaVarEnv<'t, D> {
+  pub fn new() -> Self {..
+
+--- Match #82 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/meta_var.rs
+
+DS structure: MetaVarEnv
+Impl signature: impl<'t, D: Doc> MetaVarEnv<'t, D>
+Type identifiers: TypeIdentifiers { type_variables: Some({"D": {"Doc"}}), concrete_types: {"MetaVarEnv", "Doc"} }
+
+Method name: match_variable
+Method signature: fn match_variable(&self, id: &str, candidate: &Node<'t, D>) -> bool
+Method body (preview):
+fn match_variable(&self, id: &str, candidate: &Node<'t, D>) -> bool {
+    if let Some(m) = self.single_matched.get(id) {..
+
+Impl body (preview):
+impl<'t, D: Doc> MetaVarEnv<'t, D> {
+  pub fn new() -> Self {..
+
+--- Match #83 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/meta_var.rs
+
+DS structure: MetaVarEnv
+Impl signature: impl<'t, D: Doc> MetaVarEnv<'t, D>
+Type identifiers: TypeIdentifiers { type_variables: Some({"D": {"Doc"}}), concrete_types: {"MetaVarEnv", "Doc"} }
+
+Method name: new
+Method signature: pub fn new() -> Self
+Method body (preview):
+pub fn new() -> Self {
+    Self {..
+
+Impl body (preview):
+impl<'t, D: Doc> MetaVarEnv<'t, D> {
+  pub fn new() -> Self {..
+
+--- Match #84 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/meta_var.rs
+
+DS structure: MetaVarEnv
+Impl signature: impl<D: Doc> MetaVarEnv<'_, D>
+Type identifiers: TypeIdentifiers { type_variables: Some({"D": {"Doc"}}), concrete_types: {"Doc", "MetaVarEnv"} }
+
+Method name: visit_nodes
+Method signature: pub(crate) fn visit_nodes<F>(&mut self, mut f: F)
+  where
+    F: FnMut(&mut Node<'_, D>),
+Method body (preview):
+pub(crate) fn visit_nodes<F>(&mut self, mut f: F)
+  where..
+
+Impl body (preview):
+impl<D: Doc> MetaVarEnv<'_, D> {
+  /// internal for readopt NodeMatch in pinned.rs..
+
+--- Match #85 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/node.rs
+
+DS structure: Root
+Impl signature: impl<D: Doc> Root<D>
+Type identifiers: TypeIdentifiers { type_variables: Some({"D": {"Doc"}}), concrete_types: {"Doc", "Root"} }
+
+Method name: adopt
+Method signature: pub fn adopt<'r>(&'r self, inner: D::Node<'r>) -> Node<'r, D>
+Method body (preview):
+pub fn adopt<'r>(&'r self, inner: D::Node<'r>) -> Node<'r, D> {
+    debug_assert!(self.check_lineage(&inner));..
+
+Impl body (preview):
+impl<D: Doc> Root<D> {
+  pub fn doc(doc: D) -> Self {..
+
+--- Match #86 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/node.rs
+
+DS structure: Node
+Impl signature: impl<D: Doc> Node<'_, D>
+Type identifiers: TypeIdentifiers { type_variables: Some({"D": {"Doc"}}), concrete_types: {"Node", "Doc"} }
+
+Method name: after
+Method signature: pub fn after(&self) -> Edit<D>
+Method body (preview):
+pub fn after(&self) -> Edit<D> {
+    todo!()..
+
+Impl body (preview):
+impl<D: Doc> Node<'_, D> {
+  pub fn replace<M: Matcher, R: Replacer<D>>(&self, matcher: M, replacer: R) -> Option<Edit<D>> {..
+
+--- Match #87 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/node.rs
+
+DS structure: Node
+Impl signature: impl<'r, D: Doc> Node<'r, D>
+Type identifiers: TypeIdentifiers { type_variables: Some({"D": {"Doc"}}), concrete_types: {"Node", "Doc"} }
+
+Method name: ancestors
+Method signature: pub fn ancestors(&self) -> impl Iterator<Item = Node<'r, D>> + '_
+Method body (preview):
+pub fn ancestors(&self) -> impl Iterator<Item = Node<'r, D>> + '_ {
+    let root = self.root.doc.root_node();..
+
+Impl body (preview):
+impl<'r, D: Doc> Node<'r, D> {
+  #[must_use]..
+
+--- Match #88 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/node.rs
+
+DS structure: Node
+Impl signature: impl<D: Doc> Node<'_, D>
+Type identifiers: TypeIdentifiers { type_variables: Some({"D": {"Doc"}}), concrete_types: {"Doc", "Node"} }
+
+Method name: append
+Method signature: pub fn append(&self) -> Edit<D>
+Method body (preview):
+pub fn append(&self) -> Edit<D> {
+    todo!()..
+
+Impl body (preview):
+impl<D: Doc> Node<'_, D> {
+  pub fn replace<M: Matcher, R: Replacer<D>>(&self, matcher: M, replacer: R) -> Option<Edit<D>> {..
+
+--- Match #89 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/node.rs
+
+DS structure: Node
+Impl signature: impl<D: Doc> Node<'_, D>
+Type identifiers: TypeIdentifiers { type_variables: Some({"D": {"Doc"}}), concrete_types: {"Doc", "Node"} }
+
+Method name: before
+Method signature: pub fn before(&self) -> Edit<D>
+Method body (preview):
+pub fn before(&self) -> Edit<D> {
+    todo!()..
+
+Impl body (preview):
+impl<D: Doc> Node<'_, D> {
+  pub fn replace<M: Matcher, R: Replacer<D>>(&self, matcher: M, replacer: R) -> Option<Edit<D>> {..
+
+--- Match #90 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/node.rs
+
+DS structure: Position
+Impl signature: impl Position
+Type identifiers: TypeIdentifiers { type_variables: None, concrete_types: {"Position"} }
+
+Method name: byte_point
+Method signature: pub fn byte_point(&self) -> (usize, usize)
+Method body (preview):
+pub fn byte_point(&self) -> (usize, usize) {
+    (self.line, self.byte_column)..
+
+Impl body (preview):
+impl Position {
+  pub fn new(line: usize, byte_column: usize, byte_offset: usize) -> Self {..
+
+--- Match #91 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/node.rs
+
+DS structure: Root
+Impl signature: impl<D: Doc> Root<D>
+Type identifiers: TypeIdentifiers { type_variables: Some({"D": {"Doc"}}), concrete_types: {"Doc", "Root"} }
+
+Method name: check_lineage
+Method signature: fn check_lineage(&self, inner: &D::Node<'_>) -> bool
+Method body (preview):
+fn check_lineage(&self, inner: &D::Node<'_>) -> bool {
+    let mut node = inner.clone();..
+
+Impl body (preview):
+impl<D: Doc> Root<D> {
+  pub fn doc(doc: D) -> Self {..
+
+--- Match #92 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/node.rs
+
+DS structure: Node
+Impl signature: impl<'r, D: Doc> Node<'r, D>
+Type identifiers: TypeIdentifiers { type_variables: Some({"D": {"Doc"}}), concrete_types: {"Doc", "Node"} }
+
+Method name: child
+Method signature: pub fn child(&self, nth: usize) -> Option<Self>
+Method body (preview):
+pub fn child(&self, nth: usize) -> Option<Self> {
+    let inner = self.inner.child(nth)?;..
+
+Impl body (preview):
+impl<'r, D: Doc> Node<'r, D> {
+  #[must_use]..
+
+--- Match #93 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/node.rs
+
+DS structure: Node
+Impl signature: impl<'r, D: Doc> Node<'r, D>
+Type identifiers: TypeIdentifiers { type_variables: Some({"D": {"Doc"}}), concrete_types: {"Node", "Doc"} }
+
+Method name: child_by_field_id
+Method signature: pub fn child_by_field_id(&self, field_id: u16) -> Option<Self>
+Method body (preview):
+pub fn child_by_field_id(&self, field_id: u16) -> Option<Self> {
+    let inner = self.inner.child_by_field_id(field_id)?;..
+
+Impl body (preview):
+impl<'r, D: Doc> Node<'r, D> {
+  #[must_use]..
+
+--- Match #94 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/node.rs
+
+DS structure: Node
+Impl signature: impl<'r, D: Doc> Node<'r, D>
+Type identifiers: TypeIdentifiers { type_variables: Some({"D": {"Doc"}}), concrete_types: {"Doc", "Node"} }
+
+Method name: children
+Method signature: pub fn children(&self) -> impl ExactSizeIterator<Item = Node<'r, D>> + '_
+Method body (preview):
+pub fn children(&self) -> impl ExactSizeIterator<Item = Node<'r, D>> + '_ {
+    self.inner.children().map(|inner| Node {..
+
+Impl body (preview):
+impl<'r, D: Doc> Node<'r, D> {
+  #[must_use]..
+
+--- Match #95 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/node.rs
+
+DS structure: Position
+Impl signature: impl Position
+Type identifiers: TypeIdentifiers { type_variables: None, concrete_types: {"Position"} }
+
+Method name: column
+Method signature: pub fn column<D: Doc>(&self, node: &Node<'_, D>) -> usize
+Method body (preview):
+pub fn column<D: Doc>(&self, node: &Node<'_, D>) -> usize {
+    let source = node.get_doc().get_source();..
+
+Impl body (preview):
+impl Position {
+  pub fn new(line: usize, byte_column: usize, byte_offset: usize) -> Self {..
+
+--- Match #96 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/node.rs
+
+DS structure: Node
+Impl signature: impl<'r, D: Doc> Node<'r, D>
+Type identifiers: TypeIdentifiers { type_variables: Some({"D": {"Doc"}}), concrete_types: {"Node", "Doc"} }
+
+Method name: dfs
+Method signature: pub fn dfs<'s>(&'s self) -> impl Iterator<Item = Node<'r, D>> + 's
+Method body (preview):
+pub fn dfs<'s>(&'s self) -> impl Iterator<Item = Node<'r, D>> + 's {
+    self.inner.dfs().map(|inner| Node {..
+
+Impl body (preview):
+impl<'r, D: Doc> Node<'r, D> {
+  #[must_use]..
+
+--- Match #97 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/node.rs
+
+DS structure: Root
+Impl signature: impl<D: Doc> Root<D>
+Type identifiers: TypeIdentifiers { type_variables: Some({"D": {"Doc"}}), concrete_types: {"Doc", "Root"} }
+
+Method name: doc
+Method signature: pub fn doc(doc: D) -> Self
+Method body (preview):
+pub fn doc(doc: D) -> Self {
+    Self { doc }..
+
+Impl body (preview):
+impl<D: Doc> Root<D> {
+  pub fn doc(doc: D) -> Self {..
+
+--- Match #98 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/node.rs
+
+DS structure: Root
+Impl signature: impl<D: Doc> Root<D>
+Type identifiers: TypeIdentifiers { type_variables: Some({"D": {"Doc"}}), concrete_types: {"Root", "Doc"} }
+
+Method name: edit
+Method signature: pub fn edit(&mut self, edit: Edit<D>) -> Result<&mut Self, String>
+Method body (preview):
+pub fn edit(&mut self, edit: Edit<D>) -> Result<&mut Self, String> {
+    self.doc.do_edit(&edit)?;..
+
+Impl body (preview):
+impl<D: Doc> Root<D> {
+  pub fn doc(doc: D) -> Self {..
+
+--- Match #99 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/node.rs
+
+DS structure: Node
+Impl signature: impl<D: Doc> Node<'_, D>
+Type identifiers: TypeIdentifiers { type_variables: Some({"D": {"Doc"}}), concrete_types: {"Node", "Doc"} }
+
+Method name: empty
+Method signature: pub fn empty(&self) -> Option<Edit<D>>
+Method body (preview):
+pub fn empty(&self) -> Option<Edit<D>> {
+    let mut children = self.children().peekable();..
+
+Impl body (preview):
+impl<D: Doc> Node<'_, D> {
+  pub fn replace<M: Matcher, R: Replacer<D>>(&self, matcher: M, replacer: R) -> Option<Edit<D>> {..
+
+--- Match #100 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/node.rs
+
+DS structure: Node
+Impl signature: impl<'r, D: Doc> Node<'r, D>
+Type identifiers: TypeIdentifiers { type_variables: Some({"D": {"Doc"}}), concrete_types: {"Doc", "Node"} }
+
+Method name: end_pos
+Method signature: pub fn end_pos(&self) -> Position
+Method body (preview):
+pub fn end_pos(&self) -> Position {
+    self.inner.end_pos()..
+
+Impl body (preview):
+impl<'r, D: Doc> Node<'r, D> {
+  pub fn get_doc(&self) -> &'r D {..
+
+--- Match #101 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/node.rs
+
+DS structure: Node
+Impl signature: impl<'r, D: Doc> Node<'r, D>
+Type identifiers: TypeIdentifiers { type_variables: Some({"D": {"Doc"}}), concrete_types: {"Node", "Doc"} }
+
+Method name: field
+Method signature: pub fn field(&self, name: &str) -> Option<Self>
+Method body (preview):
+pub fn field(&self, name: &str) -> Option<Self> {
+    let inner = self.inner.field(name)?;..
+
+Impl body (preview):
+impl<'r, D: Doc> Node<'r, D> {
+  #[must_use]..
+
+--- Match #102 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/node.rs
+
+DS structure: Node
+Impl signature: impl<'r, D: Doc> Node<'r, D>
+Type identifiers: TypeIdentifiers { type_variables: Some({"D": {"Doc"}}), concrete_types: {"Doc", "Node"} }
+
+Method name: field_children
+Method signature: pub fn field_children(&self, name: &str) -> impl Iterator<Item = Node<'r, D>> + '_
+Method body (preview):
+pub fn field_children(&self, name: &str) -> impl Iterator<Item = Node<'r, D>> + '_ {
+    let field_id = self.lang().field_to_id(name);..
+
+Impl body (preview):
+impl<'r, D: Doc> Node<'r, D> {
+  #[must_use]..
+
+--- Match #103 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/node.rs
+
+DS structure: Node
+Impl signature: impl<'r, D: Doc> Node<'r, D>
+Type identifiers: TypeIdentifiers { type_variables: Some({"D": {"Doc"}}), concrete_types: {"Doc", "Node"} }
+
+Method name: find
+Method signature: pub fn find<M: Matcher>(&self, pat: M) -> Option<NodeMatch<'r, D>>
+Method body (preview):
+pub fn find<M: Matcher>(&self, pat: M) -> Option<NodeMatch<'r, D>> {
+    pat.find_node(self.clone())..
+
+Impl body (preview):
+impl<'r, D: Doc> Node<'r, D> {
+  #[must_use]..
+
+--- Match #104 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/node.rs
+
+DS structure: Node
+Impl signature: impl<'r, D: Doc> Node<'r, D>
+Type identifiers: TypeIdentifiers { type_variables: Some({"D": {"Doc"}}), concrete_types: {"Node", "Doc"} }
+
+Method name: find_all
+Method signature: pub fn find_all<'s, M: Matcher + 's>(
+    &'s self,
+    pat: M,
+  ) -> impl Iterator<Item = NodeMatch<'r, D>> + 's
+Method body (preview):
+pub fn find_all<'s, M: Matcher + 's>(
+    &'s self,..
+
+Impl body (preview):
+impl<'r, D: Doc> Node<'r, D> {
+  #[must_use]..
+
+--- Match #105 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/node.rs
+
+DS structure: Node
+Impl signature: impl<D: Doc> Node<'_, D>
+Type identifiers: TypeIdentifiers { type_variables: Some({"D": {"Doc"}}), concrete_types: {"Doc", "Node"} }
+
+Method name: follows
+Method signature: pub fn follows<M: Matcher>(&self, m: M) -> bool
+Method body (preview):
+pub fn follows<M: Matcher>(&self, m: M) -> bool {
+    self.prev_all().find_map(|n| m.match_node(n)).is_some()..
+
+Impl body (preview):
+impl<D: Doc> Node<'_, D> {
+  pub fn matches<M: Matcher>(&self, m: M) -> bool {..
+
+--- Match #106 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/node.rs
+
+DS structure: Node
+Impl signature: impl<'r, D: Doc> Node<'r, D>
+Type identifiers: TypeIdentifiers { type_variables: Some({"D": {"Doc"}}), concrete_types: {"Node", "Doc"} }
+
+Method name: get_doc
+Method signature: pub fn get_doc(&self) -> &'r D
+Method body (preview):
+pub fn get_doc(&self) -> &'r D {
+    &self.root.doc..
+
+Impl body (preview):
+impl<'r, D: Doc> Node<'r, D> {
+  pub fn get_doc(&self) -> &'r D {..
+
+--- Match #107 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/node.rs
+
+DS structure: Node
+Impl signature: impl<'r, D: Doc> Node<'r, D>
+Type identifiers: TypeIdentifiers { type_variables: Some({"D": {"Doc"}}), concrete_types: {"Doc", "Node"} }
+
+Method name: get_inner_node
+Method signature: pub fn get_inner_node(&self) -> D::Node<'r>
+Method body (preview):
+pub fn get_inner_node(&self) -> D::Node<'r> {
+    self.inner.clone()..
+
+Impl body (preview):
+impl<'r, D: Doc> Node<'r, D> {
+  pub fn get_doc(&self) -> &'r D {..
+
+--- Match #108 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/node.rs
+
+DS structure: Node
+Impl signature: impl<D: Doc> Node<'_, D>
+Type identifiers: TypeIdentifiers { type_variables: Some({"D": {"Doc"}}), concrete_types: {"Node", "Doc"} }
+
+Method name: has
+Method signature: pub fn has<M: Matcher>(&self, m: M) -> bool
+Method body (preview):
+pub fn has<M: Matcher>(&self, m: M) -> bool {
+    self.dfs().skip(1).find_map(|n| m.match_node(n)).is_some()..
+
+Impl body (preview):
+impl<D: Doc> Node<'_, D> {
+  pub fn matches<M: Matcher>(&self, m: M) -> bool {..
+
+--- Match #109 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/node.rs
+
+DS structure: Node
+Impl signature: impl<D: Doc> Node<'_, D>
+Type identifiers: TypeIdentifiers { type_variables: Some({"D": {"Doc"}}), concrete_types: {"Doc", "Node"} }
+
+Method name: inside
+Method signature: pub fn inside<M: Matcher>(&self, m: M) -> bool
+Method body (preview):
+pub fn inside<M: Matcher>(&self, m: M) -> bool {
+    self.ancestors().find_map(|n| m.match_node(n)).is_some()..
+
+Impl body (preview):
+impl<D: Doc> Node<'_, D> {
+  pub fn matches<M: Matcher>(&self, m: M) -> bool {..
+
+--- Match #110 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/node.rs
+
+DS structure: Node
+Impl signature: impl<'r, D: Doc> Node<'r, D>
+Type identifiers: TypeIdentifiers { type_variables: Some({"D": {"Doc"}}), concrete_types: {"Doc", "Node"} }
+
+Method name: is_error
+Method signature: pub fn is_error(&self) -> bool
+Method body (preview):
+pub fn is_error(&self) -> bool {
+    self.inner.is_error()..
+
+Impl body (preview):
+impl<'r, D: Doc> Node<'r, D> {
+  pub fn get_doc(&self) -> &'r D {..
+
+--- Match #111 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/node.rs
+
+DS structure: Node
+Impl signature: impl<'r, D: Doc> Node<'r, D>
+Type identifiers: TypeIdentifiers { type_variables: Some({"D": {"Doc"}}), concrete_types: {"Doc", "Node"} }
+
+Method name: is_leaf
+Method signature: pub fn is_leaf(&self) -> bool
+Method body (preview):
+pub fn is_leaf(&self) -> bool {
+    self.inner.is_leaf()..
+
+Impl body (preview):
+impl<'r, D: Doc> Node<'r, D> {
+  pub fn get_doc(&self) -> &'r D {..
+
+--- Match #112 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/node.rs
+
+DS structure: Node
+Impl signature: impl<'r, D: Doc> Node<'r, D>
+Type identifiers: TypeIdentifiers { type_variables: Some({"D": {"Doc"}}), concrete_types: {"Doc", "Node"} }
+
+Method name: is_missing
+Method signature: pub fn is_missing(&self) -> bool
+Method body (preview):
+pub fn is_missing(&self) -> bool {
+    self.inner.is_missing()..
+
+Impl body (preview):
+impl<'r, D: Doc> Node<'r, D> {
+  pub fn get_doc(&self) -> &'r D {..
+
+--- Match #113 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/node.rs
+
+DS structure: Node
+Impl signature: impl<'r, D: Doc> Node<'r, D>
+Type identifiers: TypeIdentifiers { type_variables: Some({"D": {"Doc"}}), concrete_types: {"Doc", "Node"} }
+
+Method name: is_named
+Method signature: pub fn is_named(&self) -> bool
+Method body (preview):
+pub fn is_named(&self) -> bool {
+    self.inner.is_named()..
+
+Impl body (preview):
+impl<'r, D: Doc> Node<'r, D> {
+  pub fn get_doc(&self) -> &'r D {..
+
+--- Match #114 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/node.rs
+
+DS structure: Node
+Impl signature: impl<'r, D: Doc> Node<'r, D>
+Type identifiers: TypeIdentifiers { type_variables: Some({"D": {"Doc"}}), concrete_types: {"Node", "Doc"} }
+
+Method name: is_named_leaf
+Method signature: pub fn is_named_leaf(&self) -> bool
+Method body (preview):
+pub fn is_named_leaf(&self) -> bool {
+    self.inner.is_named_leaf()..
+
+Impl body (preview):
+impl<'r, D: Doc> Node<'r, D> {
+  pub fn get_doc(&self) -> &'r D {..
+
+--- Match #115 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/node.rs
+
+DS structure: Node
+Impl signature: impl<'r, D: Doc> Node<'r, D>
+Type identifiers: TypeIdentifiers { type_variables: Some({"D": {"Doc"}}), concrete_types: {"Doc", "Node"} }
+
+Method name: kind
+Method signature: pub fn kind(&self) -> Cow<'_, str>
+Method body (preview):
+pub fn kind(&self) -> Cow<'_, str> {
+    self.inner.kind()..
+
+Impl body (preview):
+impl<'r, D: Doc> Node<'r, D> {
+  pub fn get_doc(&self) -> &'r D {..
+
+--- Match #116 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/node.rs
+
+DS structure: Node
+Impl signature: impl<'r, D: Doc> Node<'r, D>
+Type identifiers: TypeIdentifiers { type_variables: Some({"D": {"Doc"}}), concrete_types: {"Node", "Doc"} }
+
+Method name: kind_id
+Method signature: pub fn kind_id(&self) -> KindId
+Method body (preview):
+pub fn kind_id(&self) -> KindId {
+    self.inner.kind_id()..
+
+Impl body (preview):
+impl<'r, D: Doc> Node<'r, D> {
+  pub fn get_doc(&self) -> &'r D {..
+
+--- Match #117 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/node.rs
+
+DS structure: Root
+Impl signature: impl<D: Doc> Root<D>
+Type identifiers: TypeIdentifiers { type_variables: Some({"D": {"Doc"}}), concrete_types: {"Root", "Doc"} }
+
+Method name: lang
+Method signature: pub fn lang(&self) -> &D::Lang
+Method body (preview):
+pub fn lang(&self) -> &D::Lang {
+    self.doc.get_lang()..
+
+Impl body (preview):
+impl<D: Doc> Root<D> {
+  pub fn doc(doc: D) -> Self {..
+
+--- Match #118 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/node.rs
+
+DS structure: Node
+Impl signature: impl<'r, D: Doc> Node<'r, D>
+Type identifiers: TypeIdentifiers { type_variables: Some({"D": {"Doc"}}), concrete_types: {"Node", "Doc"} }
+
+Method name: lang
+Method signature: pub fn lang(&self) -> &'r D::Lang
+Method body (preview):
+pub fn lang(&self) -> &'r D::Lang {
+    self.root.lang()..
+
+Impl body (preview):
+impl<'r, D: Doc> Node<'r, D> {
+  pub fn get_doc(&self) -> &'r D {..
+
+--- Match #119 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/node.rs
+
+DS structure: Position
+Impl signature: impl Position
+Type identifiers: TypeIdentifiers { type_variables: None, concrete_types: {"Position"} }
+
+Method name: line
+Method signature: pub fn line(&self) -> usize
+Method body (preview):
+pub fn line(&self) -> usize {
+    self.line..
+
+Impl body (preview):
+impl Position {
+  pub fn new(line: usize, byte_column: usize, byte_offset: usize) -> Self {..
+
+--- Match #120 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/node.rs
+
+DS structure: Node
+Impl signature: impl<D: Doc> Node<'_, D>
+Type identifiers: TypeIdentifiers { type_variables: Some({"D": {"Doc"}}), concrete_types: {"Doc", "Node"} }
+
+Method name: matches
+Method signature: pub fn matches<M: Matcher>(&self, m: M) -> bool
+Method body (preview):
+pub fn matches<M: Matcher>(&self, m: M) -> bool {
+    m.match_node(self.clone()).is_some()..
+
+Impl body (preview):
+impl<D: Doc> Node<'_, D> {
+  pub fn matches<M: Matcher>(&self, m: M) -> bool {..
+
+--- Match #121 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/node.rs
+
+DS structure: Position
+Impl signature: impl Position
+Type identifiers: TypeIdentifiers { type_variables: None, concrete_types: {"Position"} }
+
+Method name: new
+Method signature: pub fn new(line: usize, byte_column: usize, byte_offset: usize) -> Self
+Method body (preview):
+pub fn new(line: usize, byte_column: usize, byte_offset: usize) -> Self {
+    Self {..
+
+Impl body (preview):
+impl Position {
+  pub fn new(line: usize, byte_column: usize, byte_offset: usize) -> Self {..
+
+--- Match #122 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/node.rs
+
+DS structure: Node
+Impl signature: impl<'r, D: Doc> Node<'r, D>
+Type identifiers: TypeIdentifiers { type_variables: Some({"D": {"Doc"}}), concrete_types: {"Doc", "Node"} }
+
+Method name: next
+Method signature: pub fn next(&self) -> Option<Self>
+Method body (preview):
+pub fn next(&self) -> Option<Self> {
+    let inner = self.inner.next()?;..
+
+Impl body (preview):
+impl<'r, D: Doc> Node<'r, D> {
+  #[must_use]..
+
+--- Match #123 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/node.rs
+
+DS structure: Node
+Impl signature: impl<'r, D: Doc> Node<'r, D>
+Type identifiers: TypeIdentifiers { type_variables: Some({"D": {"Doc"}}), concrete_types: {"Node", "Doc"} }
+
+Method name: next_all
+Method signature: pub fn next_all(&self) -> impl Iterator<Item = Node<'r, D>> + '_
+Method body (preview):
+pub fn next_all(&self) -> impl Iterator<Item = Node<'r, D>> + '_ {
+    self.inner.next_all().map(|inner| Node {..
+
+Impl body (preview):
+impl<'r, D: Doc> Node<'r, D> {
+  #[must_use]..
+
+--- Match #124 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/node.rs
+
+DS structure: Node
+Impl signature: impl<'r, D: Doc> Node<'r, D>
+Type identifiers: TypeIdentifiers { type_variables: Some({"D": {"Doc"}}), concrete_types: {"Node", "Doc"} }
+
+Method name: node_id
+Method signature: pub fn node_id(&self) -> usize
+Method body (preview):
+pub fn node_id(&self) -> usize {
+    self.inner.node_id()..
+
+Impl body (preview):
+impl<'r, D: Doc> Node<'r, D> {
+  pub fn get_doc(&self) -> &'r D {..
+
+--- Match #125 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/node.rs
+
+DS structure: Node
+Impl signature: impl<'r, D: Doc> Node<'r, D>
+Type identifiers: TypeIdentifiers { type_variables: Some({"D": {"Doc"}}), concrete_types: {"Node", "Doc"} }
+
+Method name: parent
+Method signature: pub fn parent(&self) -> Option<Self>
+Method body (preview):
+pub fn parent(&self) -> Option<Self> {
+    let inner = self.inner.parent()?;..
+
+Impl body (preview):
+impl<'r, D: Doc> Node<'r, D> {
+  #[must_use]..
+
+--- Match #126 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/node.rs
+
+DS structure: Node
+Impl signature: impl<D: Doc> Node<'_, D>
+Type identifiers: TypeIdentifiers { type_variables: Some({"D": {"Doc"}}), concrete_types: {"Node", "Doc"} }
+
+Method name: precedes
+Method signature: pub fn precedes<M: Matcher>(&self, m: M) -> bool
+Method body (preview):
+pub fn precedes<M: Matcher>(&self, m: M) -> bool {
+    self.next_all().find_map(|n| m.match_node(n)).is_some()..
+
+Impl body (preview):
+impl<D: Doc> Node<'_, D> {
+  pub fn matches<M: Matcher>(&self, m: M) -> bool {..
+
+--- Match #127 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/node.rs
+
+DS structure: Node
+Impl signature: impl<D: Doc> Node<'_, D>
+Type identifiers: TypeIdentifiers { type_variables: Some({"D": {"Doc"}}), concrete_types: {"Doc", "Node"} }
+
+Method name: prepend
+Method signature: pub fn prepend(&self) -> Edit<D>
+Method body (preview):
+pub fn prepend(&self) -> Edit<D> {
+    todo!()..
+
+Impl body (preview):
+impl<D: Doc> Node<'_, D> {
+  pub fn replace<M: Matcher, R: Replacer<D>>(&self, matcher: M, replacer: R) -> Option<Edit<D>> {..
+
+--- Match #128 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/node.rs
+
+DS structure: Node
+Impl signature: impl<'r, D: Doc> Node<'r, D>
+Type identifiers: TypeIdentifiers { type_variables: Some({"D": {"Doc"}}), concrete_types: {"Doc", "Node"} }
+
+Method name: prev
+Method signature: pub fn prev(&self) -> Option<Node<'r, D>>
+Method body (preview):
+pub fn prev(&self) -> Option<Node<'r, D>> {
+    let inner = self.inner.prev()?;..
+
+Impl body (preview):
+impl<'r, D: Doc> Node<'r, D> {
+  #[must_use]..
+
+--- Match #129 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/node.rs
+
+DS structure: Node
+Impl signature: impl<'r, D: Doc> Node<'r, D>
+Type identifiers: TypeIdentifiers { type_variables: Some({"D": {"Doc"}}), concrete_types: {"Doc", "Node"} }
+
+Method name: prev_all
+Method signature: pub fn prev_all(&self) -> impl Iterator<Item = Node<'r, D>> + '_
+Method body (preview):
+pub fn prev_all(&self) -> impl Iterator<Item = Node<'r, D>> + '_ {
+    self.inner.prev_all().map(|inner| Node {..
+
+Impl body (preview):
+impl<'r, D: Doc> Node<'r, D> {
+  #[must_use]..
+
+--- Match #130 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/node.rs
+
+DS structure: Node
+Impl signature: impl<'r, D: Doc> Node<'r, D>
+Type identifiers: TypeIdentifiers { type_variables: Some({"D": {"Doc"}}), concrete_types: {"Doc", "Node"} }
+
+Method name: range
+Method signature: pub fn range(&self) -> std::ops::Range<usize>
+Method body (preview):
+pub fn range(&self) -> std::ops::Range<usize> {
+    self.inner.range()..
+
+Impl body (preview):
+impl<'r, D: Doc> Node<'r, D> {
+  pub fn get_doc(&self) -> &'r D {..
+
+--- Match #131 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/node.rs
+
+DS structure: Root
+Impl signature: impl<D: Doc> Root<D>
+Type identifiers: TypeIdentifiers { type_variables: Some({"D": {"Doc"}}), concrete_types: {"Root", "Doc"} }
+
+Method name: readopt
+Method signature: pub unsafe fn readopt<'a: 'b, 'b>(&'a self, node: &mut Node<'b, D>)
+Method body (preview):
+pub unsafe fn readopt<'a: 'b, 'b>(&'a self, node: &mut Node<'b, D>) {
+    debug_assert!(self.check_lineage(&node.inner));..
+
+Impl body (preview):
+impl<D: Doc> Root<D> {
+  pub fn doc(doc: D) -> Self {..
+
+--- Match #132 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/node.rs
+
+DS structure: Node
+Impl signature: impl<D: Doc> Node<'_, D>
+Type identifiers: TypeIdentifiers { type_variables: Some({"D": {"Doc"}}), concrete_types: {"Doc", "Node"} }
+
+Method name: remove
+Method signature: pub fn remove(&self) -> Edit<D>
+Method body (preview):
+pub fn remove(&self) -> Edit<D> {
+    let range = self.range();..
+
+Impl body (preview):
+impl<D: Doc> Node<'_, D> {
+  pub fn replace<M: Matcher, R: Replacer<D>>(&self, matcher: M, replacer: R) -> Option<Edit<D>> {..
+
+--- Match #133 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/node.rs
+
+DS structure: Root
+Impl signature: impl<D: Doc> Root<D>
+Type identifiers: TypeIdentifiers { type_variables: Some({"D": {"Doc"}}), concrete_types: {"Root", "Doc"} }
+
+Method name: replace
+Method signature: pub fn replace<M: Matcher, R: Replacer<D>>(
+    &mut self,
+    pattern: M,
+    replacer: R,
+  ) -> Result<bool, String>
+Method body (preview):
+pub fn replace<M: Matcher, R: Replacer<D>>(
+    &mut self,..
+
+Impl body (preview):
+impl<D: Doc> Root<D> {
+  pub fn doc(doc: D) -> Self {..
+
+--- Match #134 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/node.rs
+
+DS structure: Node
+Impl signature: impl<D: Doc> Node<'_, D>
+Type identifiers: TypeIdentifiers { type_variables: Some({"D": {"Doc"}}), concrete_types: {"Doc", "Node"} }
+
+Method name: replace
+Method signature: pub fn replace<M: Matcher, R: Replacer<D>>(&self, matcher: M, replacer: R) -> Option<Edit<D>>
+Method body (preview):
+pub fn replace<M: Matcher, R: Replacer<D>>(&self, matcher: M, replacer: R) -> Option<Edit<D>> {
+    let matched = matcher.find_node(self.clone())?;..
+
+Impl body (preview):
+impl<D: Doc> Node<'_, D> {
+  pub fn replace<M: Matcher, R: Replacer<D>>(&self, matcher: M, replacer: R) -> Option<Edit<D>> {..
+
+--- Match #135 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/node.rs
+
+DS structure: Root
+Impl signature: impl<D: Doc> Root<D>
+Type identifiers: TypeIdentifiers { type_variables: Some({"D": {"Doc"}}), concrete_types: {"Root", "Doc"} }
+
+Method name: root
+Method signature: pub fn root(&self) -> Node<'_, D>
+Method body (preview):
+pub fn root(&self) -> Node<'_, D> {
+    Node {..
+
+Impl body (preview):
+impl<D: Doc> Root<D> {
+  pub fn doc(doc: D) -> Self {..
+
+--- Match #136 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/node.rs
+
+DS structure: Node
+Impl signature: impl<'r, D: Doc> Node<'r, D>
+Type identifiers: TypeIdentifiers { type_variables: Some({"D": {"Doc"}}), concrete_types: {"Doc", "Node"} }
+
+Method name: root
+Method signature: pub fn root(&self) -> &'r Root<D>
+Method body (preview):
+pub fn root(&self) -> &'r Root<D> {
+    self.root..
+
+Impl body (preview):
+impl<'r, D: Doc> Node<'r, D> {
+  pub fn get_doc(&self) -> &'r D {..
+
+--- Match #137 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/node.rs
+
+DS structure: Node
+Impl signature: impl<'r, D: Doc> Node<'r, D>
+Type identifiers: TypeIdentifiers { type_variables: Some({"D": {"Doc"}}), concrete_types: {"Node", "Doc"} }
+
+Method name: start_pos
+Method signature: pub fn start_pos(&self) -> Position
+Method body (preview):
+pub fn start_pos(&self) -> Position {
+    self.inner.start_pos()..
+
+Impl body (preview):
+impl<'r, D: Doc> Node<'r, D> {
+  pub fn get_doc(&self) -> &'r D {..
+
+--- Match #138 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/node.rs
+
+DS structure: Node
+Impl signature: impl<'r, D: Doc> Node<'r, D>
+Type identifiers: TypeIdentifiers { type_variables: Some({"D": {"Doc"}}), concrete_types: {"Doc", "Node"} }
+
+Method name: text
+Method signature: pub fn text(&self) -> Cow<'r, str>
+Method body (preview):
+pub fn text(&self) -> Cow<'r, str> {
+    self.root.doc.get_node_text(&self.inner)..
+
+Impl body (preview):
+impl<'r, D: Doc> Node<'r, D> {
+  pub fn get_doc(&self) -> &'r D {..
+
+--- Match #139 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/ops.rs
+
+DS structure: Op
+Impl signature: impl<M: Matcher> Op<M>
+Type identifiers: TypeIdentifiers { type_variables: Some({"M": {"Matcher"}}), concrete_types: {"Op", "Matcher"} }
+
+Method name: all
+Method signature: pub fn all<MS: IntoIterator<Item = M>>(patterns: MS) -> All<M>
+Method body (preview):
+pub fn all<MS: IntoIterator<Item = M>>(patterns: MS) -> All<M> {
+    All::new(patterns)..
+
+Impl body (preview):
+impl<M: Matcher> Op<M> {
+  pub fn every(pattern: M) -> Op<And<M, MatchAll>> {..
+
+--- Match #140 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/ops.rs
+
+DS structure: Op
+Impl signature: impl<M: Matcher, N: Matcher> Op<And<M, N>>
+Type identifiers: TypeIdentifiers { type_variables: Some({"M": {"Matcher"}, "N": {"Matcher"}}), concrete_types: {"Matcher", "Op", "And"} }
+
+Method name: and
+Method signature: pub fn and<O: Matcher>(self, other: O) -> Op<NestedAnd<M, N, O>>
+Method body (preview):
+pub fn and<O: Matcher>(self, other: O) -> Op<NestedAnd<M, N, O>> {
+    Op {..
+
+Impl body (preview):
+impl<M: Matcher, N: Matcher> Op<And<M, N>> {
+  pub fn and<O: Matcher>(self, other: O) -> Op<NestedAnd<M, N, O>> {..
+
+--- Match #141 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/ops.rs
+
+DS structure: Op
+Impl signature: impl<M: Matcher> Op<M>
+Type identifiers: TypeIdentifiers { type_variables: Some({"M": {"Matcher"}}), concrete_types: {"Op", "Matcher"} }
+
+Method name: any
+Method signature: pub fn any<MS: IntoIterator<Item = M>>(patterns: MS) -> Any<M>
+Method body (preview):
+pub fn any<MS: IntoIterator<Item = M>>(patterns: MS) -> Any<M> {
+    Any::new(patterns)..
+
+Impl body (preview):
+impl<M: Matcher> Op<M> {
+  pub fn every(pattern: M) -> Op<And<M, MatchAll>> {..
+
+--- Match #142 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/ops.rs
+
+DS structure: All
+Impl signature: impl<P: Matcher> All<P>
+Type identifiers: TypeIdentifiers { type_variables: Some({"P": {"Matcher"}}), concrete_types: {"All", "Matcher"} }
+
+Method name: compute_kinds
+Method signature: fn compute_kinds(patterns: &[P]) -> Option<BitSet>
+Method body (preview):
+fn compute_kinds(patterns: &[P]) -> Option<BitSet> {
+    let mut set: Option<BitSet> = None;..
+
+Impl body (preview):
+impl<P: Matcher> All<P> {
+  pub fn new<PS: IntoIterator<Item = P>>(patterns: PS) -> Self {..
+
+--- Match #143 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/ops.rs
+
+DS structure: Any
+Impl signature: impl<P: Matcher> Any<P>
+Type identifiers: TypeIdentifiers { type_variables: Some({"P": {"Matcher"}}), concrete_types: {"Any", "Matcher"} }
+
+Method name: compute_kinds
+Method signature: fn compute_kinds(patterns: &[P]) -> Option<BitSet>
+Method body (preview):
+fn compute_kinds(patterns: &[P]) -> Option<BitSet> {
+    let mut set = BitSet::new();..
+
+Impl body (preview):
+impl<P: Matcher> Any<P> {
+  pub fn new<PS: IntoIterator<Item = P>>(patterns: PS) -> Self {..
+
+--- Match #144 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/ops.rs
+
+DS structure: Op
+Impl signature: impl<M: Matcher> Op<M>
+Type identifiers: TypeIdentifiers { type_variables: Some({"M": {"Matcher"}}), concrete_types: {"Matcher", "Op"} }
+
+Method name: either
+Method signature: pub fn either(pattern: M) -> Op<Or<M, MatchNone>>
+Method body (preview):
+pub fn either(pattern: M) -> Op<Or<M, MatchNone>> {
+    Op {..
+
+Impl body (preview):
+impl<M: Matcher> Op<M> {
+  pub fn every(pattern: M) -> Op<And<M, MatchAll>> {..
+
+--- Match #145 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/ops.rs
+
+DS structure: Op
+Impl signature: impl<M: Matcher> Op<M>
+Type identifiers: TypeIdentifiers { type_variables: Some({"M": {"Matcher"}}), concrete_types: {"Op", "Matcher"} }
+
+Method name: every
+Method signature: pub fn every(pattern: M) -> Op<And<M, MatchAll>>
+Method body (preview):
+pub fn every(pattern: M) -> Op<And<M, MatchAll>> {
+    Op {..
+
+Impl body (preview):
+impl<M: Matcher> Op<M> {
+  pub fn every(pattern: M) -> Op<And<M, MatchAll>> {..
+
+--- Match #146 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/ops.rs
+
+DS structure: All
+Impl signature: impl<P: Matcher> All<P>
+Type identifiers: TypeIdentifiers { type_variables: Some({"P": {"Matcher"}}), concrete_types: {"All", "Matcher"} }
+
+Method name: inner
+Method signature: pub fn inner(&self) -> &[P]
+Method body (preview):
+pub fn inner(&self) -> &[P] {
+    &self.patterns..
+
+Impl body (preview):
+impl<P: Matcher> All<P> {
+  pub fn new<PS: IntoIterator<Item = P>>(patterns: PS) -> Self {..
+
+--- Match #147 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/ops.rs
+
+DS structure: Any
+Impl signature: impl<P: Matcher> Any<P>
+Type identifiers: TypeIdentifiers { type_variables: Some({"P": {"Matcher"}}), concrete_types: {"Matcher", "Any"} }
+
+Method name: inner
+Method signature: pub fn inner(&self) -> &[P]
+Method body (preview):
+pub fn inner(&self) -> &[P] {
+    &self.patterns..
+
+Impl body (preview):
+impl<P: Matcher> Any<P> {
+  pub fn new<PS: IntoIterator<Item = P>>(patterns: PS) -> Self {..
+
+--- Match #148 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/ops.rs
+
+DS structure: Not
+Impl signature: impl<M: Matcher> Not<M>
+Type identifiers: TypeIdentifiers { type_variables: Some({"M": {"Matcher"}}), concrete_types: {"Not", "Matcher"} }
+
+Method name: inner
+Method signature: pub fn inner(&self) -> &M
+Method body (preview):
+pub fn inner(&self) -> &M {
+    &self.not..
+
+Impl body (preview):
+impl<M: Matcher> Not<M> {
+  pub fn new(not: M) -> Self {..
+
+--- Match #149 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/ops.rs
+
+DS structure: And
+Impl signature: impl<P1, P2> Matcher for And<P1, P2>
+where
+  P1: Matcher,
+  P2: Matcher,
+Type identifiers: TypeIdentifiers { type_variables: Some({"P1": {"Matcher"}, "P2": {"Matcher"}}), concrete_types: {"Matcher", "And"} }
+
+Method name: match_node_with_env
+Method signature: fn match_node_with_env<'tree, D: Doc>(
+    &self,
+    node: Node<'tree, D>,
+    env: &mut Cow<MetaVarEnv<'tree, D>>,
+  ) -> Option<Node<'tree, D>>
+Method body (preview):
+fn match_node_with_env<'tree, D: Doc>(
+    &self,..
+
+Impl body (preview):
+impl<P1, P2> Matcher for And<P1, P2>
+where..
+
+--- Match #150 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/ops.rs
+
+DS structure: All
+Impl signature: impl<P: Matcher> Matcher for All<P>
+Type identifiers: TypeIdentifiers { type_variables: Some({"P": {"Matcher"}}), concrete_types: {"Matcher", "All"} }
+
+Method name: match_node_with_env
+Method signature: fn match_node_with_env<'tree, D: Doc>(
+    &self,
+    node: Node<'tree, D>,
+    env: &mut Cow<MetaVarEnv<'tree, D>>,
+  ) -> Option<Node<'tree, D>>
+Method body (preview):
+fn match_node_with_env<'tree, D: Doc>(
+    &self,..
+
+Impl body (preview):
+impl<P: Matcher> Matcher for All<P> {
+  fn match_node_with_env<'tree, D: Doc>(..
+
+--- Match #151 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/ops.rs
+
+DS structure: Any
+Impl signature: impl<M: Matcher> Matcher for Any<M>
+Type identifiers: TypeIdentifiers { type_variables: Some({"M": {"Matcher"}}), concrete_types: {"Any", "Matcher"} }
+
+Method name: match_node_with_env
+Method signature: fn match_node_with_env<'tree, D: Doc>(
+    &self,
+    node: Node<'tree, D>,
+    env: &mut Cow<MetaVarEnv<'tree, D>>,
+  ) -> Option<Node<'tree, D>>
+Method body (preview):
+fn match_node_with_env<'tree, D: Doc>(
+    &self,..
+
+Impl body (preview):
+impl<M: Matcher> Matcher for Any<M> {
+  fn match_node_with_env<'tree, D: Doc>(..
+
+--- Match #152 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/ops.rs
+
+DS structure: Or
+Impl signature: impl<P1, P2> Matcher for Or<P1, P2>
+where
+  P1: Matcher,
+  P2: Matcher,
+Type identifiers: TypeIdentifiers { type_variables: Some({"P1": {"Matcher"}, "P2": {"Matcher"}}), concrete_types: {"Matcher", "Or"} }
+
+Method name: match_node_with_env
+Method signature: fn match_node_with_env<'tree, D: Doc>(
+    &self,
+    node: Node<'tree, D>,
+    env: &mut Cow<MetaVarEnv<'tree, D>>,
+  ) -> Option<Node<'tree, D>>
+Method body (preview):
+fn match_node_with_env<'tree, D: Doc>(
+    &self,..
+
+Impl body (preview):
+impl<P1, P2> Matcher for Or<P1, P2>
+where..
+
+--- Match #153 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/ops.rs
+
+DS structure: Not
+Impl signature: impl<P> Matcher for Not<P>
+where
+  P: Matcher,
+Type identifiers: TypeIdentifiers { type_variables: Some({"P": {"Matcher"}}), concrete_types: {"Not", "Matcher"} }
+
+Method name: match_node_with_env
+Method signature: fn match_node_with_env<'tree, D: Doc>(
+    &self,
+    node: Node<'tree, D>,
+    env: &mut Cow<MetaVarEnv<'tree, D>>,
+  ) -> Option<Node<'tree, D>>
+Method body (preview):
+fn match_node_with_env<'tree, D: Doc>(
+    &self,..
+
+Impl body (preview):
+impl<P> Matcher for Not<P>
+where..
+
+--- Match #154 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/ops.rs
+
+DS structure: Op
+Impl signature: impl<M> Matcher for Op<M>
+where
+  M: Matcher,
+Type identifiers: TypeIdentifiers { type_variables: Some({"M": {"Matcher"}}), concrete_types: {"Op", "Matcher"} }
+
+Method name: match_node_with_env
+Method signature: fn match_node_with_env<'tree, D: Doc>(
+    &self,
+    node: Node<'tree, D>,
+    env: &mut Cow<MetaVarEnv<'tree, D>>,
+  ) -> Option<Node<'tree, D>>
+Method body (preview):
+fn match_node_with_env<'tree, D: Doc>(
+    &self,..
+
+Impl body (preview):
+impl<M> Matcher for Op<M>
+where..
+
+--- Match #155 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/ops.rs
+
+DS structure: All
+Impl signature: impl<P: Matcher> All<P>
+Type identifiers: TypeIdentifiers { type_variables: Some({"P": {"Matcher"}}), concrete_types: {"Matcher", "All"} }
+
+Method name: new
+Method signature: pub fn new<PS: IntoIterator<Item = P>>(patterns: PS) -> Self
+Method body (preview):
+pub fn new<PS: IntoIterator<Item = P>>(patterns: PS) -> Self {
+    let patterns: Box<[P]> = patterns.into_iter().collect();..
+
+Impl body (preview):
+impl<P: Matcher> All<P> {
+  pub fn new<PS: IntoIterator<Item = P>>(patterns: PS) -> Self {..
+
+--- Match #156 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/ops.rs
+
+DS structure: Any
+Impl signature: impl<P: Matcher> Any<P>
+Type identifiers: TypeIdentifiers { type_variables: Some({"P": {"Matcher"}}), concrete_types: {"Any", "Matcher"} }
+
+Method name: new
+Method signature: pub fn new<PS: IntoIterator<Item = P>>(patterns: PS) -> Self
+Method body (preview):
+pub fn new<PS: IntoIterator<Item = P>>(patterns: PS) -> Self {
+    let patterns: Box<[P]> = patterns.into_iter().collect();..
+
+Impl body (preview):
+impl<P: Matcher> Any<P> {
+  pub fn new<PS: IntoIterator<Item = P>>(patterns: PS) -> Self {..
+
+--- Match #157 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/ops.rs
+
+DS structure: Not
+Impl signature: impl<M: Matcher> Not<M>
+Type identifiers: TypeIdentifiers { type_variables: Some({"M": {"Matcher"}}), concrete_types: {"Matcher", "Not"} }
+
+Method name: new
+Method signature: pub fn new(not: M) -> Self
+Method body (preview):
+pub fn new(not: M) -> Self {
+    Self { not }..
+
+Impl body (preview):
+impl<M: Matcher> Not<M> {
+  pub fn new(not: M) -> Self {..
+
+--- Match #158 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/ops.rs
+
+DS structure: Op
+Impl signature: impl<M: Matcher> Op<M>
+Type identifiers: TypeIdentifiers { type_variables: Some({"M": {"Matcher"}}), concrete_types: {"Op", "Matcher"} }
+
+Method name: new
+Method signature: pub fn new(matcher: M) -> Op<M>
+Method body (preview):
+pub fn new(matcher: M) -> Op<M> {
+    Self { inner: matcher }..
+
+Impl body (preview):
+impl<M: Matcher> Op<M> {
+  pub fn every(pattern: M) -> Op<And<M, MatchAll>> {..
+
+--- Match #159 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/ops.rs
+
+DS structure: Op
+Impl signature: impl<M: Matcher> Op<M>
+Type identifiers: TypeIdentifiers { type_variables: Some({"M": {"Matcher"}}), concrete_types: {"Op", "Matcher"} }
+
+Method name: not
+Method signature: pub fn not(pattern: M) -> Not<M>
+Method body (preview):
+pub fn not(pattern: M) -> Not<M> {
+    Not { not: pattern }..
+
+Impl body (preview):
+impl<M: Matcher> Op<M> {
+  pub fn not(pattern: M) -> Not<M> {..
+
+--- Match #160 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/ops.rs
+
+DS structure: Op
+Impl signature: impl<M: Matcher, N: Matcher> Op<Or<M, N>>
+Type identifiers: TypeIdentifiers { type_variables: Some({"M": {"Matcher"}, "N": {"Matcher"}}), concrete_types: {"Matcher", "Op", "Or"} }
+
+Method name: or
+Method signature: pub fn or<O: Matcher>(self, other: O) -> Op<NestedOr<M, N, O>>
+Method body (preview):
+pub fn or<O: Matcher>(self, other: O) -> Op<NestedOr<M, N, O>> {
+    Op {..
+
+Impl body (preview):
+impl<M: Matcher, N: Matcher> Op<Or<M, N>> {
+  pub fn or<O: Matcher>(self, other: O) -> Op<NestedOr<M, N, O>> {..
+
+--- Match #161 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/ops.rs
+
+DS structure: And
+Impl signature: impl<P1, P2> Matcher for And<P1, P2>
+where
+  P1: Matcher,
+  P2: Matcher,
+Type identifiers: TypeIdentifiers { type_variables: Some({"P1": {"Matcher"}, "P2": {"Matcher"}}), concrete_types: {"And", "Matcher"} }
+
+Method name: potential_kinds
+Method signature: fn potential_kinds(&self) -> Option<BitSet>
+Method body (preview):
+fn potential_kinds(&self) -> Option<BitSet> {
+    let set1 = self.pattern1.potential_kinds();..
+
+Impl body (preview):
+impl<P1, P2> Matcher for And<P1, P2>
+where..
+
+--- Match #162 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/ops.rs
+
+DS structure: All
+Impl signature: impl<P: Matcher> Matcher for All<P>
+Type identifiers: TypeIdentifiers { type_variables: Some({"P": {"Matcher"}}), concrete_types: {"Matcher", "All"} }
+
+Method name: potential_kinds
+Method signature: fn potential_kinds(&self) -> Option<BitSet>
+Method body (preview):
+fn potential_kinds(&self) -> Option<BitSet> {
+    self.kinds.clone()..
+
+Impl body (preview):
+impl<P: Matcher> Matcher for All<P> {
+  fn match_node_with_env<'tree, D: Doc>(..
+
+--- Match #163 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/ops.rs
+
+DS structure: Any
+Impl signature: impl<M: Matcher> Matcher for Any<M>
+Type identifiers: TypeIdentifiers { type_variables: Some({"M": {"Matcher"}}), concrete_types: {"Any", "Matcher"} }
+
+Method name: potential_kinds
+Method signature: fn potential_kinds(&self) -> Option<BitSet>
+Method body (preview):
+fn potential_kinds(&self) -> Option<BitSet> {
+    self.kinds.clone()..
+
+Impl body (preview):
+impl<M: Matcher> Matcher for Any<M> {
+  fn match_node_with_env<'tree, D: Doc>(..
+
+--- Match #164 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/ops.rs
+
+DS structure: Or
+Impl signature: impl<P1, P2> Matcher for Or<P1, P2>
+where
+  P1: Matcher,
+  P2: Matcher,
+Type identifiers: TypeIdentifiers { type_variables: Some({"P2": {"Matcher"}, "P1": {"Matcher"}}), concrete_types: {"Or", "Matcher"} }
+
+Method name: potential_kinds
+Method signature: fn potential_kinds(&self) -> Option<BitSet>
+Method body (preview):
+fn potential_kinds(&self) -> Option<BitSet> {
+    let mut set1 = self.pattern1.potential_kinds()?;..
+
+Impl body (preview):
+impl<P1, P2> Matcher for Or<P1, P2>
+where..
+
+--- Match #165 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/ops.rs
+
+DS structure: Op
+Impl signature: impl<M> Matcher for Op<M>
+where
+  M: Matcher,
+Type identifiers: TypeIdentifiers { type_variables: Some({"M": {"Matcher"}}), concrete_types: {"Op", "Matcher"} }
+
+Method name: potential_kinds
+Method signature: fn potential_kinds(&self) -> Option<BitSet>
+Method body (preview):
+fn potential_kinds(&self) -> Option<BitSet> {
+    self.inner.potential_kinds()..
+
+Impl body (preview):
+impl<M> Matcher for Op<M>
+where..
+
+--- Match #166 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/ops.rs
+
+DS structure: str
+Impl signature: impl TsxMatcher for &str
+Type identifiers: TypeIdentifiers { type_variables: None, concrete_types: {"TsxMatcher"} }
+
+Method name: t
+Method signature: fn t(self) -> Pattern
+Method body (preview):
+fn t(self) -> Pattern {
+      Pattern::new(self, Tsx)..
+
+Impl body (preview):
+impl TsxMatcher for &str {
+    fn t(self) -> Pattern {..
+
+--- Match #167 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/pinned.rs
+
+DS structure: PinnedNodeData
+Impl signature: impl<D: Doc + 'static, T> PinnedNodeData<D, T>
+where
+  T: NodeData<D>,
+Type identifiers: TypeIdentifiers { type_variables: Some({"D": {"Doc"}}), concrete_types: {"NodeData", "PinnedNodeData", "Doc"} }
+
+Method name: get_data
+Method signature: pub fn get_data(&mut self) -> &T::Data
+Method body (preview):
+pub fn get_data(&mut self) -> &T::Data {
+    let pin = unsafe { &*(&self.pin as *const Root<D>) as &'static Root<D> };..
+
+Impl body (preview):
+impl<D: Doc + 'static, T> PinnedNodeData<D, T>
+where..
+
+--- Match #168 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/pinned.rs
+
+DS structure: Node
+Impl signature: unsafe impl<D: Doc> NodeData<D> for Node<'static, D>
+Type identifiers: TypeIdentifiers { type_variables: Some({"D": {"Doc"}}), concrete_types: {"NodeData", "Node", "Doc"} }
+
+Method name: get_data
+Method signature: fn get_data(&self) -> &Self::Data
+Method body (preview):
+fn get_data(&self) -> &Self::Data {
+    self..
+
+Impl body (preview):
+unsafe impl<D: Doc> NodeData<D> for Node<'static, D> {
+  type Data = Node<'static, D>;..
+
+--- Match #169 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/pinned.rs
+
+DS structure: NodeMatch
+Impl signature: unsafe impl<D: Doc> NodeData<D> for NodeMatch<'static, D>
+Type identifiers: TypeIdentifiers { type_variables: Some({"D": {"Doc"}}), concrete_types: {"Doc", "NodeMatch", "NodeData"} }
+
+Method name: get_data
+Method signature: fn get_data(&self) -> &Self::Data
+Method body (preview):
+fn get_data(&self) -> &Self::Data {
+    self..
+
+Impl body (preview):
+unsafe impl<D: Doc> NodeData<D> for NodeMatch<'static, D> {
+  type Data = NodeMatch<'static, D>;..
+
+--- Match #170 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/pinned.rs
+
+DS structure: Vec
+Impl signature: unsafe impl<D: Doc> NodeData<D> for Vec<NodeMatch<'static, D>>
+Type identifiers: TypeIdentifiers { type_variables: Some({"D": {"Doc"}}), concrete_types: {"Doc", "Vec", "NodeData", "NodeMatch"} }
+
+Method name: get_data
+Method signature: fn get_data(&self) -> &Self::Data
+Method body (preview):
+fn get_data(&self) -> &Self::Data {
+    self..
+
+Impl body (preview):
+unsafe impl<D: Doc> NodeData<D> for Vec<NodeMatch<'static, D>> {
+  type Data = Vec<NodeMatch<'static, D>>;..
+
+--- Match #171 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/pinned.rs
+
+DS structure: PinnedNodeData
+Impl signature: impl<D: Doc + 'static, T> PinnedNodeData<D, T>
+where
+  T: NodeData<D>,
+Type identifiers: TypeIdentifiers { type_variables: Some({"D": {"Doc"}}), concrete_types: {"PinnedNodeData", "NodeData", "Doc"} }
+
+Method name: into_raw
+Method signature: pub fn into_raw(self) -> (Root<D>, T)
+Method body (preview):
+pub fn into_raw(self) -> (Root<D>, T) {
+    (self.pin, self.data)..
+
+Impl body (preview):
+impl<D: Doc + 'static, T> PinnedNodeData<D, T>
+where..
+
+--- Match #172 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/pinned.rs
+
+DS structure: PinnedNodeData
+Impl signature: impl<T, D: Doc + 'static> PinnedNodeData<D, T>
+Type identifiers: TypeIdentifiers { type_variables: Some({"D": {"Doc"}}), concrete_types: {"T", "PinnedNodeData", "Doc"} }
+
+Method name: new
+Method signature: pub fn new<F>(pin: Root<D>, func: F) -> Self
+  where
+    F: FnOnce(&'static Root<D>) -> T,
+Method body (preview):
+pub fn new<F>(pin: Root<D>, func: F) -> Self
+  where..
+
+Impl body (preview):
+impl<T, D: Doc + 'static> PinnedNodeData<D, T> {
+  pub fn new<F>(pin: Root<D>, func: F) -> Self..
+
+--- Match #173 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/pinned.rs
+
+DS structure: Node
+Impl signature: unsafe impl<D: Doc> NodeData<D> for Node<'static, D>
+Type identifiers: TypeIdentifiers { type_variables: Some({"D": {"Doc"}}), concrete_types: {"Node", "Doc", "NodeData"} }
+
+Method name: visit_nodes
+Method signature: fn visit_nodes<F>(&mut self, mut f: F)
+  where
+    F: FnMut(&mut Node<'_, D>),
+Method body (preview):
+fn visit_nodes<F>(&mut self, mut f: F)
+  where..
+
+Impl body (preview):
+unsafe impl<D: Doc> NodeData<D> for Node<'static, D> {
+  type Data = Node<'static, D>;..
+
+--- Match #174 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/pinned.rs
+
+DS structure: NodeMatch
+Impl signature: unsafe impl<D: Doc> NodeData<D> for NodeMatch<'static, D>
+Type identifiers: TypeIdentifiers { type_variables: Some({"D": {"Doc"}}), concrete_types: {"Doc", "NodeData", "NodeMatch"} }
+
+Method name: visit_nodes
+Method signature: fn visit_nodes<F>(&mut self, mut f: F)
+  where
+    F: FnMut(&mut Node<'_, D>),
+Method body (preview):
+fn visit_nodes<F>(&mut self, mut f: F)
+  where..
+
+Impl body (preview):
+unsafe impl<D: Doc> NodeData<D> for NodeMatch<'static, D> {
+  type Data = NodeMatch<'static, D>;..
+
+--- Match #175 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/pinned.rs
+
+DS structure: Vec
+Impl signature: unsafe impl<D: Doc> NodeData<D> for Vec<NodeMatch<'static, D>>
+Type identifiers: TypeIdentifiers { type_variables: Some({"D": {"Doc"}}), concrete_types: {"NodeData", "Doc", "Vec", "NodeMatch"} }
+
+Method name: visit_nodes
+Method signature: fn visit_nodes<F>(&mut self, mut f: F)
+  where
+    F: FnMut(&mut Node<'_, D>),
+Method body (preview):
+fn visit_nodes<F>(&mut self, mut f: F)
+  where..
+
+Impl body (preview):
+unsafe impl<D: Doc> NodeData<D> for Vec<NodeMatch<'static, D>> {
+  type Data = Vec<NodeMatch<'static, D>>;..
+
+--- Match #176 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/replacer.rs
+
+DS structure: str
+Impl signature: impl<D: Doc> Replacer<D> for str
+Type identifiers: TypeIdentifiers { type_variables: Some({"D": {"Doc"}}), concrete_types: {"Doc", "Replacer"} }
+
+Method name: generate_replacement
+Method signature: fn generate_replacement(&self, nm: &NodeMatch<'_, D>) -> Underlying<D>
+Method body (preview):
+fn generate_replacement(&self, nm: &NodeMatch<'_, D>) -> Underlying<D> {
+    template::gen_replacement(self, nm)..
+
+Impl body (preview):
+impl<D: Doc> Replacer<D> for str {
+  fn generate_replacement(&self, nm: &NodeMatch<'_, D>) -> Underlying<D> {..
+
+--- Match #177 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/replacer.rs
+
+DS structure: Root
+Impl signature: impl<D: Doc> Replacer<D> for Root<D>
+Type identifiers: TypeIdentifiers { type_variables: Some({"D": {"Doc"}}), concrete_types: {"Doc", "Replacer", "Root"} }
+
+Method name: generate_replacement
+Method signature: fn generate_replacement(&self, nm: &NodeMatch<'_, D>) -> Underlying<D>
+Method body (preview):
+fn generate_replacement(&self, nm: &NodeMatch<'_, D>) -> Underlying<D> {
+    structural::gen_replacement(self, nm)..
+
+Impl body (preview):
+impl<D: Doc> Replacer<D> for Root<D> {
+  fn generate_replacement(&self, nm: &NodeMatch<'_, D>) -> Underlying<D> {..
+
+--- Match #178 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/replacer.rs
+
+DS structure: T
+Impl signature: impl<D, T> Replacer<D> for &T
+where
+  D: Doc,
+  T: Replacer<D> + ?Sized,
+Type identifiers: TypeIdentifiers { type_variables: Some({"D": {"Doc"}}), concrete_types: {"Sized", "Replacer", "Doc"} }
+
+Method name: generate_replacement
+Method signature: fn generate_replacement(&self, nm: &NodeMatch<D>) -> Underlying<D>
+Method body (preview):
+fn generate_replacement(&self, nm: &NodeMatch<D>) -> Underlying<D> {
+    (**self).generate_replacement(nm)..
+
+Impl body (preview):
+impl<D, T> Replacer<D> for &T
+where..
+
+--- Match #179 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/replacer.rs
+
+DS structure: Node
+Impl signature: impl<D: Doc> Replacer<D> for Node<'_, D>
+Type identifiers: TypeIdentifiers { type_variables: Some({"D": {"Doc"}}), concrete_types: {"Doc", "Node", "Replacer"} }
+
+Method name: generate_replacement
+Method signature: fn generate_replacement(&self, _nm: &NodeMatch<'_, D>) -> Underlying<D>
+Method body (preview):
+fn generate_replacement(&self, _nm: &NodeMatch<'_, D>) -> Underlying<D> {
+    let range = self.range();..
+
+Impl body (preview):
+impl<D: Doc> Replacer<D> for Node<'_, D> {
+  fn generate_replacement(&self, _nm: &NodeMatch<'_, D>) -> Underlying<D> {..
+
+--- Match #180 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/replacer.rs
+
+DS structure: MetaVarExtract
+Impl signature: impl MetaVarExtract
+Type identifiers: TypeIdentifiers { type_variables: None, concrete_types: {"MetaVarExtract"} }
+
+Method name: used_var
+Method signature: fn used_var(&self) -> &str
+Method body (preview):
+fn used_var(&self) -> &str {
+    match self {..
+
+Impl body (preview):
+impl MetaVarExtract {
+  fn used_var(&self) -> &str {..
+
+--- Match #181 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/replacer/template.rs
+
+DS structure: TemplateFix
+Impl signature: impl<D: Doc> Replacer<D> for TemplateFix
+Type identifiers: TypeIdentifiers { type_variables: Some({"D": {"Doc"}}), concrete_types: {"Doc", "Replacer", "TemplateFix"} }
+
+Method name: generate_replacement
+Method signature: fn generate_replacement(&self, nm: &NodeMatch<'_, D>) -> Underlying<D>
+Method body (preview):
+fn generate_replacement(&self, nm: &NodeMatch<'_, D>) -> Underlying<D> {
+    let leading = nm.get_doc().get_source().get_range(0..nm.range().start);..
+
+Impl body (preview):
+impl<D: Doc> Replacer<D> for TemplateFix {
+  fn generate_replacement(&self, nm: &NodeMatch<'_, D>) -> Underlying<D> {..
+
+--- Match #182 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/replacer/template.rs
+
+DS structure: TemplateFix
+Impl signature: impl TemplateFix
+Type identifiers: TypeIdentifiers { type_variables: None, concrete_types: {"TemplateFix"} }
+
+Method name: try_new
+Method signature: pub fn try_new<L: Language>(template: &str, lang: &L) -> Result<Self, TemplateFixError>
+Method body (preview):
+pub fn try_new<L: Language>(template: &str, lang: &L) -> Result<Self, TemplateFixError> {
+    Ok(create_template(template, lang.meta_var_char(), &[]))..
+
+Impl body (preview):
+impl TemplateFix {
+  pub fn try_new<L: Language>(template: &str, lang: &L) -> Result<Self, TemplateFixError> {..
+
+--- Match #183 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/replacer/template.rs
+
+DS structure: TemplateFix
+Impl signature: impl TemplateFix
+Type identifiers: TypeIdentifiers { type_variables: None, concrete_types: {"TemplateFix"} }
+
+Method name: used_vars
+Method signature: pub fn used_vars(&self) -> HashSet<&str>
+Method body (preview):
+pub fn used_vars(&self) -> HashSet<&str> {
+    let template = match self {..
+
+Impl body (preview):
+impl TemplateFix {
+  pub fn try_new<L: Language>(template: &str, lang: &L) -> Result<Self, TemplateFixError> {..
+
+--- Match #184 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/replacer/template.rs
+
+DS structure: TemplateFix
+Impl signature: impl TemplateFix
+Type identifiers: TypeIdentifiers { type_variables: None, concrete_types: {"TemplateFix"} }
+
+Method name: with_transform
+Method signature: pub fn with_transform<L: Language>(tpl: &str, lang: &L, trans: &[String]) -> Self
+Method body (preview):
+pub fn with_transform<L: Language>(tpl: &str, lang: &L, trans: &[String]) -> Self {
+    create_template(tpl, lang.meta_var_char(), trans)..
+
+Impl body (preview):
+impl TemplateFix {
+  pub fn try_new<L: Language>(template: &str, lang: &L) -> Result<Self, TemplateFixError> {..
+
+--- Match #185 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/source.rs
+
+DS structure: String
+Impl signature: impl Content for String
+Type identifiers: TypeIdentifiers { type_variables: None, concrete_types: {"String", "Content"} }
+
+Method name: decode_str
+Method signature: fn decode_str(src: &str) -> Cow<'_, [Self::Underlying]>
+Method body (preview):
+fn decode_str(src: &str) -> Cow<'_, [Self::Underlying]> {
+    Cow::Borrowed(src.as_bytes())..
+
+Impl body (preview):
+impl Content for String {
+  type Underlying = u8;..
+
+--- Match #186 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/source.rs
+
+DS structure: String
+Impl signature: impl Content for String
+Type identifiers: TypeIdentifiers { type_variables: None, concrete_types: {"String", "Content"} }
+
+Method name: encode_bytes
+Method signature: fn encode_bytes(bytes: &[Self::Underlying]) -> Cow<'_, str>
+Method body (preview):
+fn encode_bytes(bytes: &[Self::Underlying]) -> Cow<'_, str> {
+    String::from_utf8_lossy(bytes)..
+
+Impl body (preview):
+impl Content for String {
+  type Underlying = u8;..
+
+--- Match #187 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/source.rs
+
+DS structure: String
+Impl signature: impl Content for String
+Type identifiers: TypeIdentifiers { type_variables: None, concrete_types: {"Content", "String"} }
+
+Method name: get_char_column
+Method signature: fn get_char_column(&self, _col: usize, offset: usize) -> usize
+Method body (preview):
+fn get_char_column(&self, _col: usize, offset: usize) -> usize {
+    let src = self.as_bytes();..
+
+Impl body (preview):
+impl Content for String {
+  type Underlying = u8;..
+
+--- Match #188 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/source.rs
+
+DS structure: String
+Impl signature: impl Content for String
+Type identifiers: TypeIdentifiers { type_variables: None, concrete_types: {"Content", "String"} }
+
+Method name: get_range
+Method signature: fn get_range(&self, range: Range<usize>) -> &[Self::Underlying]
+Method body (preview):
+fn get_range(&self, range: Range<usize>) -> &[Self::Underlying] {
+    &self.as_bytes()[range]..
+
+Impl body (preview):
+impl Content for String {
+  type Underlying = u8;..
+
+--- Match #189 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/tree_sitter/mod.rs
+
+DS structure: String
+Impl signature: impl ContentExt for String
+Type identifiers: TypeIdentifiers { type_variables: None, concrete_types: {"ContentExt", "String"} }
+
+Method name: accept_edit
+Method signature: fn accept_edit(&mut self, edit: &Edit<Self>) -> InputEdit
+Method body (preview):
+fn accept_edit(&mut self, edit: &Edit<Self>) -> InputEdit {
+    let start_byte = edit.position;..
+
+Impl body (preview):
+impl ContentExt for String {
+  fn accept_edit(&mut self, edit: &Edit<Self>) -> InputEdit {..
+
+--- Match #190 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/tree_sitter/mod.rs
+
+DS structure: Node
+Impl signature: impl<'r> SgNode<'r> for Node<'r>
+Type identifiers: TypeIdentifiers { type_variables: None, concrete_types: {"SgNode", "Node"} }
+
+Method name: ancestors
+Method signature: fn ancestors(&self, root: Self) -> impl Iterator<Item = Self>
+Method body (preview):
+fn ancestors(&self, root: Self) -> impl Iterator<Item = Self> {
+    let mut ancestor = Some(root);..
+
+Impl body (preview):
+impl<'r> SgNode<'r> for Node<'r> {
+  fn parent(&self) -> Option<Self> {..
+
+--- Match #191 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/tree_sitter/mod.rs
+
+DS structure: Node
+Impl signature: impl<'r> SgNode<'r> for Node<'r>
+Type identifiers: TypeIdentifiers { type_variables: None, concrete_types: {"SgNode", "Node"} }
+
+Method name: child
+Method signature: fn child(&self, nth: usize) -> Option<Self>
+Method body (preview):
+fn child(&self, nth: usize) -> Option<Self> {
+    Node::child(self, nth as u32)..
+
+Impl body (preview):
+impl<'r> SgNode<'r> for Node<'r> {
+  fn parent(&self) -> Option<Self> {..
+
+--- Match #192 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/tree_sitter/mod.rs
+
+DS structure: Node
+Impl signature: impl<'r> SgNode<'r> for Node<'r>
+Type identifiers: TypeIdentifiers { type_variables: None, concrete_types: {"SgNode", "Node"} }
+
+Method name: child_by_field_id
+Method signature: fn child_by_field_id(&self, field_id: u16) -> Option<Self>
+Method body (preview):
+fn child_by_field_id(&self, field_id: u16) -> Option<Self> {
+    Node::child_by_field_id(self, field_id)..
+
+Impl body (preview):
+impl<'r> SgNode<'r> for Node<'r> {
+  fn parent(&self) -> Option<Self> {..
+
+--- Match #193 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/tree_sitter/mod.rs
+
+DS structure: Node
+Impl signature: impl<'r> SgNode<'r> for Node<'r>
+Type identifiers: TypeIdentifiers { type_variables: None, concrete_types: {"Node", "SgNode"} }
+
+Method name: children
+Method signature: fn children(&self) -> impl ExactSizeIterator<Item = Self>
+Method body (preview):
+fn children(&self) -> impl ExactSizeIterator<Item = Self> {
+    let mut cursor = self.walk();..
+
+Impl body (preview):
+impl<'r> SgNode<'r> for Node<'r> {
+  fn parent(&self) -> Option<Self> {..
+
+--- Match #194 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/tree_sitter/mod.rs
+
+DS structure: Node
+Impl signature: impl<'r> SgNode<'r> for Node<'r>
+Type identifiers: TypeIdentifiers { type_variables: None, concrete_types: {"SgNode", "Node"} }
+
+Method name: dfs
+Method signature: fn dfs(&self) -> impl Iterator<Item = Self>
+Method body (preview):
+fn dfs(&self) -> impl Iterator<Item = Self> {
+    TsPre::new(self)..
+
+Impl body (preview):
+impl<'r> SgNode<'r> for Node<'r> {
+  fn parent(&self) -> Option<Self> {..
+
+--- Match #195 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/tree_sitter/mod.rs
+
+DS structure: crate
+Impl signature: impl<'r, L: LanguageExt> crate::Node<'r, StrDoc<L>>
+Type identifiers: TypeIdentifiers { type_variables: Some({"L": {"LanguageExt"}}), concrete_types: {"LanguageExt", "Node", "StrDoc"} }
+
+Method name: display_context
+Method signature: pub fn display_context(&self, before: usize, after: usize) -> DisplayContext<'r>
+Method body (preview):
+pub fn display_context(&self, before: usize, after: usize) -> DisplayContext<'r> {
+    let source = self.root.doc.get_source().as_str();..
+
+Impl body (preview):
+impl<'r, L: LanguageExt> crate::Node<'r, StrDoc<L>> {
+  #[doc(hidden)]..
+
+--- Match #196 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/tree_sitter/mod.rs
+
+DS structure: StrDoc
+Impl signature: impl<L: LanguageExt> Doc for StrDoc<L>
+Type identifiers: TypeIdentifiers { type_variables: Some({"L": {"LanguageExt"}}), concrete_types: {"Doc", "StrDoc", "LanguageExt"} }
+
+Method name: do_edit
+Method signature: fn do_edit(&mut self, edit: &Edit<Self::Source>) -> Result<(), String>
+Method body (preview):
+fn do_edit(&mut self, edit: &Edit<Self::Source>) -> Result<(), String> {
+    let source = &mut self.src;..
+
+Impl body (preview):
+impl<L: LanguageExt> Doc for StrDoc<L> {
+  type Source = String;..
+
+--- Match #197 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/tree_sitter/mod.rs
+
+DS structure: Node
+Impl signature: impl<'r> SgNode<'r> for Node<'r>
+Type identifiers: TypeIdentifiers { type_variables: None, concrete_types: {"Node", "SgNode"} }
+
+Method name: end_pos
+Method signature: fn end_pos(&self) -> Position
+Method body (preview):
+fn end_pos(&self) -> Position {
+    let pos = self.end_position();..
+
+Impl body (preview):
+impl<'r> SgNode<'r> for Node<'r> {
+  fn parent(&self) -> Option<Self> {..
+
+--- Match #198 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/tree_sitter/mod.rs
+
+DS structure: Node
+Impl signature: impl<'r> SgNode<'r> for Node<'r>
+Type identifiers: TypeIdentifiers { type_variables: None, concrete_types: {"Node", "SgNode"} }
+
+Method name: field
+Method signature: fn field(&self, name: &str) -> Option<Self>
+Method body (preview):
+fn field(&self, name: &str) -> Option<Self> {
+    self.child_by_field_name(name)..
+
+Impl body (preview):
+impl<'r> SgNode<'r> for Node<'r> {
+  fn parent(&self) -> Option<Self> {..
+
+--- Match #199 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/tree_sitter/mod.rs
+
+DS structure: Node
+Impl signature: impl<'r> SgNode<'r> for Node<'r>
+Type identifiers: TypeIdentifiers { type_variables: None, concrete_types: {"SgNode", "Node"} }
+
+Method name: field_children
+Method signature: fn field_children(&self, field_id: Option<u16>) -> impl Iterator<Item = Self>
+Method body (preview):
+fn field_children(&self, field_id: Option<u16>) -> impl Iterator<Item = Self> {
+    let field_id = field_id.and_then(NonZero::new);..
+
+Impl body (preview):
+impl<'r> SgNode<'r> for Node<'r> {
+  fn parent(&self) -> Option<Self> {..
+
+--- Match #200 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/tree_sitter/mod.rs
+
+DS structure: AstGrep
+Impl signature: impl<L: LanguageExt> AstGrep<StrDoc<L>>
+Type identifiers: TypeIdentifiers { type_variables: Some({"L": {"LanguageExt"}}), concrete_types: {"AstGrep", "StrDoc", "LanguageExt"} }
+
+Method name: generate
+Method signature: pub fn generate(self) -> String
+Method body (preview):
+pub fn generate(self) -> String {
+    self.doc.src..
+
+Impl body (preview):
+impl<L: LanguageExt> AstGrep<StrDoc<L>> {
+  pub fn new<S: AsRef<str>>(src: S, lang: L) -> Self {..
+
+--- Match #201 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/tree_sitter/mod.rs
+
+DS structure: Root
+Impl signature: impl<L: LanguageExt> Root<StrDoc<L>>
+Type identifiers: TypeIdentifiers { type_variables: Some({"L": {"LanguageExt"}}), concrete_types: {"LanguageExt", "StrDoc", "Root"} }
+
+Method name: get_injections
+Method signature: pub fn get_injections<F: Fn(&str) -> Option<L>>(&self, get_lang: F) -> Vec<Self>
+Method body (preview):
+pub fn get_injections<F: Fn(&str) -> Option<L>>(&self, get_lang: F) -> Vec<Self> {
+    let root = self.root();..
+
+Impl body (preview):
+impl<L: LanguageExt> Root<StrDoc<L>> {
+  pub fn str(src: &str, lang: L) -> Self {..
+
+--- Match #202 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/tree_sitter/mod.rs
+
+DS structure: StrDoc
+Impl signature: impl<L: LanguageExt> Doc for StrDoc<L>
+Type identifiers: TypeIdentifiers { type_variables: Some({"L": {"LanguageExt"}}), concrete_types: {"LanguageExt", "Doc", "StrDoc"} }
+
+Method name: get_lang
+Method signature: fn get_lang(&self) -> &Self::Lang
+Method body (preview):
+fn get_lang(&self) -> &Self::Lang {
+    &self.lang..
+
+Impl body (preview):
+impl<L: LanguageExt> Doc for StrDoc<L> {
+  type Source = String;..
+
+--- Match #203 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/tree_sitter/mod.rs
+
+DS structure: StrDoc
+Impl signature: impl<L: LanguageExt> Doc for StrDoc<L>
+Type identifiers: TypeIdentifiers { type_variables: Some({"L": {"LanguageExt"}}), concrete_types: {"Doc", "LanguageExt", "StrDoc"} }
+
+Method name: get_node_text
+Method signature: fn get_node_text<'a>(&'a self, node: &Self::Node<'a>) -> Cow<'a, str>
+Method body (preview):
+fn get_node_text<'a>(&'a self, node: &Self::Node<'a>) -> Cow<'a, str> {
+    Cow::Borrowed(..
+
+Impl body (preview):
+impl<L: LanguageExt> Doc for StrDoc<L> {
+  type Source = String;..
+
+--- Match #204 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/tree_sitter/mod.rs
+
+DS structure: StrDoc
+Impl signature: impl<L: LanguageExt> Doc for StrDoc<L>
+Type identifiers: TypeIdentifiers { type_variables: Some({"L": {"LanguageExt"}}), concrete_types: {"StrDoc", "Doc", "LanguageExt"} }
+
+Method name: get_source
+Method signature: fn get_source(&self) -> &Self::Source
+Method body (preview):
+fn get_source(&self) -> &Self::Source {
+    &self.src..
+
+Impl body (preview):
+impl<L: LanguageExt> Doc for StrDoc<L> {
+  type Source = String;..
+
+--- Match #205 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/tree_sitter/mod.rs
+
+DS structure: Root
+Impl signature: impl<L: LanguageExt> Root<StrDoc<L>>
+Type identifiers: TypeIdentifiers { type_variables: Some({"L": {"LanguageExt"}}), concrete_types: {"LanguageExt", "StrDoc", "Root"} }
+
+Method name: get_text
+Method signature: pub fn get_text(&self) -> &str
+Method body (preview):
+pub fn get_text(&self) -> &str {
+    &self.doc.src..
+
+Impl body (preview):
+impl<L: LanguageExt> Root<StrDoc<L>> {
+  pub fn str(src: &str, lang: L) -> Self {..
+
+--- Match #206 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/tree_sitter/mod.rs
+
+DS structure: Node
+Impl signature: impl<'r> SgNode<'r> for Node<'r>
+Type identifiers: TypeIdentifiers { type_variables: None, concrete_types: {"Node", "SgNode"} }
+
+Method name: is_error
+Method signature: fn is_error(&self) -> bool
+Method body (preview):
+fn is_error(&self) -> bool {
+    Node::is_error(self)..
+
+Impl body (preview):
+impl<'r> SgNode<'r> for Node<'r> {
+  fn parent(&self) -> Option<Self> {..
+
+--- Match #207 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/tree_sitter/mod.rs
+
+DS structure: Node
+Impl signature: impl<'r> SgNode<'r> for Node<'r>
+Type identifiers: TypeIdentifiers { type_variables: None, concrete_types: {"SgNode", "Node"} }
+
+Method name: is_leaf
+Method signature: fn is_leaf(&self) -> bool
+Method body (preview):
+fn is_leaf(&self) -> bool {
+    self.child_count() == 0..
+
+Impl body (preview):
+impl<'r> SgNode<'r> for Node<'r> {
+  fn parent(&self) -> Option<Self> {..
+
+--- Match #208 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/tree_sitter/mod.rs
+
+DS structure: Node
+Impl signature: impl<'r> SgNode<'r> for Node<'r>
+Type identifiers: TypeIdentifiers { type_variables: None, concrete_types: {"SgNode", "Node"} }
+
+Method name: is_missing
+Method signature: fn is_missing(&self) -> bool
+Method body (preview):
+fn is_missing(&self) -> bool {
+    Node::is_missing(self)..
+
+Impl body (preview):
+impl<'r> SgNode<'r> for Node<'r> {
+  fn parent(&self) -> Option<Self> {..
+
+--- Match #209 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/tree_sitter/mod.rs
+
+DS structure: Node
+Impl signature: impl<'r> SgNode<'r> for Node<'r>
+Type identifiers: TypeIdentifiers { type_variables: None, concrete_types: {"Node", "SgNode"} }
+
+Method name: is_named
+Method signature: fn is_named(&self) -> bool
+Method body (preview):
+fn is_named(&self) -> bool {
+    Node::is_named(self)..
+
+Impl body (preview):
+impl<'r> SgNode<'r> for Node<'r> {
+  fn parent(&self) -> Option<Self> {..
+
+--- Match #210 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/tree_sitter/mod.rs
+
+DS structure: Node
+Impl signature: impl<'r> SgNode<'r> for Node<'r>
+Type identifiers: TypeIdentifiers { type_variables: None, concrete_types: {"SgNode", "Node"} }
+
+Method name: is_named_leaf
+Method signature: fn is_named_leaf(&self) -> bool
+Method body (preview):
+fn is_named_leaf(&self) -> bool {
+    self.named_child_count() == 0..
+
+Impl body (preview):
+impl<'r> SgNode<'r> for Node<'r> {
+  fn parent(&self) -> Option<Self> {..
+
+--- Match #211 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/tree_sitter/mod.rs
+
+DS structure: Node
+Impl signature: impl<'r> SgNode<'r> for Node<'r>
+Type identifiers: TypeIdentifiers { type_variables: None, concrete_types: {"Node", "SgNode"} }
+
+Method name: kind
+Method signature: fn kind(&self) -> Cow<'_, str>
+Method body (preview):
+fn kind(&self) -> Cow<'_, str> {
+    Cow::Borrowed(Node::kind(self))..
+
+Impl body (preview):
+impl<'r> SgNode<'r> for Node<'r> {
+  fn parent(&self) -> Option<Self> {..
+
+--- Match #212 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/tree_sitter/mod.rs
+
+DS structure: Node
+Impl signature: impl<'r> SgNode<'r> for Node<'r>
+Type identifiers: TypeIdentifiers { type_variables: None, concrete_types: {"SgNode", "Node"} }
+
+Method name: kind_id
+Method signature: fn kind_id(&self) -> KindId
+Method body (preview):
+fn kind_id(&self) -> KindId {
+    Node::kind_id(self)..
+
+Impl body (preview):
+impl<'r> SgNode<'r> for Node<'r> {
+  fn parent(&self) -> Option<Self> {..
+
+--- Match #213 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/tree_sitter/mod.rs
+
+DS structure: NodeWalker
+Impl signature: impl ExactSizeIterator for NodeWalker<'_>
+Type identifiers: TypeIdentifiers { type_variables: None, concrete_types: {"NodeWalker", "ExactSizeIterator"} }
+
+Method name: len
+Method signature: fn len(&self) -> usize
+Method body (preview):
+fn len(&self) -> usize {
+    self.count..
+
+Impl body (preview):
+impl ExactSizeIterator for NodeWalker<'_> {
+  fn len(&self) -> usize {..
+
+--- Match #214 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/tree_sitter/mod.rs
+
+DS structure: StrDoc
+Impl signature: impl<L: LanguageExt> StrDoc<L>
+Type identifiers: TypeIdentifiers { type_variables: Some({"L": {"LanguageExt"}}), concrete_types: {"LanguageExt", "StrDoc"} }
+
+Method name: new
+Method signature: pub fn new(src: &str, lang: L) -> Self
+Method body (preview):
+pub fn new(src: &str, lang: L) -> Self {
+    Self::try_new(src, lang).expect("Parser tree error")..
+
+Impl body (preview):
+impl<L: LanguageExt> StrDoc<L> {
+  pub fn try_new(src: &str, lang: L) -> Result<Self, String> {..
+
+--- Match #215 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/tree_sitter/mod.rs
+
+DS structure: AstGrep
+Impl signature: impl<L: LanguageExt> AstGrep<StrDoc<L>>
+Type identifiers: TypeIdentifiers { type_variables: Some({"L": {"LanguageExt"}}), concrete_types: {"AstGrep", "LanguageExt", "StrDoc"} }
+
+Method name: new
+Method signature: pub fn new<S: AsRef<str>>(src: S, lang: L) -> Self
+Method body (preview):
+pub fn new<S: AsRef<str>>(src: S, lang: L) -> Self {
+    Root::str(src.as_ref(), lang)..
+
+Impl body (preview):
+impl<L: LanguageExt> AstGrep<StrDoc<L>> {
+  pub fn new<S: AsRef<str>>(src: S, lang: L) -> Self {..
+
+--- Match #216 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/tree_sitter/mod.rs
+
+DS structure: NodeWalker
+Impl signature: impl<'tree> Iterator for NodeWalker<'tree>
+Type identifiers: TypeIdentifiers { type_variables: None, concrete_types: {"Iterator", "NodeWalker"} }
+
+Method name: next
+Method signature: fn next(&mut self) -> Option<Self::Item>
+Method body (preview):
+fn next(&mut self) -> Option<Self::Item> {
+    if self.count == 0 {..
+
+Impl body (preview):
+impl<'tree> Iterator for NodeWalker<'tree> {
+  type Item = Node<'tree>;..
+
+--- Match #217 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/tree_sitter/mod.rs
+
+DS structure: Node
+Impl signature: impl<'r> SgNode<'r> for Node<'r>
+Type identifiers: TypeIdentifiers { type_variables: None, concrete_types: {"Node", "SgNode"} }
+
+Method name: next
+Method signature: fn next(&self) -> Option<Self>
+Method body (preview):
+fn next(&self) -> Option<Self> {
+    self.next_sibling()..
+
+Impl body (preview):
+impl<'r> SgNode<'r> for Node<'r> {
+  fn parent(&self) -> Option<Self> {..
+
+--- Match #218 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/tree_sitter/mod.rs
+
+DS structure: Node
+Impl signature: impl<'r> SgNode<'r> for Node<'r>
+Type identifiers: TypeIdentifiers { type_variables: None, concrete_types: {"SgNode", "Node"} }
+
+Method name: next_all
+Method signature: fn next_all(&self) -> impl Iterator<Item = Self>
+Method body (preview):
+fn next_all(&self) -> impl Iterator<Item = Self> {
+    // if root is none, use self as fallback to return a type-stable Iterator..
+
+Impl body (preview):
+impl<'r> SgNode<'r> for Node<'r> {
+  fn parent(&self) -> Option<Self> {..
+
+--- Match #219 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/tree_sitter/mod.rs
+
+DS structure: Node
+Impl signature: impl<'r> SgNode<'r> for Node<'r>
+Type identifiers: TypeIdentifiers { type_variables: None, concrete_types: {"SgNode", "Node"} }
+
+Method name: node_id
+Method signature: fn node_id(&self) -> usize
+Method body (preview):
+fn node_id(&self) -> usize {
+    self.id()..
+
+Impl body (preview):
+impl<'r> SgNode<'r> for Node<'r> {
+  fn parent(&self) -> Option<Self> {..
+
+--- Match #220 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/tree_sitter/mod.rs
+
+DS structure: Node
+Impl signature: impl<'r> SgNode<'r> for Node<'r>
+Type identifiers: TypeIdentifiers { type_variables: None, concrete_types: {"SgNode", "Node"} }
+
+Method name: parent
+Method signature: fn parent(&self) -> Option<Self>
+Method body (preview):
+fn parent(&self) -> Option<Self> {
+    Node::parent(self)..
+
+Impl body (preview):
+impl<'r> SgNode<'r> for Node<'r> {
+  fn parent(&self) -> Option<Self> {..
+
+--- Match #221 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/tree_sitter/mod.rs
+
+DS structure: StrDoc
+Impl signature: impl<L: LanguageExt> StrDoc<L>
+Type identifiers: TypeIdentifiers { type_variables: Some({"L": {"LanguageExt"}}), concrete_types: {"LanguageExt", "StrDoc"} }
+
+Method name: parse
+Method signature: fn parse(&self, old_tree: Option<&Tree>) -> Result<Tree, TSParseError>
+Method body (preview):
+fn parse(&self, old_tree: Option<&Tree>) -> Result<Tree, TSParseError> {
+    let source = self.get_source();..
+
+Impl body (preview):
+impl<L: LanguageExt> StrDoc<L> {
+  pub fn try_new(src: &str, lang: L) -> Result<Self, String> {..
+
+--- Match #222 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/tree_sitter/mod.rs
+
+DS structure: Node
+Impl signature: impl<'r> SgNode<'r> for Node<'r>
+Type identifiers: TypeIdentifiers { type_variables: None, concrete_types: {"SgNode", "Node"} }
+
+Method name: prev
+Method signature: fn prev(&self) -> Option<Self>
+Method body (preview):
+fn prev(&self) -> Option<Self> {
+    self.prev_sibling()..
+
+Impl body (preview):
+impl<'r> SgNode<'r> for Node<'r> {
+  fn parent(&self) -> Option<Self> {..
+
+--- Match #223 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/tree_sitter/mod.rs
+
+DS structure: Node
+Impl signature: impl<'r> SgNode<'r> for Node<'r>
+Type identifiers: TypeIdentifiers { type_variables: None, concrete_types: {"Node", "SgNode"} }
+
+Method name: prev_all
+Method signature: fn prev_all(&self) -> impl Iterator<Item = Self>
+Method body (preview):
+fn prev_all(&self) -> impl Iterator<Item = Self> {
+    // if root is none, use self as fallback to return a type-stable Iterator..
+
+Impl body (preview):
+impl<'r> SgNode<'r> for Node<'r> {
+  fn parent(&self) -> Option<Self> {..
+
+--- Match #224 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/tree_sitter/mod.rs
+
+DS structure: Node
+Impl signature: impl<'r> SgNode<'r> for Node<'r>
+Type identifiers: TypeIdentifiers { type_variables: None, concrete_types: {"SgNode", "Node"} }
+
+Method name: range
+Method signature: fn range(&self) -> std::ops::Range<usize>
+Method body (preview):
+fn range(&self) -> std::ops::Range<usize> {
+    self.start_byte()..self.end_byte()..
+
+Impl body (preview):
+impl<'r> SgNode<'r> for Node<'r> {
+  fn parent(&self) -> Option<Self> {..
+
+--- Match #225 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/tree_sitter/mod.rs
+
+DS structure: crate
+Impl signature: impl<'r, L: LanguageExt> crate::Node<'r, StrDoc<L>>
+Type identifiers: TypeIdentifiers { type_variables: Some({"L": {"LanguageExt"}}), concrete_types: {"LanguageExt", "StrDoc", "Node"} }
+
+Method name: replace_all
+Method signature: pub fn replace_all<M: Matcher, R: Replacer<StrDoc<L>>>(
+    &self,
+    matcher: M,
+    replacer: R,
+  ) -> Vec<Edit<String>>
+Method body (preview):
+pub fn replace_all<M: Matcher, R: Replacer<StrDoc<L>>>(
+    &self,..
+
+Impl body (preview):
+impl<'r, L: LanguageExt> crate::Node<'r, StrDoc<L>> {
+  #[doc(hidden)]..
+
+--- Match #226 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/tree_sitter/mod.rs
+
+DS structure: StrDoc
+Impl signature: impl<L: LanguageExt> Doc for StrDoc<L>
+Type identifiers: TypeIdentifiers { type_variables: Some({"L": {"LanguageExt"}}), concrete_types: {"LanguageExt", "StrDoc", "Doc"} }
+
+Method name: root_node
+Method signature: fn root_node(&self) -> Node<'_>
+Method body (preview):
+fn root_node(&self) -> Node<'_> {
+    self.tree.root_node()..
+
+Impl body (preview):
+impl<L: LanguageExt> Doc for StrDoc<L> {
+  type Source = String;..
+
+--- Match #227 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/tree_sitter/mod.rs
+
+DS structure: AstGrep
+Impl signature: impl<L: LanguageExt> AstGrep<StrDoc<L>>
+Type identifiers: TypeIdentifiers { type_variables: Some({"L": {"LanguageExt"}}), concrete_types: {"LanguageExt", "AstGrep", "StrDoc"} }
+
+Method name: source
+Method signature: pub fn source(&self) -> &str
+Method body (preview):
+pub fn source(&self) -> &str {
+    self.doc.get_source().as_str()..
+
+Impl body (preview):
+impl<L: LanguageExt> AstGrep<StrDoc<L>> {
+  pub fn new<S: AsRef<str>>(src: S, lang: L) -> Self {..
+
+--- Match #228 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/tree_sitter/mod.rs
+
+DS structure: Node
+Impl signature: impl<'r> SgNode<'r> for Node<'r>
+Type identifiers: TypeIdentifiers { type_variables: None, concrete_types: {"Node", "SgNode"} }
+
+Method name: start_pos
+Method signature: fn start_pos(&self) -> Position
+Method body (preview):
+fn start_pos(&self) -> Position {
+    let pos = self.start_position();..
+
+Impl body (preview):
+impl<'r> SgNode<'r> for Node<'r> {
+  fn parent(&self) -> Option<Self> {..
+
+--- Match #229 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/tree_sitter/mod.rs
+
+DS structure: Root
+Impl signature: impl<L: LanguageExt> Root<StrDoc<L>>
+Type identifiers: TypeIdentifiers { type_variables: Some({"L": {"LanguageExt"}}), concrete_types: {"LanguageExt", "Root", "StrDoc"} }
+
+Method name: str
+Method signature: pub fn str(src: &str, lang: L) -> Self
+Method body (preview):
+pub fn str(src: &str, lang: L) -> Self {
+    Self::try_new(src, lang).expect("should parse")..
+
+Impl body (preview):
+impl<L: LanguageExt> Root<StrDoc<L>> {
+  pub fn str(src: &str, lang: L) -> Self {..
+
+--- Match #230 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/tree_sitter/mod.rs
+
+DS structure: StrDoc
+Impl signature: impl<L: LanguageExt> StrDoc<L>
+Type identifiers: TypeIdentifiers { type_variables: Some({"L": {"LanguageExt"}}), concrete_types: {"LanguageExt", "StrDoc"} }
+
+Method name: try_new
+Method signature: pub fn try_new(src: &str, lang: L) -> Result<Self, String>
+Method body (preview):
+pub fn try_new(src: &str, lang: L) -> Result<Self, String> {
+    let src = src.to_string();..
+
+Impl body (preview):
+impl<L: LanguageExt> StrDoc<L> {
+  pub fn try_new(src: &str, lang: L) -> Result<Self, String> {..
+
+--- Match #231 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/tree_sitter/mod.rs
+
+DS structure: Root
+Impl signature: impl<L: LanguageExt> Root<StrDoc<L>>
+Type identifiers: TypeIdentifiers { type_variables: Some({"L": {"LanguageExt"}}), concrete_types: {"Root", "StrDoc", "LanguageExt"} }
+
+Method name: try_new
+Method signature: pub fn try_new(src: &str, lang: L) -> Result<Self, String>
+Method body (preview):
+pub fn try_new(src: &str, lang: L) -> Result<Self, String> {
+    let doc = StrDoc::try_new(src, lang)?;..
+
+Impl body (preview):
+impl<L: LanguageExt> Root<StrDoc<L>> {
+  pub fn str(src: &str, lang: L) -> Self {..
+
+--- Match #232 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/tree_sitter/traversal.rs
+
+DS structure: Visitor
+Impl signature: impl<M, A> Visitor<M, A>
+Type identifiers: TypeIdentifiers { type_variables: None, concrete_types: {"M", "A", "Visitor"} }
+
+Method name: algorithm
+Method signature: pub fn algorithm<Algo>(self) -> Visitor<M, Algo>
+Method body (preview):
+pub fn algorithm<Algo>(self) -> Visitor<M, Algo> {
+    Visitor {..
+
+Impl body (preview):
+impl<M, A> Visitor<M, A> {
+  pub fn algorithm<Algo>(self) -> Visitor<M, Algo> {..
+
+--- Match #233 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/tree_sitter/traversal.rs
+
+DS structure: Pre
+Impl signature: impl<'t, L: LanguageExt> Traversal<'t, StrDoc<L>> for Pre<'t, L>
+Type identifiers: TypeIdentifiers { type_variables: Some({"L": {"LanguageExt"}}), concrete_types: {"Traversal", "Pre", "LanguageExt", "StrDoc"} }
+
+Method name: calibrate_for_match
+Method signature: fn calibrate_for_match(&mut self, depth: Option<usize>)
+Method body (preview):
+fn calibrate_for_match(&mut self, depth: Option<usize>) {
+    // not entering the node, ignore..
+
+Impl body (preview):
+impl<'t, L: LanguageExt> Traversal<'t, StrDoc<L>> for Pre<'t, L> {
+  fn calibrate_for_match(&mut self, depth: Option<usize>) {..
+
+--- Match #234 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/tree_sitter/traversal.rs
+
+DS structure: Post
+Impl signature: impl<'t, L: LanguageExt> Traversal<'t, StrDoc<L>> for Post<'t, L>
+Type identifiers: TypeIdentifiers { type_variables: Some({"L": {"LanguageExt"}}), concrete_types: {"LanguageExt", "Traversal", "StrDoc", "Post"} }
+
+Method name: calibrate_for_match
+Method signature: fn calibrate_for_match(&mut self, depth: Option<usize>)
+Method body (preview):
+fn calibrate_for_match(&mut self, depth: Option<usize>) {
+    if let Some(depth) = depth {..
+
+Impl body (preview):
+impl<'t, L: LanguageExt> Traversal<'t, StrDoc<L>> for Post<'t, L> {
+  fn calibrate_for_match(&mut self, depth: Option<usize>) {..
+
+--- Match #235 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/tree_sitter/traversal.rs
+
+DS structure: Pre
+Impl signature: impl<'t, L: LanguageExt> Traversal<'t, StrDoc<L>> for Pre<'t, L>
+Type identifiers: TypeIdentifiers { type_variables: Some({"L": {"LanguageExt"}}), concrete_types: {"Traversal", "StrDoc", "Pre", "LanguageExt"} }
+
+Method name: get_current_depth
+Method signature: fn get_current_depth(&self) -> usize
+Method body (preview):
+fn get_current_depth(&self) -> usize {
+    self.inner.current_depth..
+
+Impl body (preview):
+impl<'t, L: LanguageExt> Traversal<'t, StrDoc<L>> for Pre<'t, L> {
+  fn calibrate_for_match(&mut self, depth: Option<usize>) {..
+
+--- Match #236 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/tree_sitter/traversal.rs
+
+DS structure: Post
+Impl signature: impl<'t, L: LanguageExt> Traversal<'t, StrDoc<L>> for Post<'t, L>
+Type identifiers: TypeIdentifiers { type_variables: Some({"L": {"LanguageExt"}}), concrete_types: {"Post", "Traversal", "LanguageExt", "StrDoc"} }
+
+Method name: get_current_depth
+Method signature: fn get_current_depth(&self) -> usize
+Method body (preview):
+fn get_current_depth(&self) -> usize {
+    self.current_depth..
+
+Impl body (preview):
+impl<'t, L: LanguageExt> Traversal<'t, StrDoc<L>> for Post<'t, L> {
+  fn calibrate_for_match(&mut self, depth: Option<usize>) {..
+
+--- Match #237 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/tree_sitter/traversal.rs
+
+DS structure: Visit
+Impl signature: impl<'t, D, T, M> Visit<'t, D, T, M>
+where
+  D: Doc + 't,
+  T: Traversal<'t, D>,
+  M: Matcher,
+Type identifiers: TypeIdentifiers { type_variables: Some({"D": {"Doc"}, "M": {"Matcher"}}), concrete_types: {"Matcher", "Visit", "Traversal", "Doc"} }
+
+Method name: mark_match
+Method signature: fn mark_match(&mut self, depth: Option<usize>)
+Method body (preview):
+fn mark_match(&mut self, depth: Option<usize>) {
+    if !self.reentrant {..
+
+Impl body (preview):
+impl<'t, D, T, M> Visit<'t, D, T, M>
+where..
+
+--- Match #238 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/tree_sitter/traversal.rs
+
+DS structure: Visitor
+Impl signature: impl<M, A> Visitor<M, A>
+Type identifiers: TypeIdentifiers { type_variables: None, concrete_types: {"Visitor", "A", "M"} }
+
+Method name: named_only
+Method signature: pub fn named_only(self, named_only: bool) -> Self
+Method body (preview):
+pub fn named_only(self, named_only: bool) -> Self {
+    Self { named_only, ..self }..
+
+Impl body (preview):
+impl<M, A> Visitor<M, A> {
+  pub fn algorithm<Algo>(self) -> Visitor<M, Algo> {..
+
+--- Match #239 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/tree_sitter/traversal.rs
+
+DS structure: Visitor
+Impl signature: impl<M> Visitor<M>
+Type identifiers: TypeIdentifiers { type_variables: None, concrete_types: {"M", "Visitor"} }
+
+Method name: new
+Method signature: pub fn new(matcher: M) -> Visitor<M>
+Method body (preview):
+pub fn new(matcher: M) -> Visitor<M> {
+    Visitor {..
+
+Impl body (preview):
+impl<M> Visitor<M> {
+  pub fn new(matcher: M) -> Visitor<M> {..
+
+--- Match #240 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/tree_sitter/traversal.rs
+
+DS structure: TsPre
+Impl signature: impl<'tree> TsPre<'tree>
+Type identifiers: TypeIdentifiers { type_variables: None, concrete_types: {"TsPre"} }
+
+Method name: new
+Method signature: pub fn new(node: &ts::Node<'tree>) -> Self
+Method body (preview):
+pub fn new(node: &ts::Node<'tree>) -> Self {
+    Self {..
+
+Impl body (preview):
+impl<'tree> TsPre<'tree> {
+  pub fn new(node: &ts::Node<'tree>) -> Self {..
+
+--- Match #241 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/tree_sitter/traversal.rs
+
+DS structure: Pre
+Impl signature: impl<'t, L: LanguageExt> Pre<'t, L>
+Type identifiers: TypeIdentifiers { type_variables: Some({"L": {"LanguageExt"}}), concrete_types: {"LanguageExt", "Pre"} }
+
+Method name: new
+Method signature: pub fn new(node: &Node<'t, StrDoc<L>>) -> Self
+Method body (preview):
+pub fn new(node: &Node<'t, StrDoc<L>>) -> Self {
+    let inner = TsPre::new(&node.inner);..
+
+Impl body (preview):
+impl<'t, L: LanguageExt> Pre<'t, L> {
+  pub fn new(node: &Node<'t, StrDoc<L>>) -> Self {..
+
+--- Match #242 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/tree_sitter/traversal.rs
+
+DS structure: Post
+Impl signature: impl<'tree, L: LanguageExt> Post<'tree, L>
+Type identifiers: TypeIdentifiers { type_variables: Some({"L": {"LanguageExt"}}), concrete_types: {"LanguageExt", "Post"} }
+
+Method name: new
+Method signature: pub fn new(node: &Node<'tree, StrDoc<L>>) -> Self
+Method body (preview):
+pub fn new(node: &Node<'tree, StrDoc<L>>) -> Self {
+    let mut ret = Self {..
+
+Impl body (preview):
+impl<'tree, L: LanguageExt> Post<'tree, L> {
+  pub fn new(node: &Node<'tree, StrDoc<L>>) -> Self {..
+
+--- Match #243 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/tree_sitter/traversal.rs
+
+DS structure: Level
+Impl signature: impl<'tree, L: LanguageExt> Level<'tree, L>
+Type identifiers: TypeIdentifiers { type_variables: Some({"L": {"LanguageExt"}}), concrete_types: {"LanguageExt", "Level"} }
+
+Method name: new
+Method signature: pub fn new(node: &Node<'tree, StrDoc<L>>) -> Self
+Method body (preview):
+pub fn new(node: &Node<'tree, StrDoc<L>>) -> Self {
+    let mut deque = VecDeque::new();..
+
+Impl body (preview):
+impl<'tree, L: LanguageExt> Level<'tree, L> {
+  pub fn new(node: &Node<'tree, StrDoc<L>>) -> Self {..
+
+--- Match #244 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/tree_sitter/traversal.rs
+
+DS structure: Visit
+Impl signature: impl<'t, D, T, M> Iterator for Visit<'t, D, T, M>
+where
+  D: Doc + 't,
+  T: Traversal<'t, D>,
+  M: Matcher,
+Type identifiers: TypeIdentifiers { type_variables: Some({"D": {"Doc"}, "M": {"Matcher"}}), concrete_types: {"Iterator", "Doc", "Matcher", "Traversal", "Visit"} }
+
+Method name: next
+Method signature: fn next(&mut self) -> Option<Self::Item>
+Method body (preview):
+fn next(&mut self) -> Option<Self::Item> {
+    loop {..
+
+Impl body (preview):
+impl<'t, D, T, M> Iterator for Visit<'t, D, T, M>
+where..
+
+--- Match #245 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/tree_sitter/traversal.rs
+
+DS structure: TsPre
+Impl signature: impl<'tree> Iterator for TsPre<'tree>
+Type identifiers: TypeIdentifiers { type_variables: None, concrete_types: {"TsPre", "Iterator"} }
+
+Method name: next
+Method signature: fn next(&mut self) -> Option<Self::Item>
+Method body (preview):
+fn next(&mut self) -> Option<Self::Item> {
+    // start_id will always be Some until the dfs terminates..
+
+Impl body (preview):
+impl<'tree> Iterator for TsPre<'tree> {
+  type Item = ts::Node<'tree>;..
+
+--- Match #246 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/tree_sitter/traversal.rs
+
+DS structure: Pre
+Impl signature: impl<'tree, L: LanguageExt> Iterator for Pre<'tree, L>
+Type identifiers: TypeIdentifiers { type_variables: Some({"L": {"LanguageExt"}}), concrete_types: {"Pre", "Iterator", "LanguageExt"} }
+
+Method name: next
+Method signature: fn next(&mut self) -> Option<Self::Item>
+Method body (preview):
+fn next(&mut self) -> Option<Self::Item> {
+    let inner = self.inner.next()?;..
+
+Impl body (preview):
+impl<'tree, L: LanguageExt> Iterator for Pre<'tree, L> {
+  type Item = Node<'tree, StrDoc<L>>;..
+
+--- Match #247 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/tree_sitter/traversal.rs
+
+DS structure: Post
+Impl signature: impl<'tree, L: LanguageExt> Iterator for Post<'tree, L>
+Type identifiers: TypeIdentifiers { type_variables: Some({"L": {"LanguageExt"}}), concrete_types: {"Post", "LanguageExt", "Iterator"} }
+
+Method name: next
+Method signature: fn next(&mut self) -> Option<Self::Item>
+Method body (preview):
+fn next(&mut self) -> Option<Self::Item> {
+    // start_id will always be Some until the dfs terminates..
+
+Impl body (preview):
+impl<'tree, L: LanguageExt> Iterator for Post<'tree, L> {
+  type Item = Node<'tree, StrDoc<L>>;..
+
+--- Match #248 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/tree_sitter/traversal.rs
+
+DS structure: Level
+Impl signature: impl<'tree, L: LanguageExt> Iterator for Level<'tree, L>
+Type identifiers: TypeIdentifiers { type_variables: Some({"L": {"LanguageExt"}}), concrete_types: {"Iterator", "LanguageExt", "Level"} }
+
+Method name: next
+Method signature: fn next(&mut self) -> Option<Self::Item>
+Method body (preview):
+fn next(&mut self) -> Option<Self::Item> {
+    let inner = self.deque.pop_front()?;..
+
+Impl body (preview):
+impl<'tree, L: LanguageExt> Iterator for Level<'tree, L> {
+  type Item = Node<'tree, StrDoc<L>>;..
+
+--- Match #249 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/tree_sitter/traversal.rs
+
+DS structure: Visitor
+Impl signature: impl<M, A> Visitor<M, A>
+Type identifiers: TypeIdentifiers { type_variables: None, concrete_types: {"A", "Visitor", "M"} }
+
+Method name: reentrant
+Method signature: pub fn reentrant(self, reentrant: bool) -> Self
+Method body (preview):
+pub fn reentrant(self, reentrant: bool) -> Self {
+    Self { reentrant, ..self }..
+
+Impl body (preview):
+impl<M, A> Visitor<M, A> {
+  pub fn algorithm<Algo>(self) -> Visitor<M, Algo> {..
+
+--- Match #250 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/tree_sitter/traversal.rs
+
+DS structure: TsPre
+Impl signature: impl<'tree> TsPre<'tree>
+Type identifiers: TypeIdentifiers { type_variables: None, concrete_types: {"TsPre"} }
+
+Method name: step_down
+Method signature: fn step_down(&mut self) -> bool
+Method body (preview):
+fn step_down(&mut self) -> bool {
+    if self.cursor.goto_first_child() {..
+
+Impl body (preview):
+impl<'tree> TsPre<'tree> {
+  pub fn new(node: &ts::Node<'tree>) -> Self {..
+
+--- Match #251 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/tree_sitter/traversal.rs
+
+DS structure: Post
+Impl signature: impl<'tree, L: LanguageExt> Post<'tree, L>
+Type identifiers: TypeIdentifiers { type_variables: Some({"L": {"LanguageExt"}}), concrete_types: {"LanguageExt", "Post"} }
+
+Method name: step_up
+Method signature: fn step_up(&mut self)
+Method body (preview):
+fn step_up(&mut self) {
+    self.current_depth -= 1;..
+
+Impl body (preview):
+impl<'tree, L: LanguageExt> Post<'tree, L> {
+  pub fn new(node: &Node<'tree, StrDoc<L>>) -> Self {..
+
+--- Match #252 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/tree_sitter/traversal.rs
+
+DS structure: Post
+Impl signature: impl<'tree, L: LanguageExt> Post<'tree, L>
+Type identifiers: TypeIdentifiers { type_variables: Some({"L": {"LanguageExt"}}), concrete_types: {"Post", "LanguageExt"} }
+
+Method name: trace_down
+Method signature: fn trace_down(&mut self)
+Method body (preview):
+fn trace_down(&mut self) {
+    while self.cursor.goto_first_child() {..
+
+Impl body (preview):
+impl<'tree, L: LanguageExt> Post<'tree, L> {
+  pub fn new(node: &Node<'tree, StrDoc<L>>) -> Self {..
+
+--- Match #253 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/tree_sitter/traversal.rs
+
+DS structure: TsPre
+Impl signature: impl<'tree> TsPre<'tree>
+Type identifiers: TypeIdentifiers { type_variables: None, concrete_types: {"TsPre"} }
+
+Method name: trace_up
+Method signature: fn trace_up(&mut self, start: usize)
+Method body (preview):
+fn trace_up(&mut self, start: usize) {
+    let cursor = &mut self.cursor;..
+
+Impl body (preview):
+impl<'tree> TsPre<'tree> {
+  pub fn new(node: &ts::Node<'tree>) -> Self {..
+
+--- Match #254 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/tree_sitter/traversal.rs
+
+DS structure: PreOrder
+Impl signature: impl Algorithm for PreOrder
+Type identifiers: TypeIdentifiers { type_variables: None, concrete_types: {"Algorithm", "PreOrder"} }
+
+Method name: traverse
+Method signature: fn traverse<L: LanguageExt>(node: Node<'_, StrDoc<L>>) -> Self::Traversal<'_, L>
+Method body (preview):
+fn traverse<L: LanguageExt>(node: Node<'_, StrDoc<L>>) -> Self::Traversal<'_, L> {
+    Pre::new(&node)..
+
+Impl body (preview):
+impl Algorithm for PreOrder {
+  type Traversal<'t, L: LanguageExt> = Pre<'t, L>;..
+
+--- Match #255 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/tree_sitter/traversal.rs
+
+DS structure: PostOrder
+Impl signature: impl Algorithm for PostOrder
+Type identifiers: TypeIdentifiers { type_variables: None, concrete_types: {"Algorithm", "PostOrder"} }
+
+Method name: traverse
+Method signature: fn traverse<L: LanguageExt>(node: Node<'_, StrDoc<L>>) -> Self::Traversal<'_, L>
+Method body (preview):
+fn traverse<L: LanguageExt>(node: Node<'_, StrDoc<L>>) -> Self::Traversal<'_, L> {
+    Post::new(&node)..
+
+Impl body (preview):
+impl Algorithm for PostOrder {
+  type Traversal<'t, L: LanguageExt> = Post<'t, L>;..
+
+--- Match #256 ---
+File: /home/emporas/repos/ast-grep/crates/core/src/tree_sitter/traversal.rs
+
+DS structure: Visitor
+Impl signature: impl<M, A> Visitor<M, A>
+where
+  A: Algorithm,
+Type identifiers: TypeIdentifiers { type_variables: Some({"A": {"Algorithm"}}), concrete_types: {"Visitor", "Algorithm", "M"} }
+
+Method name: visit
+Method signature: pub fn visit<L: LanguageExt>(
+    self,
+    node: Node<'_, StrDoc<L>>,
+  ) -> Visit<'_, StrDoc<L>, A::Traversal<'_, L>, M>
+  where
+    M: Matcher,
+Method body (preview):
+pub fn visit<L: LanguageExt>(
+    self,..
+
+Impl body (preview):
+impl<M, A> Visitor<M, A>
+where..
+
+#+end_src

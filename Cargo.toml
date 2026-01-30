@@ -1,7 +1,12 @@
 [package]
-name = "ast-grep-test"
+name = "snippet-agent"
 version = "0.1.0"
 edition = "2024"
+
+[workspace]
+members = [
+    "snippet-agent-syntax-queries",
+]
 
 [dependencies]
 serde = { version = "1.0", features = ["derive"] }
@@ -18,3 +23,9 @@ regex = "1.12.2"
 duct = "1.1.1"
 thiserror = "2.0.17"
 walkdir = "2.5.0"
+syntax_queries = { package = "snippet-agent-syntax-queries", path = "snippet-agent-syntax-queries" }
+
+directories = "6.0.0"
+
+[dev-dependencies]
+tempfile = "3.10"
