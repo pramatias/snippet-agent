@@ -6,7 +6,7 @@ description = "Tree-sitter based queries and utilities for snippet-agent (syntax
 license = "MIT"
 readme = "README.org"
 repository = "https://github.com/pramatias/snippet-agent"
-keywords = ["tree-sitter", "devtools", "rag"]
+keywords = ["tree-sitter", "parser", "rag"]
 
 [dependencies]
 log = "0.4.29"
