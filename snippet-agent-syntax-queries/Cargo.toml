@@ -2,6 +2,11 @@
 name = "snippet-agent-syntax-queries"
 version = "0.1.0"
 edition = "2024"
+description = "Tree-sitter based queries and utilities for snippet-agent (syntax queries)."
+license = "MIT"
+readme = "README.org"
+repository = "https://github.com/pramatias/snippet-agent"
+keywords = ["tree-sitter", "devtools", "rag"]
 
 [dependencies]
 log = "0.4.29"
