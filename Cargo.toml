@@ -2,6 +2,11 @@
 name = "snippet-agent"
 version = "0.1.0"
 edition = "2024"
+description = "Codebase parsing tool. It aggregates code (i.e. RAG) as an input to LLMs"
+license = "MIT"
+readme = "README.org"
+repository = "https://github.com/pramatias/snippet-agent"
+keywords = ["parser", "cli", "rag"]
 
 [workspace]
 members = [
