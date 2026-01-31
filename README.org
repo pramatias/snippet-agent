@@ -1,10 +1,8 @@
 #+title: Snippet Agent
-#+TITLE: snippet-agent — Snippet Agent
 #+AUTHOR: emporas
 #+EMAIL: emporas@gmail.com
-
 #+DATE: 2026-01-31
-#+DESCRIPTION: CLI that scans a Rust codebase (structs, enums, functions, methods) and extracts contextual snippets and signatures for LLM consumption.
+#+DESCRIPTION: CLI that scans a Rust codebase (structs, enums, functions, methods) and extracts contextual snippets and function/method implementations and signatures for LLM consumption.
 #+KEYWORDS: rust, cli, ast-grep, llm, snippets, code-context, parsing, signatures
 #+LANGUAGE: en
 #+OPTIONS: toc:nil
@@ -21,35 +19,22 @@
 - [[#structmethods][StructMethods]]
 - [[#internals][Internals]]
 - [[#usage-examples][Usage Examples]]
-- [[#testing][Testing]]
 - [[#license][License]]
 
 * Overview :overview:
-snippet-agent is a small Rust CLI that scans (via AST queries) a Rust repository for
+snippet-agent is a Rust CLI that scans a Rust directory, parses the source code
 structs, enums, free functions and impl/methods and converts those findings into
-concise, normalized context suitable for use with LLMs (prompt construction, retrieval, etc).
+concise, normalized context suitable for use with LLMs, what is traditionally called RAG, Retrieval Augmentation Generation.
 
 Key behaviors:
 
-Walks a directory/tree (project or arbitrary directory) and finds code constructs using the project's AST selection helpers.
+It find code constructs,
 
 Extracts signatures: impl signatures, function signatures, type identifiers, and a best-effort "data structure" name for impl blocks.
 
 Produces human-readable console output and (optionally) machine-consumable JSON for downstream tooling.
 
 Configures logging verbosity with -v / --verbose and -q / --quiet.
-
-Important crates / modules used in this project:
-
-ast_grep_selection — selection and byte-range helpers used to represent matches.
-
-syntax_queries::RustParser — small parsing helpers used to trim / delete AST subtrees and extract signature fragments.
-
-method_find — the module responsible for finding methods using queries.
-
-impl_sig_types — helpers and types that represent extracted signatures and TypeIdentifiers.
-
-path_resolution — resolves the search path (file / directory / crate root).
 
 * Installation :installation:
 Install from crates.io (when published):
@@ -138,6 +123,10 @@ Args:
 
 Behavior: placeholder (TODO). Will be used to find struct declarations and extract their fields/signatures.
 
+#+BEGIN_SRC bash
+snippet-agent struct -d ./crates/my_crate/src
+#+END_SRC
+
 ** StructMethods :structmethods:
 Inspect/transform methods of a struct in the given directory.
 
@@ -146,30 +135,6 @@ Args:
 -d, --directory <DIR> — Directory to inspect/process (required for this mode).
 
 Behavior: placeholder (TODO). Planned to enumerate and extract method-level context for every impl of the struct.
-
-* Usage Examples :usage-examples:
-
-Find a method named fmt in an auto-detected project root and print readable output
-
-#+BEGIN_SRC bash
-snippet-agent method -n fmt -r
-#+END_SRC
-
-** Inspect a single file for methods named from, emit JSON, be verbose
-
-#+BEGIN_SRC bash
-snippet-agent method -n from -f src/lib.rs --json -v
-#+END_SRC
-
-* Search an explicit directory for all methods (no name filter)
-
-* Run function-mode
-
-* Run struct-mode
-
-#+BEGIN_SRC bash
-snippet-agent struct -d ./crates/my_crate/src
-#+END_SRC
 
 * Adjust verbosity: show debug-level logs
 
