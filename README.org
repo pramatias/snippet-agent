@@ -11,16 +11,27 @@
 
 * Table of Contents
 [[#overview][Overview]]
+
 [[#installation][Installation]]
+
 [[#configuration][Configuration]]
+
 [[#commands][Commands]]
+
 [[#method][Method]]
+
 [[#function][Function]]
+
 [[#struct][Struct]]
+
 [[#structmethods][StructMethods]]
+
 [[#internals][Internals]]
+
 [[#usage-examples][Usage Examples]]
+
 [[#testing][Testing]]
+
 [[#license][License]]
 
 * Overview :overview:
