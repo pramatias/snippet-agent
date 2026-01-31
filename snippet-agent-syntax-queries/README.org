@@ -1,3 +1,3 @@
 #+title: Small lib for tree-sitter queries
 
-tree sitter utilities
+Utilities lib for tree sitter queries for Rust code
