@@ -84,7 +84,7 @@ You may pass --file, --directory, --crate or --root flags to control how the too
 chooses the search root. See the Method subcommand docs below for the exact flags.
 
 * Commands :commands:
-* Method :method:
+** Method :method:
 Inspect/transform/search an impl/method in a directory (highest priority options and fine-grained controls).
 
 Flags:
@@ -111,7 +111,11 @@ Results are mapped into MethodData / MethodDataMatch values, where signatures an
 
 By default the CLI prints a readable preview; use --json to integrate with other tools.
 
-* Function :function:
+#+BEGIN_SRC bash
+snippet-agent method -d /path/to/project/src
+#+END_SRC
+
+** Function :function:
 Inspect/transform free functions in the given directory.
 
 Args:
@@ -121,7 +125,11 @@ Args:
 Currently run_function is a placeholder in the codebase (TODO). When implemented it will follow the
 same pattern as run_method: find matches, extract signatures and types, and print/emit the structured result.
 
-* Struct :struct:
+#+BEGIN_SRC bash
+snippet-agent function -d ./examples
+#+END_SRC
+
+** Struct :struct:
 Inspect/transform a struct in the given directory.
 
 Args:
@@ -130,7 +138,7 @@ Args:
 
 Behavior: placeholder (TODO). Will be used to find struct declarations and extract their fields/signatures.
 
-* StructMethods :structmethods:
+** StructMethods :structmethods:
 Inspect/transform methods of a struct in the given directory.
 
 Args:
@@ -139,91 +147,15 @@ Args:
 
 Behavior: placeholder (TODO). Planned to enumerate and extract method-level context for every impl of the struct.
 
-* Global verbosity flags (available to every command)
-
--v, --verbose (count)
-
--q, --quiet (count)
-
-* Internals :internals:
-This section explains core runtime data structures and extraction strategies used by the program.
-
-Match & data types
-
-AstGrepMatch (provided by ast_grep_selection) holds raw matched text and byte ranges:
-
-file: FilePath
-
-method_body: String
-
-impl_body: String
-
-method_name: String
-
-plus byte-range wrappers.
-
-MethodDataMatch — new per-match struct that mirrors AstGrepMatch and adds:
-
-impl_signature: ImplSignature (String)
-
-function_signature: FunctionSignature (String)
-
-ds_structure: DSName (String) — the inferred data-structure name for the impl
-
-type_identifiers: TypeIdentifiers — parsed generics, concrete types, trait bounds, etc.
-
-MethodData — top-level container holding:
-
-method: String (search name)
-
-matches: Vec<MethodDataMatch>
-
-Signature & type extraction pipeline (used by MethodData::new)
-For each AstGrepMatch:
-
-extract_function_signature(&ast_match.method_body)
-
-Uses RustParser::new(method_body, "block") and delete_node_till_end() to trim down to the function signature.
-
-extract_impl_signature(&ast_match.impl_body)
-
-Uses RustParser::new(impl_body, "declaration_list") and delete_node_till_end() to obtain the impl-level signature fragment.
-
-extract_type_identifiers(&impl_sig)
-
-Uses RustParser::new(&source, "type_identifier") and save_type_identifiers to collect type tokens and then builds a TypeIdentifiers via TypeIdentifiers::from_impl_signature.
-
-extract_ds_structure(&impl_sig, &type_ids)
-
-Heuristics:
-
-If type_ids.concrete_types has exactly one element → return it.
-
-Prefer the token after for (e.g. impl From<T> for Wrapper<T> → Wrapper).
-
-Fallback to RustParser::delete_till_start("type_parameters") to get remainder and select first token.
-
-Normalizes tokens by stripping generics and punctuation; returns a cleaned DS name.
-
-Printing / preview behavior
-
-MethodData::print_all() prints:
-
-Method search name and number of matches
-
-For each match: file, ds_structure, impl_signature, type_identifiers, method name,
-function signature and a preview (first two lines) of the method and impl bodies.
-
-preview_first_two_lines returns up to two lines joined by \n and appends ...
-
 * Usage Examples :usage-examples:
+
 Find a method named fmt in an auto-detected project root and print readable output
 
 #+BEGIN_SRC bash
 snippet-agent method -n fmt -r
 #+END_SRC
 
-* Inspect a single file for methods named from, emit JSON, be verbose
+** Inspect a single file for methods named from, emit JSON, be verbose
 
 #+BEGIN_SRC bash
 snippet-agent method -n from -f src/lib.rs --json -v
@@ -231,17 +163,9 @@ snippet-agent method -n from -f src/lib.rs --json -v
 
 * Search an explicit directory for all methods (no name filter)
 
-#+BEGIN_SRC bash
-snippet-agent method -d /path/to/project/src
-#+END_SRC
+* Run function-mode
 
-* Run function-mode (directory required — function mode implementation is TODO in codebase)
-
-#+BEGIN_SRC bash
-snippet-agent function -d ./examples
-#+END_SRC
-
-* Run struct-mode (directory required — struct mode implementation is TODO in codebase)
+* Run struct-mode
 
 #+BEGIN_SRC bash
 snippet-agent struct -d ./crates/my_crate/src
@@ -267,6 +191,12 @@ MethodData::new mapping and signature extraction
 MethodDataMatch::extract_ds_structure heuristics (single/multiple concrete types)
 
 Normalization of concrete types and type variables (HashSet comparisons in tests)
+
+* Global verbosity flags (available to every command)
+
+-v, --verbose (count)
+
+-q, --quiet (count)
 
 * License :license:
 MIT License
