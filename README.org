@@ -9,7 +9,7 @@
 #+LANGUAGE: en
 #+OPTIONS: toc:nil
 
-Table of Contents
+* Table of Contents
 [[#overview][
 Overview]]
 [[#installation][
