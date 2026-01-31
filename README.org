@@ -1,1 +1,274 @@
 #+title: Snippet Agent
+#+TITLE: snippet-agent — Snippet Agent
+#+AUTHOR: emporas
+#+EMAIL: emporas@gmail.com
+
+#+DATE: 2026-01-31
+#+DESCRIPTION: CLI that scans a Rust codebase (structs, enums, functions, methods) and extracts contextual snippets and signatures for LLM consumption.
+#+KEYWORDS: rust, cli, ast-grep, llm, snippets, code-context, parsing, signatures
+#+LANGUAGE: en
+#+OPTIONS: toc:nil
+
+Table of Contents
+[[#overview][
+Overview]]
+[[#installation][Installation]]
+[[#configuration][Configuration]]
+[[#commands][Commands]]
+[[#method][Method]]
+[[#function][Function]]
+[[#struct][Struct]]
+[[#structmethods][StructMethods]]
+[[#internals][Internals]]
+[[#usage-examples][Usage Examples]]
+[[#testing][Testing]]
+[[#license][License]]
+
+* Overview :overview:
+snippet-agent is a small Rust CLI that scans (via AST queries) a Rust repository for
+structs, enums, free functions and impl/methods and converts those findings into
+concise, normalized context suitable for use with LLMs (prompt construction, retrieval, etc).
+
+Key behaviors:
+
+Walks a directory/tree (project or arbitrary directory) and finds code constructs using the project's AST selection helpers.
+
+Extracts signatures: impl signatures, function signatures, type identifiers, and a best-effort "data structure" name for impl blocks.
+
+Produces human-readable console output and (optionally) machine-consumable JSON for downstream tooling.
+
+Configures logging verbosity with -v / --verbose and -q / --quiet.
+
+Important crates / modules used in this project:
+
+ast_grep_selection — selection and byte-range helpers used to represent matches.
+
+syntax_queries::RustParser — small parsing helpers used to trim / delete AST subtrees and extract signature fragments.
+
+method_find — the module responsible for finding methods using queries.
+
+impl_sig_types — helpers and types that represent extracted signatures and TypeIdentifiers.
+
+path_resolution — resolves the search path (file / directory / crate root).
+
+* Installation :installation:
+Install from crates.io (when published):
+
+#+BEGIN_SRC bash
+cargo install snippet-agent
+#+END_SRC
+
+To install from source:
+
+#+BEGIN_SRC bash
+git clone https://github.com/your_org/snippet-agent.git
+
+cd snippet-agent
+cargo install --path .
+#+END_SRC
+
+Ensure you have Rust and Cargo (recommended >= 1.60).
+
+* Configuration :configuration:
+Logging and verbosity are configured with the Verbosity flags (flattened into every command):
+
+-v, --verbose (repeatable): increase logging level. (0 → Info, 1 → Debug, 2+ → Trace)
+
+-q, --quiet (repeatable): suppress non-error output (forces LevelFilter::Warn).
+
+At startup the CLI calls init::initialize_logger(...) with the resolved LevelFilter,
+so nothing special is required — pass -v / -q to tune output.
+
+Path resolution (file/directory/crate root) is handled by path_resolution::resolve_path.
+You may pass --file, --directory, --crate or --root flags to control how the tool
+chooses the search root. See the Method subcommand docs below for the exact flags.
+
+* Commands :commands:
+* Method :method:
+Inspect/transform/search an impl/method in a directory (highest priority options and fine-grained controls).
+
+Flags:
+
+-n, --name <NAME> — Optional method name to find. If omitted, the tool will search for all matches.
+
+-f, --file <FILE> — Optional file path (highest priority) to inspect/process.
+
+-c, --crate — Treat given target as a crate/directory (boolean flag).
+
+-r, --root — Use the project root (auto-detected by walking up to Cargo.toml).
+
+-d, --directory <DIR> — Directory to inspect/process (overrides auto-detection).
+
+--json — Emit JSON output instead of (or in addition to) pretty-printed text.
+
+Behavior notes:
+
+run_method resolves a path using resolve_path(...) (explicitly passing file, directory, crate and root).
+
+It builds a MethodFind instance and calls .query() to populate matches.
+
+Results are mapped into MethodData / MethodDataMatch values, where signatures and type identifiers are extracted.
+
+By default the CLI prints a readable preview; use --json to integrate with other tools.
+
+* Function :function:
+Inspect/transform free functions in the given directory.
+
+Args:
+
+-d, --directory <DIR> — Directory to inspect/process (required for this mode).
+
+Currently run_function is a placeholder in the codebase (TODO). When implemented it will follow the
+same pattern as run_method: find matches, extract signatures and types, and print/emit the structured result.
+
+* Struct :struct:
+Inspect/transform a struct in the given directory.
+
+Args:
+
+-d, --directory <DIR> — Directory to inspect/process (required for this mode).
+
+Behavior: placeholder (TODO). Will be used to find struct declarations and extract their fields/signatures.
+
+* StructMethods :structmethods:
+Inspect/transform methods of a struct in the given directory.
+
+Args:
+
+-d, --directory <DIR> — Directory to inspect/process (required for this mode).
+
+Behavior: placeholder (TODO). Planned to enumerate and extract method-level context for every impl of the struct.
+
+* Global verbosity flags (available to every command)
+
+-v, --verbose (count)
+
+-q, --quiet (count)
+
+* Internals :internals:
+This section explains core runtime data structures and extraction strategies used by the program.
+
+Match & data types
+
+AstGrepMatch (provided by ast_grep_selection) holds raw matched text and byte ranges:
+
+file: FilePath
+
+method_body: String
+
+impl_body: String
+
+method_name: String
+
+plus byte-range wrappers.
+
+MethodDataMatch — new per-match struct that mirrors AstGrepMatch and adds:
+
+impl_signature: ImplSignature (String)
+
+function_signature: FunctionSignature (String)
+
+ds_structure: DSName (String) — the inferred data-structure name for the impl
+
+type_identifiers: TypeIdentifiers — parsed generics, concrete types, trait bounds, etc.
+
+MethodData — top-level container holding:
+
+method: String (search name)
+
+matches: Vec<MethodDataMatch>
+
+Signature & type extraction pipeline (used by MethodData::new)
+For each AstGrepMatch:
+
+extract_function_signature(&ast_match.method_body)
+
+Uses RustParser::new(method_body, "block") and delete_node_till_end() to trim down to the function signature.
+
+extract_impl_signature(&ast_match.impl_body)
+
+Uses RustParser::new(impl_body, "declaration_list") and delete_node_till_end() to obtain the impl-level signature fragment.
+
+extract_type_identifiers(&impl_sig)
+
+Uses RustParser::new(&source, "type_identifier") and save_type_identifiers to collect type tokens and then builds a TypeIdentifiers via TypeIdentifiers::from_impl_signature.
+
+extract_ds_structure(&impl_sig, &type_ids)
+
+Heuristics:
+
+If type_ids.concrete_types has exactly one element → return it.
+
+Prefer the token after for (e.g. impl From<T> for Wrapper<T> → Wrapper).
+
+Fallback to RustParser::delete_till_start("type_parameters") to get remainder and select first token.
+
+Normalizes tokens by stripping generics and punctuation; returns a cleaned DS name.
+
+Printing / preview behavior
+
+MethodData::print_all() prints:
+
+Method search name and number of matches
+
+For each match: file, ds_structure, impl_signature, type_identifiers, method name,
+function signature and a preview (first two lines) of the method and impl bodies.
+
+preview_first_two_lines returns up to two lines joined by \n and appends ...
+
+* Usage Examples :usage-examples:
+Find a method named fmt in an auto-detected project root and print readable output
+
+#+BEGIN_SRC bash
+snippet-agent method -n fmt -r
+#+END_SRC
+
+* Inspect a single file for methods named from, emit JSON, be verbose
+
+#+BEGIN_SRC bash
+snippet-agent method -n from -f src/lib.rs --json -v
+#+END_SRC
+
+* Search an explicit directory for all methods (no name filter)
+
+#+BEGIN_SRC bash
+snippet-agent method -d /path/to/project/src
+#+END_SRC
+
+* Run function-mode (directory required — function mode implementation is TODO in codebase)
+
+#+BEGIN_SRC bash
+snippet-agent function -d ./examples
+#+END_SRC
+
+* Run struct-mode (directory required — struct mode implementation is TODO in codebase)
+
+#+BEGIN_SRC bash
+snippet-agent struct -d ./crates/my_crate/src
+#+END_SRC
+
+* Adjust verbosity: show debug-level logs
+
+#+BEGIN_SRC bash
+snippet-agent method -d ./ -n new_from_slice -v
+#+END_SRC
+
+Testing :testing:
+Run the full test suite with cargo test:
+
+#+BEGIN_SRC bash
+cargo test
+#+END_SRC
+
+The repository contains multiple unit tests that exercise:
+
+MethodData::new mapping and signature extraction
+
+MethodDataMatch::extract_ds_structure heuristics (single/multiple concrete types)
+
+Normalization of concrete types and type variables (HashSet comparisons in tests)
+
+* License :license:
+MIT License
+
+See the full text in the LICENSE file at the root of this repository.

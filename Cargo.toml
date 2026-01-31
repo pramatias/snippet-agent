@@ -1,6 +1,6 @@
 [package]
 name = "snippet-agent"
-version = "0.1.1"
+version = "0.1.2"
 edition = "2024"
 description = "Codebase parsing tool. It aggregates code (i.e. RAG) as an input to LLMs"
 license = "MIT"
@@ -28,7 +28,7 @@ regex = "1.12.2"
 duct = "1.1.1"
 thiserror = "2.0.17"
 walkdir = "2.5.0"
-syntax_queries = { package = "snippet-agent-syntax-queries", path = "snippet-agent-syntax-queries", version = "0.1.1" }
+syntax_queries = { package = "snippet-agent-syntax-queries", path = "snippet-agent-syntax-queries", version = "0.1.2" }
 
 directories = "6.0.0"
 

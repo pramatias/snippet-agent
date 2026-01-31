@@ -1,6 +1,6 @@
 [package]
 name = "snippet-agent-syntax-queries"
-version = "0.1.1"
+version = "0.1.2"
 edition = "2024"
 description = "Tree-sitter based queries and utilities for snippet-agent (syntax queries)."
 license = "MIT"
