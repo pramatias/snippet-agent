@@ -1,5 +1,7 @@
 use anyhow::{Result, anyhow};
 use std::ffi::OsString;
+use std::fs::File;
+use std::io::Read;
 use std::path::{Component, Path, PathBuf};
 use thiserror::Error;
 use walkdir::WalkDir;
@@ -27,6 +29,95 @@ enum PathSource {
     Cwd,
 }
 
+#[allow(dead_code)]
+pub fn read_rs_files(
+    file: Option<String>,
+    directory: Option<String>,
+    crate_dir: bool,
+    root: bool,
+) -> Result<Vec<(String, String)>, PathResolveError> {
+    // First get the list of canonicalized paths from collect_rs_files
+    let paths = collect_rs_files(file, directory, crate_dir, root)?;
+
+    let mut results = Vec::with_capacity(paths.len());
+
+    for path in paths.into_iter() {
+        let src = path.to_string_lossy().into_owned();
+
+        // Open the file
+        let mut f = File::open(&path).map_err(|e| {
+            PathResolveError::Other(format!("failed to open '{}': {}", path.display(), e))
+        })?;
+
+        // Read its contents
+        let mut contents = String::new();
+        f.read_to_string(&mut contents).map_err(|e| {
+            PathResolveError::Other(format!("failed to read '{}': {}", path.display(), e))
+        })?;
+
+        results.push((contents, src));
+    }
+
+    Ok(results)
+}
+
+/// Collect all `.rs` files under the directory produced by `resolve_path`.
+/// If the resolved path is a file, returns that file only if it has `.rs` extension.
+/// Returns canonicalized (absolute) paths.
+pub fn collect_rs_files(
+    file: Option<String>,
+    directory: Option<String>,
+    crate_dir: bool,
+    root: bool,
+) -> Result<Vec<PathBuf>, PathResolveError> {
+    // Resolve the base path (reuses your existing resolver).
+    let resolved = resolve_path(file, directory, crate_dir, root)?;
+
+    // Canonicalize the resolved path up-front so we work with absolute paths.
+    let resolved = resolved.canonicalize().map_err(|e| {
+        PathResolveError::Other(format!(
+            "failed to canonicalize resolved path '{}': {}",
+            resolved.display(),
+            e
+        ))
+    })?;
+
+    let mut files = Vec::new();
+
+    if resolved.is_file() {
+        // If it's a file, only return it if it ends with .rs
+        if resolved.extension().and_then(|s| s.to_str()) == Some("rs") {
+            files.push(resolved);
+        }
+        return Ok(files);
+    }
+
+    // If it's a directory, walk recursively and collect .rs files.
+    for entry in WalkDir::new(&resolved).into_iter() {
+        let entry = entry.map_err(|e| {
+            PathResolveError::Other(format!(
+                "walkdir traversal error for '{}': {}",
+                resolved.display(),
+                e
+            ))
+        })?;
+        if entry.file_type().is_file() {
+            if entry.path().extension().and_then(|s| s.to_str()) == Some("rs") {
+                let abs = entry.path().canonicalize().map_err(|e| {
+                    PathResolveError::Other(format!(
+                        "failed to canonicalize '{}': {}",
+                        entry.path().display(),
+                        e
+                    ))
+                })?;
+                files.push(abs);
+            }
+        }
+    }
+
+    Ok(files)
+}
+
 /// New signature: four explicit parameters (file, directory, crate_dir flag, root flag).
 /// Returns a PathBuf or a PathResolveError (thiserror).
 pub fn resolve_path(
@@ -35,7 +126,6 @@ pub fn resolve_path(
     crate_dir: bool,
     root: bool,
 ) -> Result<PathBuf, PathResolveError> {
-
     // Collect which parameters were provided so we can error on multiple being set.
     let mut provided = Vec::new();
     if file.is_some() {
@@ -70,16 +160,11 @@ pub fn resolve_path(
 
     // Pattern match on the chosen source to produce the final PathBuf.
     match source {
-        PathSource::File(p) => {
-            absolutize(&p)
-                .map_err(|e| PathResolveError::Other(format!("absolutize(file) failed: {}", e)))
-        }
+        PathSource::File(p) => absolutize(&p)
+            .map_err(|e| PathResolveError::Other(format!("absolutize(file) failed: {}", e))),
 
-        PathSource::Directory(p) => {
-            absolutize(&p).map_err(|e| {
-                PathResolveError::Other(format!("absolutize(directory) failed: {}", e))
-            })
-        }
+        PathSource::Directory(p) => absolutize(&p)
+            .map_err(|e| PathResolveError::Other(format!("absolutize(directory) failed: {}", e))),
 
         PathSource::CrateDir => {
             let cwd = std::env::current_dir()

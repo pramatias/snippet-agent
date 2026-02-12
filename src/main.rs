@@ -1,15 +1,20 @@
+mod ast_grep;
+mod all_elements;
 mod ast_grep_selection;
 mod impl_sig_types;
 mod init;
 mod method_find;
 mod path_resolution;
+mod syn_elements;
+mod json_selection;
+mod syn_method;
 
 use clap::{ArgAction, Args, Parser, Subcommand};
 use init::initialize_logger;
 use log::LevelFilter;
 
 use anyhow::{Context, Result, anyhow};
-
+use std::path::Path;
 use log::{debug, error};
 
 use crate::ast_grep_selection::ByteRange;
@@ -17,6 +22,9 @@ use crate::impl_sig_types::*;
 use crate::method_find::*;
 use crate::method_find::{FilePath, ImplBody, MethodBody, MethodName};
 use crate::path_resolution::resolve_path;
+use crate::json_selection::unprocessed_elements::AllUnprocessedElements;
+use crate::ast_grep::ast_grep_yaml_rules::run_ast_grep_rule;
+
 use syntax_queries::RustParser;
 
 /// Configure logging verbosity using -v/--verbose and -q/--quiet flags.
@@ -183,10 +191,8 @@ fn main() -> Result<()> {
 /// create each match. The initializer takes an `AstGrepMatch`, initializes the
 /// common fields, and runs the existing `extract_signatures_impl_fn` method twice to
 /// populate the two signature fields.
-fn run_method(args: &MethodArgs) -> Result<MethodData> {
-    debug!("Starting run_method with args: {:?}", args);
-
-    // Call resolve_path with each MethodArgs field passed explicitly.
+pub fn run_method(args: &MethodArgs) -> Result<MethodData> {
+    // Resolve path as before
     let resolved_path = resolve_path(
         args.file.clone(),
         args.directory.clone(),
@@ -197,42 +203,51 @@ fn run_method(args: &MethodArgs) -> Result<MethodData> {
         error!("resolve_path error: {}", e);
         anyhow!("Path resolution failed: {}", e)
     })?;
-    debug!("Resolved path to search: {:?}", resolved_path);
 
-    // Use provided method name if present, otherwise fall back to previous default.
+    // Use provided method name or empty string.
     let method_name = args.name.clone().unwrap_or_default();
-    debug!("Method name to search for: '{}'", method_name);
 
-    debug!(
-        "Initializing MethodFind with path: {}",
-        resolved_path.to_string_lossy()
-    );
     let mut finder = MethodFind::new(
         resolved_path.to_string_lossy().into_owned(),
         method_name.clone(),
     );
 
-    debug!("Executing query...");
-    // Run the actual query (this populates finder.matches)
     finder.query().map_err(|e| {
         error!("MethodFind query failed: {:#}", e);
         anyhow!("MethodFind failed: {:#}", e)
     })?;
 
-    // Now hand the raw AstGrepMatch vector to MethodData::new and let it
-    // construct MethodDataMatch entries and initialize signatures.
-    let method_data = MethodData::new(method_name, finder.matches.clone());
+    let method_data = MethodData::new(method_name, finder.matches);
 
-    method_data.print_all();
-    debug!(
-        "run_method produced MethodData with {} matches",
-        method_data.matches.len()
-    );
+    // method_data.print_all();
+
+    let ag_dir = resolved_path.to_string_lossy().into_owned();
+
+    // Run ast-grep rule, get JSON
+    let ag_json = run_ast_grep_rule(&ag_dir).map_err(|e| {
+        error!("run_ast_grep_rule failed: {:?}", e);
+        anyhow!("ast-grep run failed: {:?}", e)
+    })?;
+
+    // Parse JSON into AllSynElements
+    let all_syn = AllUnprocessedElements::from_json(&ag_json).map_err(|e| {
+        error!("AllSynElements::from_json failed: {}", e);
+        anyhow!("Failed parsing ast-grep JSON: {}", e)
+    })?;
+
+    // all_syn.print_all();
+    // You now have `all_syn` (AllSynElements) and can use it.
+    // For now we log a debug line; replace with whatever you need to do with it.
+
+    // Remove all unprocessed elements from the root.
+    crate::all_elements::remove_all_unprocessed(&resolved_path, &all_syn).map_err(|e| {
+        error!("remove_all_unprocessed_from_root failed: {}", e);
+        anyhow!("Failed to remove unprocessed elements: {}", e)
+    })?;
 
     Ok(method_data)
 }
 
-/// New signature type aliases requested
 pub type ImplSignature = String;
 pub type FunctionSignature = String;
 pub type DSName = String;
@@ -313,10 +328,16 @@ impl MethodData {
 
             println!("Method name: {}", m.method_name);
             println!("Method signature: {}", m.function_signature);
-            println!("Method body (preview):\n{}\n", Self::preview_first_two_lines(&m.method_body));
+            println!(
+                "Method body (preview):\n{}\n",
+                Self::preview_first_two_lines(&m.method_body)
+            );
 
             // println!("Method name range: {:?}", m.method_name_range);
-            println!("Impl body (preview):\n{}", Self::preview_first_two_lines(&m.impl_body));
+            println!(
+                "Impl body (preview):\n{}",
+                Self::preview_first_two_lines(&m.impl_body)
+            );
             // println!("Impl body range: {:?}", m.impl_body_range);
             // println!("Method body range: {:?}", m.method_body_range);
         }
@@ -349,7 +370,10 @@ impl MethodDataMatch {
     /// 1) Try to find the token "for" and return the next token (stripped of any '<' etc).
     /// 2) If "for" is not present, use RustParser::delete_till_start targeting "type_parameters"
     ///    and take the first token from the resulting remainder.
-    pub fn extract_ds_structure(impl_signature: &ImplSignature, type_ids: &TypeIdentifiers) -> DSName {
+    pub fn extract_ds_structure(
+        impl_signature: &ImplSignature,
+        type_ids: &TypeIdentifiers,
+    ) -> DSName {
         // Local result to return
         let mut ds_structure: DSName = String::new();
 
@@ -362,7 +386,9 @@ impl MethodDataMatch {
         fn normalize_token(token: &str) -> String {
             // cut at first '<' or other delimiter, then trim non-ident chars from both ends
             let first_piece = token
-                .split(|c: char| c == '<' || c == ',' || c == ':' || c == ';' || c == ')' || c == '{' || c == '(')
+                .split(|c: char| {
+                    c == '<' || c == ',' || c == ':' || c == ';' || c == ')' || c == '{' || c == '('
+                })
                 .next()
                 .unwrap_or(token);
 
@@ -535,12 +561,6 @@ impl MethodDataMatch {
     }
 }
 
-/// New enum to pick which signature/parser to run.
-pub enum SignatureTarget {
-    Function,
-    Impl,
-}
-
 #[cfg(test)]
 mod tests {
     use super::*; // adjust if MethodData / AstGrepMatch live in another module
@@ -693,7 +713,8 @@ mod tests {
         set_t.insert("Deserialize".into());
 
         assert_eq!(
-            mapped.type_identifiers.type_variables, Some(expected_type_vars),
+            mapped.type_identifiers.type_variables,
+            Some(expected_type_vars),
             "type variables did not match expected"
         );
 
@@ -724,7 +745,8 @@ mod tests {
     }
 
     #[test]
-    fn mmethoddata_new_maps_fields_and_signaturesethoddata_new_maps_fields_and_signatures_with_generics_and_serde_de() {
+    fn mmethoddata_new_maps_fields_and_signaturesethoddata_new_maps_fields_and_signatures_with_generics_and_serde_de()
+     {
         // new impl body (user-provided)
         let impl_body = r#"impl<T, const N: usize> Array<T, N> where T: Clone + std::fmt::Debug + serde::de::Deserialize<'de>,
 {
@@ -793,7 +815,8 @@ mod tests {
         set_t.insert("Deserialize".into());
 
         assert_eq!(
-            mapped.type_identifiers.type_variables, Some(expected_type_vars),
+            mapped.type_identifiers.type_variables,
+            Some(expected_type_vars),
             "type variables did not match expected"
         );
 
@@ -846,43 +869,43 @@ mod tests {
         }
     }
 
-#[test]
-fn methoddatamatch_extract_ds_structure_multiple_concrete_types() {
-    // original test fixed: supply TypeIdentifiers with two concrete types (From, Wrapper)
-    let mut m = make_dummy_methoddatamatch();
-    m.impl_signature = "impl From for Wrapper".into();
+    #[test]
+    fn methoddatamatch_extract_ds_structure_multiple_concrete_types() {
+        // original test fixed: supply TypeIdentifiers with two concrete types (From, Wrapper)
+        let mut m = make_dummy_methoddatamatch();
+        m.impl_signature = "impl From for Wrapper".into();
 
-    // build TypeIdentifiers: empty type_variables, concrete_types contains "From" and "Wrapper"
-    let mut type_ids = TypeIdentifiers::default();
-    type_ids.concrete_types.insert("From".to_string());
-    type_ids.concrete_types.insert("Wrapper".to_string());
-    // type_variables intentionally left empty (not useful for this test)
+        // build TypeIdentifiers: empty type_variables, concrete_types contains "From" and "Wrapper"
+        let mut type_ids = TypeIdentifiers::default();
+        type_ids.concrete_types.insert("From".to_string());
+        type_ids.concrete_types.insert("Wrapper".to_string());
+        // type_variables intentionally left empty (not useful for this test)
 
-    // Call the new static function form with both parameters and check the returned DS name.
-    let ds = MethodDataMatch::extract_ds_structure(&m.impl_signature, &type_ids);
+        // Call the new static function form with both parameters and check the returned DS name.
+        let ds = MethodDataMatch::extract_ds_structure(&m.impl_signature, &type_ids);
 
-    assert_eq!(ds, "Wrapper");
+        assert_eq!(ds, "Wrapper");
 
-    // (Optional) If you want the instance to hold the result too:
-    // m.ds_structure = ds.clone();
-    // assert_eq!(m.ds_structure, "Wrapper");
-}
+        // (Optional) If you want the instance to hold the result too:
+        // m.ds_structure = ds.clone();
+        // assert_eq!(m.ds_structure, "Wrapper");
+    }
 
-#[test]
-fn methoddatamatch_extract_ds_structure_single_concrete_type() {
-    // new test: when concrete_types has exactly one element, the function should return it immediately
-    let mut m = make_dummy_methoddatamatch();
-    m.impl_signature = "impl Wrapper".into();
+    #[test]
+    fn methoddatamatch_extract_ds_structure_single_concrete_type() {
+        // new test: when concrete_types has exactly one element, the function should return it immediately
+        let mut m = make_dummy_methoddatamatch();
+        m.impl_signature = "impl Wrapper".into();
 
-    // single concrete type -> early return
-    let mut type_ids = TypeIdentifiers::default();
-    type_ids.concrete_types.insert("Wrapper".to_string());
-    // type_variables intentionally left empty
+        // single concrete type -> early return
+        let mut type_ids = TypeIdentifiers::default();
+        type_ids.concrete_types.insert("Wrapper".to_string());
+        // type_variables intentionally left empty
 
-    let ds = MethodDataMatch::extract_ds_structure(&m.impl_signature, &type_ids);
+        let ds = MethodDataMatch::extract_ds_structure(&m.impl_signature, &type_ids);
 
-    assert_eq!(ds, "Wrapper");
-}
+        assert_eq!(ds, "Wrapper");
+    }
 
     // If SelectorByteOffsetRange is in another module, import it appropriately:
     // use crate::selector::SelectorByteOffsetRange;

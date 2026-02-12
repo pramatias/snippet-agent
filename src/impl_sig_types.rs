@@ -1,9 +1,8 @@
 use std::collections::{HashMap, HashSet};
-
+use serde::Deserialize;
 use syntax_queries::RustParser;
 
-/// New container for the parsed type identifiers.
-#[derive(Debug, Clone, Default)]
+#[derive(Debug, Clone, Default, Deserialize)]
 pub struct TypeIdentifiers {
     /// mapping: type variable -> set of concrete types (kept in sorted order & unique)
     pub type_variables: Option<HashMap<String, HashSet<String>>>,
@@ -133,21 +132,21 @@ impl TypeIdentifiers {
                 }
             }
         }
-// after pruning and producing a HashMap<String, HashSet<String>>
-let type_variables = prune_type_variables(cleaned_type_variables, cleaned_concrete_types.clone());
+        // after pruning and producing a HashMap<String, HashSet<String>>
+        let type_variables =
+            prune_type_variables(cleaned_type_variables, cleaned_concrete_types.clone());
 
-// convert to Option<HashMap<_, _>>: None if empty
-let type_variables = if type_variables.is_empty() {
-    None
-} else {
-    Some(type_variables)
-};
+        // convert to Option<HashMap<_, _>>: None if empty
+        let type_variables = if type_variables.is_empty() {
+            None
+        } else {
+            Some(type_variables)
+        };
 
-TypeIdentifiers {
-    type_variables,
-    concrete_types: cleaned_concrete_types,
-}
-
+        TypeIdentifiers {
+            type_variables,
+            concrete_types: cleaned_concrete_types,
+        }
     }
 
     /// Parse trait bounds from `impl_sig` (mutable), remove each found bound occurrence
@@ -800,51 +799,55 @@ mod tests {
         assert_eq!(found, expected);
     }
 
-#[test]
-fn test_remove_ds_structure() {
-    let mut ti = TypeIdentifiers::default();
+    #[test]
+    fn test_remove_ds_structure() {
+        let mut ti = TypeIdentifiers::default();
 
-    // fill concrete types
-    ti.concrete_types.insert("List".into());
-    ti.concrete_types.insert("Node".into());
+        // fill concrete types
+        ti.concrete_types.insert("List".into());
+        ti.concrete_types.insert("Node".into());
 
-    // prepare sets
-    let mut set_t = HashSet::new();
-    set_t.insert("List".to_string());
-    set_t.insert("String".to_string());
+        // prepare sets
+        let mut set_t = HashSet::new();
+        set_t.insert("List".to_string());
+        set_t.insert("String".to_string());
 
-    let mut set_u = HashSet::new();
-    set_u.insert("Node".to_string());
+        let mut set_u = HashSet::new();
+        set_u.insert("Node".to_string());
 
-    // Since type_variables is Option<HashMap<..>>, get_or_insert the inner map
-    ti.type_variables
-        .get_or_insert_with(HashMap::new)
-        .insert("T".into(), set_t);
+        // Since type_variables is Option<HashMap<..>>, get_or_insert the inner map
+        ti.type_variables
+            .get_or_insert_with(HashMap::new)
+            .insert("T".into(), set_t);
 
-    ti.type_variables
-        .get_or_insert_with(HashMap::new)
-        .insert("U".into(), set_u);
+        ti.type_variables
+            .get_or_insert_with(HashMap::new)
+            .insert("U".into(), set_u);
 
-    // Remove "List"
-    let removed = ti.remove_ds_structure("List");
-    assert_eq!(removed, 2); // removed from concrete_types and from T set
+        // Remove "List"
+        let removed = ti.remove_ds_structure("List");
+        assert_eq!(removed, 2); // removed from concrete_types and from T set
 
-    assert!(!ti.concrete_types.contains("List"));
+        assert!(!ti.concrete_types.contains("List"));
 
-    // Check that the inner HashSet for "T" does NOT contain "List"
-    assert!(!ti
-        .type_variables
-        .as_ref()
-        .and_then(|m| m.get("T"))
-        .map_or(false, |s| s.contains("List")));
+        // Check that the inner HashSet for "T" does NOT contain "List"
+        assert!(
+            !ti.type_variables
+                .as_ref()
+                .and_then(|m| m.get("T"))
+                .map_or(false, |s| s.contains("List"))
+        );
 
-    // Remove "Node" — after removal U set becomes empty and should be removed entirely
-    let removed2 = ti.remove_ds_structure("Node");
-    assert_eq!(removed2, 2); // one removal from concrete_types and one from U set
-    assert!(!ti.concrete_types.contains("Node"));
+        // Remove "Node" — after removal U set becomes empty and should be removed entirely
+        let removed2 = ti.remove_ds_structure("Node");
+        assert_eq!(removed2, 2); // one removal from concrete_types and one from U set
+        assert!(!ti.concrete_types.contains("Node"));
 
-    // assert there is no "U" key in the inner map (or the whole Option is None)
-    assert!(!ti.type_variables.as_ref().map_or(false, |m| m.contains_key("U")));
-}
-
+        // assert there is no "U" key in the inner map (or the whole Option is None)
+        assert!(
+            !ti.type_variables
+                .as_ref()
+                .map_or(false, |m| m.contains_key("U"))
+        );
+    }
 }

@@ -98,7 +98,6 @@ pub fn json_selectors_ast_grep(
     method: &str,
     directory: &str,
 ) -> Result<Vec<SelectorAstGrepMatch>, AstGrepError> {
-
     let stdout = run_ast_grep_rule(method, directory)?;
 
     let trimmed = stdout.trim();

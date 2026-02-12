@@ -95,7 +95,6 @@ impl MethodFind {
         let mut items: Vec<AstGrepMatch> = Vec::with_capacity(selector_items.len());
 
         for (_, selector) in selector_items.iter().enumerate() {
-
             // Try to read the first two secondary meta variables directly.
             let secondaries = &selector.meta_variables.multi.secondary;
             if secondaries.len() < 2 {
@@ -143,6 +142,7 @@ mod tests {
     use super::*;
     use std::fs;
     use tempfile::tempdir;
+
     #[test]
     fn test_methodfind_matches_contain_expected_fields() {
         // create temp dir and a test file (not used by the logic under test,

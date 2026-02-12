@@ -9,6 +9,46 @@ pub struct RustParser<'a> {
     pub target_node_text: String,
 }
 
+///find function item
+impl<'a> RustParser<'a> {
+    /// Given a `function_item` node, attempt to find its identifier/name.
+    /// Prefer the child found by the field name "name" (if present),
+    /// otherwise fall back to searching for the first `identifier` node.
+    ///
+    /// Returns `None` if no identifier could be located.
+    pub fn find_identifier_in_function(&self, func_node: Node<'a>) -> Option<String> {
+        // Try the conventional named field first
+        if let Some(name_node) = func_node.child_by_field_name("name") {
+            if name_node.kind() == "identifier" {
+                if let Ok(txt) = name_node.utf8_text(self.source.as_bytes()) {
+                    return Some(txt.to_string());
+                }
+            } else {
+                // sometimes the field exists but is a different node kind (defensive)
+                if let Ok(txt) = name_node.utf8_text(self.source.as_bytes()) {
+                    return Some(txt.to_string());
+                }
+            }
+        }
+
+        // Fallback: find first `identifier` node inside the function node
+        let mut stack = vec![func_node];
+        while let Some(node) = stack.pop() {
+            if node.kind() == "identifier" {
+                if let Ok(txt) = node.utf8_text(self.source.as_bytes()) {
+                    return Some(txt.to_string());
+                }
+            }
+            let mut child_walk = node.walk();
+            for child in node.children(&mut child_walk) {
+                stack.push(child);
+            }
+        }
+
+        None
+    }
+}
+
 ///delete_till_start
 impl<'a> RustParser<'a> {
     pub fn delete_till_start(&self, target: &str) -> Option<String> {
@@ -133,8 +173,6 @@ impl<'a> RustParser<'a> {
 
 ///delete all nodes
 impl<'a> RustParser<'a> {
-    /// Remove *all* nodes whose kind matches `self.target_node_text`.
-    /// Returns `Some(new_source)` with those nodes removed, or `None` if none found.
     pub fn delete_all_nodes(&self) -> String {
         let root = self.tree.root_node();
 
