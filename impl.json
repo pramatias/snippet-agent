@@ -1,0 +1,506 @@
+[
+{
+  "text": "pub fn new(directory: impl Into<String>, method: impl Into<String>) -> Self {\n        MethodFind {\n            directory: directory.into(),\n            method: method.into(),\n            matches: Vec::new(),\n       }\n    }",
+  "range": {
+    "byteOffset": {
+      "start": 1364,
+      "end": 1586
+    },
+    "start": {
+      "line": 43,
+      "column": 4
+    },
+    "end": {
+      "line": 49,
+      "column": 5
+    }
+  },
+  "file": "src/method_find.rs",
+  "lines": "    pub fn new(directory: impl Into<String>, method: impl Into<String>) -> Self {\n        MethodFind {\n            directory: directory.into(),\n            method: method.into(),\n            matches: Vec::new(),\n       }\n    }",
+  "charCount": {
+    "leading": 4,
+    "trailing": 0
+  },
+  "language": "Rust",
+  "metaVariables": {
+    "single": {},
+    "multi": {
+      "secondary": [
+        {
+          "text": "impl MethodFind {\n    /// Create a new MethodFind. `matches` starts empty.\n    pub fn new(directory: impl Into<String>, method: impl Into<String>) -> Self {\n        MethodFind {\n            directory: directory.into(),\n            method: method.into(),\n            matches: Vec::new(),\n       }\n    }\n}",
+          "range": {
+            "byteOffset": {
+              "start": 1285,
+              "end": 1588
+            },
+            "start": {
+              "line": 41,
+              "column": 0
+            },
+            "end": {
+              "line": 50,
+              "column": 1
+            }
+          }
+        },
+        {
+          "text": "new",
+          "range": {
+            "byteOffset": {
+              "start": 1371,
+              "end": 1374
+            },
+            "start": {
+              "line": 43,
+              "column": 11
+            },
+            "end": {
+              "line": 43,
+              "column": 14
+            }
+          }
+        }
+      ]
+    },
+    "transformed": {}
+  },
+  "ruleId": "find-foo-both",
+  "severity": "hint",
+  "note": null,
+  "message": "",
+  "labels": [
+    {
+      "text": "pub fn new(directory: impl Into<String>, method: impl Into<String>) -> Self {\n        MethodFind {\n            directory: directory.into(),\n            method: method.into(),\n            matches: Vec::new(),\n       }\n    }",
+      "range": {
+        "byteOffset": {
+          "start": 1364,
+          "end": 1586
+        },
+        "start": {
+          "line": 43,
+          "column": 4
+        },
+        "end": {
+          "line": 49,
+          "column": 5
+        }
+      },
+      "style": "primary"
+    },
+    {
+      "text": "impl MethodFind {\n    /// Create a new MethodFind. `matches` starts empty.\n    pub fn new(directory: impl Into<String>, method: impl Into<String>) -> Self {\n        MethodFind {\n            directory: directory.into(),\n            method: method.into(),\n            matches: Vec::new(),\n       }\n    }\n}",
+      "range": {
+        "byteOffset": {
+          "start": 1285,
+          "end": 1588
+        },
+        "start": {
+          "line": 41,
+          "column": 0
+        },
+        "end": {
+          "line": 50,
+          "column": 1
+        }
+      },
+      "style": "secondary"
+    },
+    {
+      "text": "new",
+      "range": {
+        "byteOffset": {
+          "start": 1371,
+          "end": 1374
+        },
+        "start": {
+          "line": 43,
+          "column": 11
+        },
+        "end": {
+          "line": 43,
+          "column": 14
+        }
+      },
+      "style": "secondary"
+    }
+  ]
+},
+{
+  "text": "pub fn query(&mut self) -> Result<(), AstGrepError> {\n        // find matches (keeps previous behavior of returning early if none)\n        let items = self.find_matches()?;\n        if items.is_empty() {\n            return Ok(());\n        }\n\n        // store found matches\n        self.matches = items;\n\n        Ok(())\n    }",
+  "range": {
+    "byteOffset": {
+      "start": 1773,
+      "end": 2096
+    },
+    "start": {
+      "line": 56,
+      "column": 4
+    },
+    "end": {
+      "line": 67,
+      "column": 5
+    }
+  },
+  "file": "src/method_find.rs",
+  "lines": "    pub fn query(&mut self) -> Result<(), AstGrepError> {\n        // find matches (keeps previous behavior of returning early if none)\n        let items = self.find_matches()?;\n        if items.is_empty() {\n            return Ok(());\n        }\n\n        // store found matches\n        self.matches = items;\n\n        Ok(())\n    }",
+  "charCount": {
+    "leading": 4,
+    "trailing": 0
+  },
+  "language": "Rust",
+  "metaVariables": {
+    "single": {},
+    "multi": {
+      "secondary": [
+        {
+          "text": "impl MethodFind {\n    /// Run the full pipeline: find matches, run RustParser/delete_node on each\n    /// match.method_body (target node = \"block\"), then print matches.\n    pub fn query(&mut self) -> Result<(), AstGrepError> {\n        // find matches (keeps previous behavior of returning early if none)\n        let items = self.find_matches()?;\n        if items.is_empty() {\n            return Ok(());\n        }\n\n        // store found matches\n        self.matches = items;\n\n        Ok(())\n    }\n}",
+          "range": {
+            "byteOffset": {
+              "start": 1600,
+              "end": 2098
+            },
+            "start": {
+              "line": 53,
+              "column": 0
+            },
+            "end": {
+              "line": 68,
+              "column": 1
+            }
+          }
+        },
+        {
+          "text": "query",
+          "range": {
+            "byteOffset": {
+              "start": 1780,
+              "end": 1785
+            },
+            "start": {
+              "line": 56,
+              "column": 11
+            },
+            "end": {
+              "line": 56,
+              "column": 16
+            }
+          }
+        }
+      ]
+    },
+    "transformed": {}
+  },
+  "ruleId": "find-foo-both",
+  "severity": "hint",
+  "note": null,
+  "message": "",
+  "labels": [
+    {
+      "text": "pub fn query(&mut self) -> Result<(), AstGrepError> {\n        // find matches (keeps previous behavior of returning early if none)\n        let items = self.find_matches()?;\n        if items.is_empty() {\n            return Ok(());\n        }\n\n        // store found matches\n        self.matches = items;\n\n        Ok(())\n    }",
+      "range": {
+        "byteOffset": {
+          "start": 1773,
+          "end": 2096
+        },
+        "start": {
+          "line": 56,
+          "column": 4
+        },
+        "end": {
+          "line": 67,
+          "column": 5
+        }
+      },
+      "style": "primary"
+    },
+    {
+      "text": "impl MethodFind {\n    /// Run the full pipeline: find matches, run RustParser/delete_node on each\n    /// match.method_body (target node = \"block\"), then print matches.\n    pub fn query(&mut self) -> Result<(), AstGrepError> {\n        // find matches (keeps previous behavior of returning early if none)\n        let items = self.find_matches()?;\n        if items.is_empty() {\n            return Ok(());\n        }\n\n        // store found matches\n        self.matches = items;\n\n        Ok(())\n    }\n}",
+      "range": {
+        "byteOffset": {
+          "start": 1600,
+          "end": 2098
+        },
+        "start": {
+          "line": 53,
+          "column": 0
+        },
+        "end": {
+          "line": 68,
+          "column": 1
+        }
+      },
+      "style": "secondary"
+    },
+    {
+      "text": "query",
+      "range": {
+        "byteOffset": {
+          "start": 1780,
+          "end": 1785
+        },
+        "start": {
+          "line": 56,
+          "column": 11
+        },
+        "end": {
+          "line": 56,
+          "column": 16
+        }
+      },
+      "style": "secondary"
+    }
+  ]
+},
+{
+  "text": "pub fn order_fields(&mut self) {\n        if self.impl_body_range > self.method_name_range {\n            // swap the textual fields\n            std::mem::swap(&mut self.impl_body, &mut self.method_name);\n            // swap the corresponding ranges\n            std::mem::swap(&mut self.impl_body_range, &mut self.method_name_range);\n        }\n    }",
+  "range": {
+    "byteOffset": {
+      "start": 2340,
+      "end": 2687
+    },
+    "start": {
+      "line": 75,
+      "column": 4
+    },
+    "end": {
+      "line": 82,
+      "column": 5
+    }
+  },
+  "file": "src/method_find.rs",
+  "lines": "    pub fn order_fields(&mut self) {\n        if self.impl_body_range > self.method_name_range {\n            // swap the textual fields\n            std::mem::swap(&mut self.impl_body, &mut self.method_name);\n            // swap the corresponding ranges\n            std::mem::swap(&mut self.impl_body_range, &mut self.method_name_range);\n        }\n    }",
+  "charCount": {
+    "leading": 4,
+    "trailing": 0
+  },
+  "language": "Rust",
+  "metaVariables": {
+    "single": {},
+    "multi": {
+      "secondary": [
+        {
+          "text": "impl AstGrepMatch {\n    /// Ensure that `impl_body_range <= method_name_range`. If not, swap both\n    /// the text fields and their corresponding ranges so `impl_body` is the one\n    /// with the smaller (or equal) byte range.\n    pub fn order_fields(&mut self) {\n        if self.impl_body_range > self.method_name_range {\n            // swap the textual fields\n            std::mem::swap(&mut self.impl_body, &mut self.method_name);\n            // swap the corresponding ranges\n            std::mem::swap(&mut self.impl_body_range, &mut self.method_name_range);\n        }\n    }\n}",
+          "range": {
+            "byteOffset": {
+              "start": 2109,
+              "end": 2689
+            },
+            "start": {
+              "line": 71,
+              "column": 0
+            },
+            "end": {
+              "line": 83,
+              "column": 1
+            }
+          }
+        },
+        {
+          "text": "order_fields",
+          "range": {
+            "byteOffset": {
+              "start": 2347,
+              "end": 2359
+            },
+            "start": {
+              "line": 75,
+              "column": 11
+            },
+            "end": {
+              "line": 75,
+              "column": 23
+            }
+          }
+        }
+      ]
+    },
+    "transformed": {}
+  },
+  "ruleId": "find-foo-both",
+  "severity": "hint",
+  "note": null,
+  "message": "",
+  "labels": [
+    {
+      "text": "pub fn order_fields(&mut self) {\n        if self.impl_body_range > self.method_name_range {\n            // swap the textual fields\n            std::mem::swap(&mut self.impl_body, &mut self.method_name);\n            // swap the corresponding ranges\n            std::mem::swap(&mut self.impl_body_range, &mut self.method_name_range);\n        }\n    }",
+      "range": {
+        "byteOffset": {
+          "start": 2340,
+          "end": 2687
+        },
+        "start": {
+          "line": 75,
+          "column": 4
+        },
+        "end": {
+          "line": 82,
+          "column": 5
+        }
+      },
+      "style": "primary"
+    },
+    {
+      "text": "impl AstGrepMatch {\n    /// Ensure that `impl_body_range <= method_name_range`. If not, swap both\n    /// the text fields and their corresponding ranges so `impl_body` is the one\n    /// with the smaller (or equal) byte range.\n    pub fn order_fields(&mut self) {\n        if self.impl_body_range > self.method_name_range {\n            // swap the textual fields\n            std::mem::swap(&mut self.impl_body, &mut self.method_name);\n            // swap the corresponding ranges\n            std::mem::swap(&mut self.impl_body_range, &mut self.method_name_range);\n        }\n    }\n}",
+      "range": {
+        "byteOffset": {
+          "start": 2109,
+          "end": 2689
+        },
+        "start": {
+          "line": 71,
+          "column": 0
+        },
+        "end": {
+          "line": 83,
+          "column": 1
+        }
+      },
+      "style": "secondary"
+    },
+    {
+      "text": "order_fields",
+      "range": {
+        "byteOffset": {
+          "start": 2347,
+          "end": 2359
+        },
+        "start": {
+          "line": 75,
+          "column": 11
+        },
+        "end": {
+          "line": 75,
+          "column": 23
+        }
+      },
+      "style": "secondary"
+    }
+  ]
+},
+{
+  "text": "pub fn find_matches(&mut self) -> Result<Vec<AstGrepMatch>, AstGrepError> {\n        // Delegate running ast-grep + JSON parsing\n        let selector_items: Vec<SelectorAstGrepMatch> =\n            json_selectors_ast_grep(&self.method, &self.directory)?;\n\n        let mut items: Vec<AstGrepMatch> = Vec::with_capacity(selector_items.len());\n\n        for (_, selector) in selector_items.iter().enumerate() {\n            // Try to read the first two secondary meta variables directly.\n            let secondaries = &selector.meta_variables.multi.secondary;\n            if secondaries.len() < 2 {\n                // intentionally skip selectors without at least two secondaries\n                continue;\n            }\n\n            // Use the first two secondary selectors (no pre-ordering here)\n            let impl_secondary = &secondaries[0];\n            let method_name_secondary = &secondaries[1];\n\n            let impl_body = impl_secondary.text.clone();\n            let impl_body_range = impl_secondary.range.byte_offset.clone();\n\n            let method_name = method_name_secondary.text.clone();\n            let method_name_range = method_name_secondary.range.byte_offset.clone();\n\n            items.push(AstGrepMatch {\n                file: selector.file.clone(),\n                method_body: selector.text.clone(),\n                method_body_range: selector.range.byte_offset.clone(),\n                impl_body,\n                impl_body_range,\n                method_name,\n                method_name_range,\n            });\n        }\n\n        // Ensure the impl_body/ method_name ordering invariant for every match:\n        for (_, item) in items.iter_mut().enumerate() {\n            item.order_fields();\n        }\n\n        // deterministic ordering: file -> method_name\n        items.sort_by(|a, b| a.file.cmp(&b.file).then(a.method_name.cmp(&b.method_name)));\n\n        // store results in the struct and return them\n        self.matches = items.clone();\n        Ok(items)\n    }",
+  "range": {
+    "byteOffset": {
+      "start": 2836,
+      "end": 4821
+    },
+    "start": {
+      "line": 89,
+      "column": 4
+    },
+    "end": {
+      "line": 136,
+      "column": 5
+    }
+  },
+  "file": "src/method_find.rs",
+  "lines": "    pub fn find_matches(&mut self) -> Result<Vec<AstGrepMatch>, AstGrepError> {\n        // Delegate running ast-grep + JSON parsing\n        let selector_items: Vec<SelectorAstGrepMatch> =\n            json_selectors_ast_grep(&self.method, &self.directory)?;\n\n        let mut items: Vec<AstGrepMatch> = Vec::with_capacity(selector_items.len());\n\n        for (_, selector) in selector_items.iter().enumerate() {\n            // Try to read the first two secondary meta variables directly.\n            let secondaries = &selector.meta_variables.multi.secondary;\n            if secondaries.len() < 2 {\n                // intentionally skip selectors without at least two secondaries\n                continue;\n            }\n\n            // Use the first two secondary selectors (no pre-ordering here)\n            let impl_secondary = &secondaries[0];\n            let method_name_secondary = &secondaries[1];\n\n            let impl_body = impl_secondary.text.clone();\n            let impl_body_range = impl_secondary.range.byte_offset.clone();\n\n            let method_name = method_name_secondary.text.clone();\n            let method_name_range = method_name_secondary.range.byte_offset.clone();\n\n            items.push(AstGrepMatch {\n                file: selector.file.clone(),\n                method_body: selector.text.clone(),\n                method_body_range: selector.range.byte_offset.clone(),\n                impl_body,\n                impl_body_range,\n                method_name,\n                method_name_range,\n            });\n        }\n\n        // Ensure the impl_body/ method_name ordering invariant for every match:\n        for (_, item) in items.iter_mut().enumerate() {\n            item.order_fields();\n        }\n\n        // deterministic ordering: file -> method_name\n        items.sort_by(|a, b| a.file.cmp(&b.file).then(a.method_name.cmp(&b.method_name)));\n\n        // store results in the struct and return them\n        self.matches = items.clone();\n        Ok(items)\n    }",
+  "charCount": {
+    "leading": 4,
+    "trailing": 0
+  },
+  "language": "Rust",
+  "metaVariables": {
+    "single": {},
+    "multi": {
+      "secondary": [
+        {
+          "text": "impl MethodFind {\n    /// Find matches, store them in `self.matches`, and return a deterministic Vec\n    /// of AstGrepMatch items.\n    pub fn find_matches(&mut self) -> Result<Vec<AstGrepMatch>, AstGrepError> {\n        // Delegate running ast-grep + JSON parsing\n        let selector_items: Vec<SelectorAstGrepMatch> =\n            json_selectors_ast_grep(&self.method, &self.directory)?;\n\n        let mut items: Vec<AstGrepMatch> = Vec::with_capacity(selector_items.len());\n\n        for (_, selector) in selector_items.iter().enumerate() {\n            // Try to read the first two secondary meta variables directly.\n            let secondaries = &selector.meta_variables.multi.secondary;\n            if secondaries.len() < 2 {\n                // intentionally skip selectors without at least two secondaries\n                continue;\n            }\n\n            // Use the first two secondary selectors (no pre-ordering here)\n            let impl_secondary = &secondaries[0];\n            let method_name_secondary = &secondaries[1];\n\n            let impl_body = impl_secondary.text.clone();\n            let impl_body_range = impl_secondary.range.byte_offset.clone();\n\n            let method_name = method_name_secondary.text.clone();\n            let method_name_range = method_name_secondary.range.byte_offset.clone();\n\n            items.push(AstGrepMatch {\n                file: selector.file.clone(),\n                method_body: selector.text.clone(),\n                method_body_range: selector.range.byte_offset.clone(),\n                impl_body,\n                impl_body_range,\n                method_name,\n                method_name_range,\n            });\n        }\n\n        // Ensure the impl_body/ method_name ordering invariant for every match:\n        for (_, item) in items.iter_mut().enumerate() {\n            item.order_fields();\n        }\n\n        // deterministic ordering: file -> method_name\n        items.sort_by(|a, b| a.file.cmp(&b.file).then(a.method_name.cmp(&b.method_name)));\n\n        // store results in the struct and return them\n        self.matches = items.clone();\n        Ok(items)\n    }\n}",
+          "range": {
+            "byteOffset": {
+              "start": 2700,
+              "end": 4823
+            },
+            "start": {
+              "line": 86,
+              "column": 0
+            },
+            "end": {
+              "line": 137,
+              "column": 1
+            }
+          }
+        },
+        {
+          "text": "find_matches",
+          "range": {
+            "byteOffset": {
+              "start": 2843,
+              "end": 2855
+            },
+            "start": {
+              "line": 89,
+              "column": 11
+            },
+            "end": {
+              "line": 89,
+              "column": 23
+            }
+          }
+        }
+      ]
+    },
+    "transformed": {}
+  },
+  "ruleId": "find-foo-both",
+  "severity": "hint",
+  "note": null,
+  "message": "",
+  "labels": [
+    {
+      "text": "pub fn find_matches(&mut self) -> Result<Vec<AstGrepMatch>, AstGrepError> {\n        // Delegate running ast-grep + JSON parsing\n        let selector_items: Vec<SelectorAstGrepMatch> =\n            json_selectors_ast_grep(&self.method, &self.directory)?;\n\n        let mut items: Vec<AstGrepMatch> = Vec::with_capacity(selector_items.len());\n\n        for (_, selector) in selector_items.iter().enumerate() {\n            // Try to read the first two secondary meta variables directly.\n            let secondaries = &selector.meta_variables.multi.secondary;\n            if secondaries.len() < 2 {\n                // intentionally skip selectors without at least two secondaries\n                continue;\n            }\n\n            // Use the first two secondary selectors (no pre-ordering here)\n            let impl_secondary = &secondaries[0];\n            let method_name_secondary = &secondaries[1];\n\n            let impl_body = impl_secondary.text.clone();\n            let impl_body_range = impl_secondary.range.byte_offset.clone();\n\n            let method_name = method_name_secondary.text.clone();\n            let method_name_range = method_name_secondary.range.byte_offset.clone();\n\n            items.push(AstGrepMatch {\n                file: selector.file.clone(),\n                method_body: selector.text.clone(),\n                method_body_range: selector.range.byte_offset.clone(),\n                impl_body,\n                impl_body_range,\n                method_name,\n                method_name_range,\n            });\n        }\n\n        // Ensure the impl_body/ method_name ordering invariant for every match:\n        for (_, item) in items.iter_mut().enumerate() {\n            item.order_fields();\n        }\n\n        // deterministic ordering: file -> method_name\n        items.sort_by(|a, b| a.file.cmp(&b.file).then(a.method_name.cmp(&b.method_name)));\n\n        // store results in the struct and return them\n        self.matches = items.clone();\n        Ok(items)\n    }",
+      "range": {
+        "byteOffset": {
+          "start": 2836,
+          "end": 4821
+        },
+        "start": {
+          "line": 89,
+          "column": 4
+        },
+        "end": {
+          "line": 136,
+          "column": 5
+        }
+      },
+      "style": "primary"
+    },
+    {
+      "text": "impl MethodFind {\n    /// Find matches, store them in `self.matches`, and return a deterministic Vec\n    /// of AstGrepMatch items.\n    pub fn find_matches(&mut self) -> Result<Vec<AstGrepMatch>, AstGrepError> {\n        // Delegate running ast-grep + JSON parsing\n        let selector_items: Vec<SelectorAstGrepMatch> =\n            json_selectors_ast_grep(&self.method, &self.directory)?;\n\n        let mut items: Vec<AstGrepMatch> = Vec::with_capacity(selector_items.len());\n\n        for (_, selector) in selector_items.iter().enumerate() {\n            // Try to read the first two secondary meta variables directly.\n            let secondaries = &selector.meta_variables.multi.secondary;\n            if secondaries.len() < 2 {\n                // intentionally skip selectors without at least two secondaries\n                continue;\n            }\n\n            // Use the first two secondary selectors (no pre-ordering here)\n            let impl_secondary = &secondaries[0];\n            let method_name_secondary = &secondaries[1];\n\n            let impl_body = impl_secondary.text.clone();\n            let impl_body_range = impl_secondary.range.byte_offset.clone();\n\n            let method_name = method_name_secondary.text.clone();\n            let method_name_range = method_name_secondary.range.byte_offset.clone();\n\n            items.push(AstGrepMatch {\n                file: selector.file.clone(),\n                method_body: selector.text.clone(),\n                method_body_range: selector.range.byte_offset.clone(),\n                impl_body,\n                impl_body_range,\n                method_name,\n                method_name_range,\n            });\n        }\n\n        // Ensure the impl_body/ method_name ordering invariant for every match:\n        for (_, item) in items.iter_mut().enumerate() {\n            item.order_fields();\n        }\n\n        // deterministic ordering: file -> method_name\n        items.sort_by(|a, b| a.file.cmp(&b.file).then(a.method_name.cmp(&b.method_name)));\n\n        // store results in the struct and return them\n        self.matches = items.clone();\n        Ok(items)\n    }\n}",
+      "range": {
+        "byteOffset": {
+          "start": 2700,
+          "end": 4823
+        },
+        "start": {
+          "line": 86,
+          "column": 0
+        },
+        "end": {
+          "line": 137,
+          "column": 1
+        }
+      },
+      "style": "secondary"
+    },
+    {
+      "text": "find_matches",
+      "range": {
+        "byteOffset": {
+          "start": 2843,
+          "end": 2855
+        },
+        "start": {
+          "line": 89,
+          "column": 11
+        },
+        "end": {
+          "line": 89,
+          "column": 23
+        }
+      },
+      "style": "secondary"
+    }
+  ]
+}
+]

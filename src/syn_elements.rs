@@ -1,0 +1,323 @@
+use serde::Deserialize;
+use crate::json_selection::unprocessed_elements::*;
+use crate::impl_sig_types::*;
+
+pub type ImplSignature = String;
+pub type FunctionSignature = String;
+pub type DSName = String;
+
+pub type SynAttributes = UnprocessedAttributes;
+pub type SynTestsMods = UnprocessedTestsMods;
+pub type SynFunctions = UnprocessedFunctions;
+pub type SynStructs = UnprocessedStructs;
+pub type SynTraits = UnprocessedTraits;
+pub type SynTraitMethodSigs = UnprocessedTraitMethodSigs;
+pub type SynTraitMethodDefs = UnprocessedTraitMethodDefs;
+pub type SynTypeAliases = UnprocessedTypeAliases;
+pub type SynEnums = UnprocessedEnums;
+pub type SynUnions = UnprocessedUnions;
+
+#[derive(Debug, Deserialize, Clone)]
+pub struct SynMethod {
+    pub file: FilePath,
+
+    // original raw elements (keeps source text + range)
+    pub impl_body: MethodImplBody,
+    pub method_body: MethodBody,
+    pub method_name: MethodName,
+
+    pub impl_signature: ImplSignature,
+    pub function_signature: FunctionSignature,
+    pub ds_structure: DSName,
+    pub type_identifiers: TypeIdentifiers,
+
+}
+
+#[derive(Debug, Deserialize, Clone)]
+pub struct SynImpl {
+    pub file: FilePath,
+
+    // original impl body
+    pub impl_body: ImplBody,
+
+    // additional metadata you commonly want from an impl
+    /// Optional target type this impl is for (e.g. "MyType" or "MyType<T>")
+    pub for_type: Option<String>,
+    /// Whether the impl is `unsafe` (best-effort)
+    pub is_unsafe: bool,
+    /// Generics string, if applicable (best-effort)
+    pub generics: Option<String>,
+    /// Attributes that were attached to this impl (e.g. doc, cfg) - extracted/normalized
+    pub attributes: Vec<String>,
+
+    /// Methods that belong to this impl — initially empty when converting from raw; you can populate this
+    /// by matching `unprocessed_methods` to the impl (e.g. by `file` + byte ranges) in a later pass.
+    pub methods: Vec<SynMethod>,
+}
+
+impl From<UnprocessedImpl> for SynImpl {
+    fn from(u: UnprocessedImpl) -> Self {
+        SynImpl {
+            file: u.file,
+            impl_body: u.impl_body,
+            for_type: None,
+            is_unsafe: false,
+            generics: None,
+            attributes: Vec::new(),
+            methods: Vec::new(),
+        }
+    }
+}
+
+// SynCollections (vectors) for the richer types
+pub type SynMethods = Vec<SynMethod>;
+pub type SynImpls = Vec<SynImpl>;
+
+#[derive(Debug, Clone)]
+pub struct AllSynElements {
+    pub syn_attributes: SynAttributes,
+    pub syn_tests_mods: SynTestsMods,
+    pub syn_functions: SynFunctions,
+    pub syn_methods: SynMethods,
+    pub syn_impls: SynImpls,
+    pub syn_structs: SynStructs,
+    pub syn_traits: SynTraits,
+    pub syn_trait_method_sigs: SynTraitMethodSigs,
+    pub syn_trait_method_defs: SynTraitMethodDefs,
+    pub syn_type_aliases: SynTypeAliases,
+    pub syn_enums: SynEnums,
+    pub syn_unions: SynUnions,
+}
+
+impl AllSynElements {
+    /// Convert an `AllUnprocessedElements` into `AllSynElements`.
+    /// This conversion is shallow: it copies/aliases the unchanged collections and converts
+    /// `UnprocessedImpl`s and `UnprocessedMethod`s into `SynImpl`/`SynMethod` with default
+    /// processed fields. You can extend this to parse signatures/attributes and to attach
+    /// methods to their impls by matching ranges/locations.
+    pub fn from_unprocessed(u: AllUnprocessedElements) -> Self {
+        // convert methods and impls using From implementations above
+        let syn_methods: SynMethods = u
+            .unprocessed_methods
+            .into_iter()
+            .map(SynMethod::from)
+            .collect();
+
+        let syn_impls: SynImpls = u
+            .unprocessed_impls
+            .into_iter()
+            .map(SynImpl::from)
+            .collect();
+
+        AllSynElements {
+            syn_attributes: u.unprocessed_attributes,
+            syn_tests_mods: u.unprocessed_tests_mods,
+            syn_functions: u.unprocessed_functions,
+            syn_methods,
+            syn_impls,
+            syn_structs: u.unprocessed_structs,
+            syn_traits: u.unprocessed_traits,
+            syn_trait_method_sigs: u.unprocessed_trait_method_sigs,
+            syn_trait_method_defs: u.unprocessed_trait_method_defs,
+            syn_type_aliases: u.unprocessed_type_aliases,
+            syn_enums: u.unprocessed_enums,
+            syn_unions: u.unprocessed_unions,
+        }
+    }
+}
+
+#[allow(dead_code)]
+fn context(){
+    const CONTEXT: &str = r#"
+// use crate::raw_elements::*;
+// use crate::raw_syn_casting::*;
+
+pub type UnprocessedAttributes = Vec<UnprocessedAttribute>;
+pub type UnprocessedTestsMods = Vec<UnprocessedTestsMod>;
+pub type UnprocessedFunctions = Vec<UnprocessedFunction>;
+pub type UnprocessedMethods = Vec<UnprocessedMethod>;
+pub type UnprocessedImpls = Vec<UnprocessedImpl>;
+pub type UnprocessedStructs = Vec<UnprocessedStruct>;
+pub type UnprocessedTraits = Vec<UnprocessedTrait>;
+pub type UnprocessedTraitMethodSigs = Vec<UnprocessedTraitMethodSignature>;
+pub type UnprocessedTraitMethodDefs = Vec<UnprocessedTraitMethodDefinition>;
+pub type UnprocessedTypeAliases = Vec<UnprocessedTypeAlias>;
+pub type UnprocessedEnums = Vec<UnprocessedEnum>;
+pub type UnprocessedUnions = Vec<UnprocessedUnion>;
+
+#[derive(Debug, Clone)]
+pub struct AllSynElements {
+    pub unprocessed_attributes: UnprocessedAttributes,
+    pub unprocessed_tests_mods: UnprocessedTestsMods,
+    pub unprocessed_functions: UnprocessedFunctions,
+    pub unprocessed_methods: UnprocessedMethods,
+    pub unprocessed_impls: UnprocessedImpls,
+    pub unprocessed_structs: UnprocessedStructs,
+    pub unprocessed_traits: UnprocessedTraits,
+    pub unprocessed_trait_method_sigs: UnprocessedTraitMethodSigs,
+    pub unprocessed_trait_method_defs: UnprocessedTraitMethodDefs,
+    pub unprocessed_type_aliases: UnprocessedTypeAliases,
+    pub unprocessed_enums: UnprocessedEnums,
+    pub unprocessed_unions: UnprocessedUnions,
+}
+
+pub type FilePath = String;
+
+#[allow(dead_code)]
+#[derive(Debug, Deserialize, Clone)]
+pub struct SynPosition {
+    pub line: u64,
+    pub column: u64,
+}
+
+#[allow(dead_code)]
+#[derive(Debug, Deserialize, Clone)]
+pub struct ByteRange {
+    pub start: u64,
+    pub end: u64,
+}
+
+#[allow(dead_code)]
+#[derive(Debug, Deserialize, Clone)]
+pub struct CharactersDimension {
+    pub start: SynPosition,
+    pub end: SynPosition,
+}
+
+#[allow(dead_code)]
+#[derive(Debug, Deserialize, Clone)]
+pub struct SynRange {
+    pub byte_range: ByteRange,
+    pub characters_dimension: CharactersDimension,
+}
+
+#[derive(Debug, Deserialize, Clone)]
+pub struct SynElement {
+    pub text: String,
+
+    #[allow(dead_code)]
+    pub range: SynRange,
+}
+
+pub type MethodImplBody = SynElement;
+pub type MethodBody = SynElement;
+pub type MethodName = SynElement;
+pub type TraitBody = SynElement;
+pub type TraitMethodBody = SynElement;
+pub type TraitMethodName = SynElement;
+pub type TraitName = SynElement;
+pub type TypeAliasBody = SynElement;
+pub type TypeAliasName = SynElement;
+pub type EnumBody = SynElement;
+pub type EnumName = SynElement;
+pub type UnionBody = SynElement;
+pub type UnionName = SynElement;
+pub type TestsModBody = SynElement;
+pub type FunctionBody = SynElement;
+pub type FunctionName = SynElement;
+pub type TraitMethodSignature = SynElement;
+pub type SignatureName = SynElement;
+pub type AttributeBody = SynElement;
+pub type ImplBody = SynElement;
+pub type StructBody = SynElement;
+pub type StructName = SynElement;
+
+#[derive(Debug, Deserialize, Clone)]
+pub struct UnprocessedMethod {
+    pub file: FilePath,
+
+    pub impl_body: MethodImplBody,
+    pub method_body: MethodBody,
+    pub method_name: MethodName,
+}
+
+#[derive(Debug, Deserialize, Clone)]
+pub struct UnprocessedTraitMethodDefinition {
+    pub file: FilePath,
+
+    pub trait_body: TraitBody,
+    pub trait_method_body: TraitMethodBody,
+    pub method_name: TraitMethodName,
+    pub trait_name: TraitName,
+}
+
+#[derive(Debug, Deserialize, Clone)]
+pub struct UnprocessedTypeAlias {
+    pub file: FilePath,
+
+    pub type_body: TypeAliasBody,
+    pub type_name: TypeAliasName,
+}
+
+#[derive(Debug, Deserialize, Clone)]
+pub struct UnprocessedEnum {
+    pub file: FilePath,
+
+    pub enum_body: EnumBody,
+    pub enum_name: EnumName,
+}
+
+#[derive(Debug, Deserialize, Clone)]
+pub struct UnprocessedUnion {
+    pub file: FilePath,
+
+    pub union_body: UnionBody,
+    pub union_name: UnionName,
+}
+
+#[derive(Debug, Deserialize, Clone)]
+pub struct UnprocessedTestsMod {
+    pub file: FilePath,
+
+    pub tests_mod_body: TestsModBody,
+}
+
+#[derive(Debug, Deserialize, Clone)]
+pub struct UnprocessedFunction {
+    pub file: FilePath,
+
+    pub function_body: FunctionBody,
+    pub function_name: FunctionName,
+}
+
+#[derive(Debug, Deserialize, Clone)]
+pub struct UnprocessedTrait {
+    pub file: FilePath,
+
+    pub trait_body: TraitBody,
+    pub trait_name: TraitName,
+}
+
+#[derive(Debug, Deserialize, Clone)]
+pub struct UnprocessedTraitMethodSignature {
+    pub file: FilePath,
+
+    pub trait_method_signature: TraitMethodSignature,
+    pub method_signature_name: SignatureName,
+    pub trait_body: TraitBody,
+    pub trait_name: TraitName,
+}
+
+#[derive(Debug, Deserialize, Clone)]
+pub struct UnprocessedAttribute {
+    pub file: FilePath,
+
+    pub attribute_body: AttributeBody,
+}
+
+#[derive(Debug, Deserialize, Clone)]
+pub struct UnprocessedImpl {
+    pub file: FilePath,
+
+    pub impl_body: ImplBody,
+}
+
+#[derive(Debug, Deserialize, Clone)]
+pub struct UnprocessedStruct {
+    pub file: FilePath,
+
+    pub struct_body: StructBody,
+    pub struct_name: StructName,
+}
+"#;
+}

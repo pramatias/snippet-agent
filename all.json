@@ -1,0 +1,3754 @@
+[
+{
+  "text": "#[cfg(test)]",
+  "range": {
+    "byteOffset": {
+      "start": 0,
+      "end": 12
+    },
+    "start": {
+      "line": 0,
+      "column": 0
+    },
+    "end": {
+      "line": 0,
+      "column": 12
+    }
+  },
+  "file": "sample_program.rs",
+  "lines": "#[cfg(test)]",
+  "charCount": {
+    "leading": 0,
+    "trailing": 0
+  },
+  "language": "Rust",
+  "metaVariables": {
+    "single": {
+      "ATTRIBUTES": {
+        "text": "#[cfg(test)]",
+        "range": {
+          "byteOffset": {
+            "start": 0,
+            "end": 12
+          },
+          "start": {
+            "line": 0,
+            "column": 0
+          },
+          "end": {
+            "line": 0,
+            "column": 12
+          }
+        }
+      }
+    },
+    "multi": {},
+    "transformed": {}
+  },
+  "ruleId": "find-all-syntactic-elements",
+  "severity": "hint",
+  "note": null,
+  "message": "",
+  "labels": [
+    {
+      "text": "#[cfg(test)]",
+      "range": {
+        "byteOffset": {
+          "start": 0,
+          "end": 12
+        },
+        "start": {
+          "line": 0,
+          "column": 0
+        },
+        "end": {
+          "line": 0,
+          "column": 12
+        }
+      },
+      "style": "primary"
+    }
+  ]
+},
+{
+  "text": "mod tests {\n    #[test]\n    fn test_json_selectors_ast_grep() {\n        use super::*;\n        let temp_dir = tempfile::tempdir().expect(\"Failed to create temp directory\");\n    }\n}",
+  "range": {
+    "byteOffset": {
+      "start": 13,
+      "end": 192
+    },
+    "start": {
+      "line": 1,
+      "column": 0
+    },
+    "end": {
+      "line": 7,
+      "column": 1
+    }
+  },
+  "file": "sample_program.rs",
+  "lines": "mod tests {\n    #[test]\n    fn test_json_selectors_ast_grep() {\n        use super::*;\n        let temp_dir = tempfile::tempdir().expect(\"Failed to create temp directory\");\n    }\n}",
+  "charCount": {
+    "leading": 0,
+    "trailing": 0
+  },
+  "language": "Rust",
+  "metaVariables": {
+    "single": {
+      "TESTS_MOD": {
+        "text": "mod tests {\n    #[test]\n    fn test_json_selectors_ast_grep() {\n        use super::*;\n        let temp_dir = tempfile::tempdir().expect(\"Failed to create temp directory\");\n    }\n}",
+        "range": {
+          "byteOffset": {
+            "start": 13,
+            "end": 192
+          },
+          "start": {
+            "line": 1,
+            "column": 0
+          },
+          "end": {
+            "line": 7,
+            "column": 1
+          }
+        }
+      }
+    },
+    "multi": {
+      "secondary": [
+        {
+          "text": "tests",
+          "range": {
+            "byteOffset": {
+              "start": 17,
+              "end": 22
+            },
+            "start": {
+              "line": 1,
+              "column": 4
+            },
+            "end": {
+              "line": 1,
+              "column": 9
+            }
+          }
+        }
+      ]
+    },
+    "transformed": {}
+  },
+  "ruleId": "find-all-syntactic-elements",
+  "severity": "hint",
+  "note": null,
+  "message": "",
+  "labels": [
+    {
+      "text": "mod tests {\n    #[test]\n    fn test_json_selectors_ast_grep() {\n        use super::*;\n        let temp_dir = tempfile::tempdir().expect(\"Failed to create temp directory\");\n    }\n}",
+      "range": {
+        "byteOffset": {
+          "start": 13,
+          "end": 192
+        },
+        "start": {
+          "line": 1,
+          "column": 0
+        },
+        "end": {
+          "line": 7,
+          "column": 1
+        }
+      },
+      "style": "primary"
+    },
+    {
+      "text": "tests",
+      "range": {
+        "byteOffset": {
+          "start": 17,
+          "end": 22
+        },
+        "start": {
+          "line": 1,
+          "column": 4
+        },
+        "end": {
+          "line": 1,
+          "column": 9
+        }
+      },
+      "style": "secondary"
+    }
+  ]
+},
+{
+  "text": "#[test]",
+  "range": {
+    "byteOffset": {
+      "start": 29,
+      "end": 36
+    },
+    "start": {
+      "line": 2,
+      "column": 4
+    },
+    "end": {
+      "line": 2,
+      "column": 11
+    }
+  },
+  "file": "sample_program.rs",
+  "lines": "    #[test]",
+  "charCount": {
+    "leading": 4,
+    "trailing": 0
+  },
+  "language": "Rust",
+  "metaVariables": {
+    "single": {
+      "ATTRIBUTES": {
+        "text": "#[test]",
+        "range": {
+          "byteOffset": {
+            "start": 29,
+            "end": 36
+          },
+          "start": {
+            "line": 2,
+            "column": 4
+          },
+          "end": {
+            "line": 2,
+            "column": 11
+          }
+        }
+      }
+    },
+    "multi": {},
+    "transformed": {}
+  },
+  "ruleId": "find-all-syntactic-elements",
+  "severity": "hint",
+  "note": null,
+  "message": "",
+  "labels": [
+    {
+      "text": "#[test]",
+      "range": {
+        "byteOffset": {
+          "start": 29,
+          "end": 36
+        },
+        "start": {
+          "line": 2,
+          "column": 4
+        },
+        "end": {
+          "line": 2,
+          "column": 11
+        }
+      },
+      "style": "primary"
+    }
+  ]
+},
+{
+  "text": "fn test_json_selectors_ast_grep() {\n        use super::*;\n        let temp_dir = tempfile::tempdir().expect(\"Failed to create temp directory\");\n    }",
+  "range": {
+    "byteOffset": {
+      "start": 41,
+      "end": 190
+    },
+    "start": {
+      "line": 3,
+      "column": 4
+    },
+    "end": {
+      "line": 6,
+      "column": 5
+    }
+  },
+  "file": "sample_program.rs",
+  "lines": "    fn test_json_selectors_ast_grep() {\n        use super::*;\n        let temp_dir = tempfile::tempdir().expect(\"Failed to create temp directory\");\n    }",
+  "charCount": {
+    "leading": 4,
+    "trailing": 0
+  },
+  "language": "Rust",
+  "metaVariables": {
+    "single": {
+      "FUNCTION_NAME": {
+        "text": "test_json_selectors_ast_grep",
+        "range": {
+          "byteOffset": {
+            "start": 44,
+            "end": 72
+          },
+          "start": {
+            "line": 3,
+            "column": 7
+          },
+          "end": {
+            "line": 3,
+            "column": 35
+          }
+        }
+      },
+      "FUNCTION_BODY": {
+        "text": "fn test_json_selectors_ast_grep() {\n        use super::*;\n        let temp_dir = tempfile::tempdir().expect(\"Failed to create temp directory\");\n    }",
+        "range": {
+          "byteOffset": {
+            "start": 41,
+            "end": 190
+          },
+          "start": {
+            "line": 3,
+            "column": 4
+          },
+          "end": {
+            "line": 6,
+            "column": 5
+          }
+        }
+      }
+    },
+    "multi": {
+      "secondary": [
+        {
+          "text": "test_json_selectors_ast_grep",
+          "range": {
+            "byteOffset": {
+              "start": 44,
+              "end": 72
+            },
+            "start": {
+              "line": 3,
+              "column": 7
+            },
+            "end": {
+              "line": 3,
+              "column": 35
+            }
+          }
+        }
+      ]
+    },
+    "transformed": {}
+  },
+  "ruleId": "find-all-syntactic-elements",
+  "severity": "hint",
+  "note": null,
+  "message": "",
+  "labels": [
+    {
+      "text": "fn test_json_selectors_ast_grep() {\n        use super::*;\n        let temp_dir = tempfile::tempdir().expect(\"Failed to create temp directory\");\n    }",
+      "range": {
+        "byteOffset": {
+          "start": 41,
+          "end": 190
+        },
+        "start": {
+          "line": 3,
+          "column": 4
+        },
+        "end": {
+          "line": 6,
+          "column": 5
+        }
+      },
+      "style": "primary"
+    },
+    {
+      "text": "test_json_selectors_ast_grep",
+      "range": {
+        "byteOffset": {
+          "start": 44,
+          "end": 72
+        },
+        "start": {
+          "line": 3,
+          "column": 7
+        },
+        "end": {
+          "line": 3,
+          "column": 35
+        }
+      },
+      "style": "secondary"
+    }
+  ]
+},
+{
+  "text": "#[derive(Copy, Clone)]",
+  "range": {
+    "byteOffset": {
+      "start": 194,
+      "end": 216
+    },
+    "start": {
+      "line": 9,
+      "column": 0
+    },
+    "end": {
+      "line": 9,
+      "column": 22
+    }
+  },
+  "file": "sample_program.rs",
+  "lines": "#[derive(Copy, Clone)]",
+  "charCount": {
+    "leading": 0,
+    "trailing": 0
+  },
+  "language": "Rust",
+  "metaVariables": {
+    "single": {
+      "ATTRIBUTES": {
+        "text": "#[derive(Copy, Clone)]",
+        "range": {
+          "byteOffset": {
+            "start": 194,
+            "end": 216
+          },
+          "start": {
+            "line": 9,
+            "column": 0
+          },
+          "end": {
+            "line": 9,
+            "column": 22
+          }
+        }
+      }
+    },
+    "multi": {},
+    "transformed": {}
+  },
+  "ruleId": "find-all-syntactic-elements",
+  "severity": "hint",
+  "note": null,
+  "message": "",
+  "labels": [
+    {
+      "text": "#[derive(Copy, Clone)]",
+      "range": {
+        "byteOffset": {
+          "start": 194,
+          "end": 216
+        },
+        "start": {
+          "line": 9,
+          "column": 0
+        },
+        "end": {
+          "line": 9,
+          "column": 22
+        }
+      },
+      "style": "primary"
+    }
+  ]
+},
+{
+  "text": "#[repr(C)]",
+  "range": {
+    "byteOffset": {
+      "start": 217,
+      "end": 227
+    },
+    "start": {
+      "line": 10,
+      "column": 0
+    },
+    "end": {
+      "line": 10,
+      "column": 10
+    }
+  },
+  "file": "sample_program.rs",
+  "lines": "#[repr(C)]",
+  "charCount": {
+    "leading": 0,
+    "trailing": 0
+  },
+  "language": "Rust",
+  "metaVariables": {
+    "single": {
+      "ATTRIBUTES": {
+        "text": "#[repr(C)]",
+        "range": {
+          "byteOffset": {
+            "start": 217,
+            "end": 227
+          },
+          "start": {
+            "line": 10,
+            "column": 0
+          },
+          "end": {
+            "line": 10,
+            "column": 10
+          }
+        }
+      }
+    },
+    "multi": {},
+    "transformed": {}
+  },
+  "ruleId": "find-all-syntactic-elements",
+  "severity": "hint",
+  "note": null,
+  "message": "",
+  "labels": [
+    {
+      "text": "#[repr(C)]",
+      "range": {
+        "byteOffset": {
+          "start": 217,
+          "end": 227
+        },
+        "start": {
+          "line": 10,
+          "column": 0
+        },
+        "end": {
+          "line": 10,
+          "column": 10
+        }
+      },
+      "style": "primary"
+    }
+  ]
+},
+{
+  "text": "pub union IntOrFloat {\n    pub i: u32,\n    pub f: f32,\n}",
+  "range": {
+    "byteOffset": {
+      "start": 228,
+      "end": 284
+    },
+    "start": {
+      "line": 11,
+      "column": 0
+    },
+    "end": {
+      "line": 14,
+      "column": 1
+    }
+  },
+  "file": "sample_program.rs",
+  "lines": "pub union IntOrFloat {\n    pub i: u32,\n    pub f: f32,\n}",
+  "charCount": {
+    "leading": 0,
+    "trailing": 0
+  },
+  "language": "Rust",
+  "metaVariables": {
+    "single": {
+      "UNION_NAME": {
+        "text": "IntOrFloat",
+        "range": {
+          "byteOffset": {
+            "start": 238,
+            "end": 248
+          },
+          "start": {
+            "line": 11,
+            "column": 10
+          },
+          "end": {
+            "line": 11,
+            "column": 20
+          }
+        }
+      },
+      "UNION_BODY": {
+        "text": "pub union IntOrFloat {\n    pub i: u32,\n    pub f: f32,\n}",
+        "range": {
+          "byteOffset": {
+            "start": 228,
+            "end": 284
+          },
+          "start": {
+            "line": 11,
+            "column": 0
+          },
+          "end": {
+            "line": 14,
+            "column": 1
+          }
+        }
+      }
+    },
+    "multi": {
+      "secondary": [
+        {
+          "text": "IntOrFloat",
+          "range": {
+            "byteOffset": {
+              "start": 238,
+              "end": 248
+            },
+            "start": {
+              "line": 11,
+              "column": 10
+            },
+            "end": {
+              "line": 11,
+              "column": 20
+            }
+          }
+        }
+      ]
+    },
+    "transformed": {}
+  },
+  "ruleId": "find-all-syntactic-elements",
+  "severity": "hint",
+  "note": null,
+  "message": "",
+  "labels": [
+    {
+      "text": "pub union IntOrFloat {\n    pub i: u32,\n    pub f: f32,\n}",
+      "range": {
+        "byteOffset": {
+          "start": 228,
+          "end": 284
+        },
+        "start": {
+          "line": 11,
+          "column": 0
+        },
+        "end": {
+          "line": 14,
+          "column": 1
+        }
+      },
+      "style": "primary"
+    },
+    {
+      "text": "IntOrFloat",
+      "range": {
+        "byteOffset": {
+          "start": 238,
+          "end": 248
+        },
+        "start": {
+          "line": 11,
+          "column": 10
+        },
+        "end": {
+          "line": 11,
+          "column": 20
+        }
+      },
+      "style": "secondary"
+    }
+  ]
+},
+{
+  "text": "enum Result<T, E>\nwhere\n    E: std::error::Error,\n{\n    Ok(T),\n    Err(E),\n}",
+  "range": {
+    "byteOffset": {
+      "start": 286,
+      "end": 362
+    },
+    "start": {
+      "line": 16,
+      "column": 0
+    },
+    "end": {
+      "line": 22,
+      "column": 1
+    }
+  },
+  "file": "sample_program.rs",
+  "lines": "enum Result<T, E>\nwhere\n    E: std::error::Error,\n{\n    Ok(T),\n    Err(E),\n}",
+  "charCount": {
+    "leading": 0,
+    "trailing": 0
+  },
+  "language": "Rust",
+  "metaVariables": {
+    "single": {
+      "ENUM_NAME": {
+        "text": "Result",
+        "range": {
+          "byteOffset": {
+            "start": 291,
+            "end": 297
+          },
+          "start": {
+            "line": 16,
+            "column": 5
+          },
+          "end": {
+            "line": 16,
+            "column": 11
+          }
+        }
+      },
+      "ENUM_BODY": {
+        "text": "enum Result<T, E>\nwhere\n    E: std::error::Error,\n{\n    Ok(T),\n    Err(E),\n}",
+        "range": {
+          "byteOffset": {
+            "start": 286,
+            "end": 362
+          },
+          "start": {
+            "line": 16,
+            "column": 0
+          },
+          "end": {
+            "line": 22,
+            "column": 1
+          }
+        }
+      }
+    },
+    "multi": {
+      "secondary": [
+        {
+          "text": "Result",
+          "range": {
+            "byteOffset": {
+              "start": 291,
+              "end": 297
+            },
+            "start": {
+              "line": 16,
+              "column": 5
+            },
+            "end": {
+              "line": 16,
+              "column": 11
+            }
+          }
+        }
+      ]
+    },
+    "transformed": {}
+  },
+  "ruleId": "find-all-syntactic-elements",
+  "severity": "hint",
+  "note": null,
+  "message": "",
+  "labels": [
+    {
+      "text": "enum Result<T, E>\nwhere\n    E: std::error::Error,\n{\n    Ok(T),\n    Err(E),\n}",
+      "range": {
+        "byteOffset": {
+          "start": 286,
+          "end": 362
+        },
+        "start": {
+          "line": 16,
+          "column": 0
+        },
+        "end": {
+          "line": 22,
+          "column": 1
+        }
+      },
+      "style": "primary"
+    },
+    {
+      "text": "Result",
+      "range": {
+        "byteOffset": {
+          "start": 291,
+          "end": 297
+        },
+        "start": {
+          "line": 16,
+          "column": 5
+        },
+        "end": {
+          "line": 16,
+          "column": 11
+        }
+      },
+      "style": "secondary"
+    }
+  ]
+},
+{
+  "text": "struct MyType;",
+  "range": {
+    "byteOffset": {
+      "start": 364,
+      "end": 378
+    },
+    "start": {
+      "line": 24,
+      "column": 0
+    },
+    "end": {
+      "line": 24,
+      "column": 14
+    }
+  },
+  "file": "sample_program.rs",
+  "lines": "struct MyType;",
+  "charCount": {
+    "leading": 0,
+    "trailing": 0
+  },
+  "language": "Rust",
+  "metaVariables": {
+    "single": {
+      "STRUCT_BODY": {
+        "text": "struct MyType;",
+        "range": {
+          "byteOffset": {
+            "start": 364,
+            "end": 378
+          },
+          "start": {
+            "line": 24,
+            "column": 0
+          },
+          "end": {
+            "line": 24,
+            "column": 14
+          }
+        }
+      },
+      "STRUCT_NAME": {
+        "text": "MyType",
+        "range": {
+          "byteOffset": {
+            "start": 371,
+            "end": 377
+          },
+          "start": {
+            "line": 24,
+            "column": 7
+          },
+          "end": {
+            "line": 24,
+            "column": 13
+          }
+        }
+      }
+    },
+    "multi": {
+      "secondary": [
+        {
+          "text": "MyType",
+          "range": {
+            "byteOffset": {
+              "start": 371,
+              "end": 377
+            },
+            "start": {
+              "line": 24,
+              "column": 7
+            },
+            "end": {
+              "line": 24,
+              "column": 13
+            }
+          }
+        }
+      ]
+    },
+    "transformed": {}
+  },
+  "ruleId": "find-all-syntactic-elements",
+  "severity": "hint",
+  "note": null,
+  "message": "",
+  "labels": [
+    {
+      "text": "struct MyType;",
+      "range": {
+        "byteOffset": {
+          "start": 364,
+          "end": 378
+        },
+        "start": {
+          "line": 24,
+          "column": 0
+        },
+        "end": {
+          "line": 24,
+          "column": 14
+        }
+      },
+      "style": "primary"
+    },
+    {
+      "text": "MyType",
+      "range": {
+        "byteOffset": {
+          "start": 371,
+          "end": 377
+        },
+        "start": {
+          "line": 24,
+          "column": 7
+        },
+        "end": {
+          "line": 24,
+          "column": 13
+        }
+      },
+      "style": "secondary"
+    }
+  ]
+},
+{
+  "text": "struct Wrapper<T>(T);",
+  "range": {
+    "byteOffset": {
+      "start": 379,
+      "end": 400
+    },
+    "start": {
+      "line": 25,
+      "column": 0
+    },
+    "end": {
+      "line": 25,
+      "column": 21
+    }
+  },
+  "file": "sample_program.rs",
+  "lines": "struct Wrapper<T>(T);",
+  "charCount": {
+    "leading": 0,
+    "trailing": 0
+  },
+  "language": "Rust",
+  "metaVariables": {
+    "single": {
+      "STRUCT_BODY": {
+        "text": "struct Wrapper<T>(T);",
+        "range": {
+          "byteOffset": {
+            "start": 379,
+            "end": 400
+          },
+          "start": {
+            "line": 25,
+            "column": 0
+          },
+          "end": {
+            "line": 25,
+            "column": 21
+          }
+        }
+      },
+      "STRUCT_NAME": {
+        "text": "Wrapper",
+        "range": {
+          "byteOffset": {
+            "start": 386,
+            "end": 393
+          },
+          "start": {
+            "line": 25,
+            "column": 7
+          },
+          "end": {
+            "line": 25,
+            "column": 14
+          }
+        }
+      }
+    },
+    "multi": {
+      "secondary": [
+        {
+          "text": "Wrapper",
+          "range": {
+            "byteOffset": {
+              "start": 386,
+              "end": 393
+            },
+            "start": {
+              "line": 25,
+              "column": 7
+            },
+            "end": {
+              "line": 25,
+              "column": 14
+            }
+          }
+        }
+      ]
+    },
+    "transformed": {}
+  },
+  "ruleId": "find-all-syntactic-elements",
+  "severity": "hint",
+  "note": null,
+  "message": "",
+  "labels": [
+    {
+      "text": "struct Wrapper<T>(T);",
+      "range": {
+        "byteOffset": {
+          "start": 379,
+          "end": 400
+        },
+        "start": {
+          "line": 25,
+          "column": 0
+        },
+        "end": {
+          "line": 25,
+          "column": 21
+        }
+      },
+      "style": "primary"
+    },
+    {
+      "text": "Wrapper",
+      "range": {
+        "byteOffset": {
+          "start": 386,
+          "end": 393
+        },
+        "start": {
+          "line": 25,
+          "column": 7
+        },
+        "end": {
+          "line": 25,
+          "column": 14
+        }
+      },
+      "style": "secondary"
+    }
+  ]
+},
+{
+  "text": "struct Array<T, const N: usize>([T; N]);",
+  "range": {
+    "byteOffset": {
+      "start": 401,
+      "end": 441
+    },
+    "start": {
+      "line": 26,
+      "column": 0
+    },
+    "end": {
+      "line": 26,
+      "column": 40
+    }
+  },
+  "file": "sample_program.rs",
+  "lines": "struct Array<T, const N: usize>([T; N]);",
+  "charCount": {
+    "leading": 0,
+    "trailing": 0
+  },
+  "language": "Rust",
+  "metaVariables": {
+    "single": {
+      "STRUCT_BODY": {
+        "text": "struct Array<T, const N: usize>([T; N]);",
+        "range": {
+          "byteOffset": {
+            "start": 401,
+            "end": 441
+          },
+          "start": {
+            "line": 26,
+            "column": 0
+          },
+          "end": {
+            "line": 26,
+            "column": 40
+          }
+        }
+      },
+      "STRUCT_NAME": {
+        "text": "Array",
+        "range": {
+          "byteOffset": {
+            "start": 408,
+            "end": 413
+          },
+          "start": {
+            "line": 26,
+            "column": 7
+          },
+          "end": {
+            "line": 26,
+            "column": 12
+          }
+        }
+      }
+    },
+    "multi": {
+      "secondary": [
+        {
+          "text": "Array",
+          "range": {
+            "byteOffset": {
+              "start": 408,
+              "end": 413
+            },
+            "start": {
+              "line": 26,
+              "column": 7
+            },
+            "end": {
+              "line": 26,
+              "column": 12
+            }
+          }
+        }
+      ]
+    },
+    "transformed": {}
+  },
+  "ruleId": "find-all-syntactic-elements",
+  "severity": "hint",
+  "note": null,
+  "message": "",
+  "labels": [
+    {
+      "text": "struct Array<T, const N: usize>([T; N]);",
+      "range": {
+        "byteOffset": {
+          "start": 401,
+          "end": 441
+        },
+        "start": {
+          "line": 26,
+          "column": 0
+        },
+        "end": {
+          "line": 26,
+          "column": 40
+        }
+      },
+      "style": "primary"
+    },
+    {
+      "text": "Array",
+      "range": {
+        "byteOffset": {
+          "start": 408,
+          "end": 413
+        },
+        "start": {
+          "line": 26,
+          "column": 7
+        },
+        "end": {
+          "line": 26,
+          "column": 12
+        }
+      },
+      "style": "secondary"
+    }
+  ]
+},
+{
+  "text": "trait SomeTrait<T> {\n    fn my_function();\n}",
+  "range": {
+    "byteOffset": {
+      "start": 443,
+      "end": 487
+    },
+    "start": {
+      "line": 28,
+      "column": 0
+    },
+    "end": {
+      "line": 30,
+      "column": 1
+    }
+  },
+  "file": "sample_program.rs",
+  "lines": "trait SomeTrait<T> {\n    fn my_function();\n}",
+  "charCount": {
+    "leading": 0,
+    "trailing": 0
+  },
+  "language": "Rust",
+  "metaVariables": {
+    "single": {
+      "TRAIT_NAME": {
+        "text": "SomeTrait",
+        "range": {
+          "byteOffset": {
+            "start": 449,
+            "end": 458
+          },
+          "start": {
+            "line": 28,
+            "column": 6
+          },
+          "end": {
+            "line": 28,
+            "column": 15
+          }
+        }
+      },
+      "TRAIT_BODY": {
+        "text": "trait SomeTrait<T> {\n    fn my_function();\n}",
+        "range": {
+          "byteOffset": {
+            "start": 443,
+            "end": 487
+          },
+          "start": {
+            "line": 28,
+            "column": 0
+          },
+          "end": {
+            "line": 30,
+            "column": 1
+          }
+        }
+      }
+    },
+    "multi": {
+      "secondary": [
+        {
+          "text": "SomeTrait",
+          "range": {
+            "byteOffset": {
+              "start": 449,
+              "end": 458
+            },
+            "start": {
+              "line": 28,
+              "column": 6
+            },
+            "end": {
+              "line": 28,
+              "column": 15
+            }
+          }
+        }
+      ]
+    },
+    "transformed": {}
+  },
+  "ruleId": "find-all-syntactic-elements",
+  "severity": "hint",
+  "note": null,
+  "message": "",
+  "labels": [
+    {
+      "text": "trait SomeTrait<T> {\n    fn my_function();\n}",
+      "range": {
+        "byteOffset": {
+          "start": 443,
+          "end": 487
+        },
+        "start": {
+          "line": 28,
+          "column": 0
+        },
+        "end": {
+          "line": 30,
+          "column": 1
+        }
+      },
+      "style": "primary"
+    },
+    {
+      "text": "SomeTrait",
+      "range": {
+        "byteOffset": {
+          "start": 449,
+          "end": 458
+        },
+        "start": {
+          "line": 28,
+          "column": 6
+        },
+        "end": {
+          "line": 28,
+          "column": 15
+        }
+      },
+      "style": "secondary"
+    }
+  ]
+},
+{
+  "text": "fn my_function();",
+  "range": {
+    "byteOffset": {
+      "start": 468,
+      "end": 485
+    },
+    "start": {
+      "line": 29,
+      "column": 4
+    },
+    "end": {
+      "line": 29,
+      "column": 21
+    }
+  },
+  "file": "sample_program.rs",
+  "lines": "    fn my_function();",
+  "charCount": {
+    "leading": 4,
+    "trailing": 0
+  },
+  "language": "Rust",
+  "metaVariables": {
+    "single": {
+      "TRAIT_METHOD_SIGNATURE_NAME": {
+        "text": "my_function",
+        "range": {
+          "byteOffset": {
+            "start": 471,
+            "end": 482
+          },
+          "start": {
+            "line": 29,
+            "column": 7
+          },
+          "end": {
+            "line": 29,
+            "column": 18
+          }
+        }
+      },
+      "TRAIT_BODY_WITH_METHOD_SIGNATURE": {
+        "text": "trait SomeTrait<T> {\n    fn my_function();\n}",
+        "range": {
+          "byteOffset": {
+            "start": 443,
+            "end": 487
+          },
+          "start": {
+            "line": 28,
+            "column": 0
+          },
+          "end": {
+            "line": 30,
+            "column": 1
+          }
+        }
+      },
+      "TRAIT_METHOD_SIGNATURE": {
+        "text": "fn my_function();",
+        "range": {
+          "byteOffset": {
+            "start": 468,
+            "end": 485
+          },
+          "start": {
+            "line": 29,
+            "column": 4
+          },
+          "end": {
+            "line": 29,
+            "column": 21
+          }
+        }
+      },
+      "TRAIT_NAME_METHOD_SIGNATURE": {
+        "text": "SomeTrait",
+        "range": {
+          "byteOffset": {
+            "start": 449,
+            "end": 458
+          },
+          "start": {
+            "line": 28,
+            "column": 6
+          },
+          "end": {
+            "line": 28,
+            "column": 15
+          }
+        }
+      }
+    },
+    "multi": {
+      "secondary": [
+        {
+          "text": "my_function",
+          "range": {
+            "byteOffset": {
+              "start": 471,
+              "end": 482
+            },
+            "start": {
+              "line": 29,
+              "column": 7
+            },
+            "end": {
+              "line": 29,
+              "column": 18
+            }
+          }
+        },
+        {
+          "text": "SomeTrait",
+          "range": {
+            "byteOffset": {
+              "start": 449,
+              "end": 458
+            },
+            "start": {
+              "line": 28,
+              "column": 6
+            },
+            "end": {
+              "line": 28,
+              "column": 15
+            }
+          }
+        },
+        {
+          "text": "trait SomeTrait<T> {\n    fn my_function();\n}",
+          "range": {
+            "byteOffset": {
+              "start": 443,
+              "end": 487
+            },
+            "start": {
+              "line": 28,
+              "column": 0
+            },
+            "end": {
+              "line": 30,
+              "column": 1
+            }
+          }
+        }
+      ]
+    },
+    "transformed": {}
+  },
+  "ruleId": "find-all-syntactic-elements",
+  "severity": "hint",
+  "note": null,
+  "message": "",
+  "labels": [
+    {
+      "text": "fn my_function();",
+      "range": {
+        "byteOffset": {
+          "start": 468,
+          "end": 485
+        },
+        "start": {
+          "line": 29,
+          "column": 4
+        },
+        "end": {
+          "line": 29,
+          "column": 21
+        }
+      },
+      "style": "primary"
+    },
+    {
+      "text": "my_function",
+      "range": {
+        "byteOffset": {
+          "start": 471,
+          "end": 482
+        },
+        "start": {
+          "line": 29,
+          "column": 7
+        },
+        "end": {
+          "line": 29,
+          "column": 18
+        }
+      },
+      "style": "secondary"
+    },
+    {
+      "text": "SomeTrait",
+      "range": {
+        "byteOffset": {
+          "start": 449,
+          "end": 458
+        },
+        "start": {
+          "line": 28,
+          "column": 6
+        },
+        "end": {
+          "line": 28,
+          "column": 15
+        }
+      },
+      "style": "secondary"
+    },
+    {
+      "text": "trait SomeTrait<T> {\n    fn my_function();\n}",
+      "range": {
+        "byteOffset": {
+          "start": 443,
+          "end": 487
+        },
+        "start": {
+          "line": 28,
+          "column": 0
+        },
+        "end": {
+          "line": 30,
+          "column": 1
+        }
+      },
+      "style": "secondary"
+    }
+  ]
+},
+{
+  "text": "trait SomeTrait { type Assoc; }",
+  "range": {
+    "byteOffset": {
+      "start": 488,
+      "end": 519
+    },
+    "start": {
+      "line": 31,
+      "column": 0
+    },
+    "end": {
+      "line": 31,
+      "column": 31
+    }
+  },
+  "file": "sample_program.rs",
+  "lines": "trait SomeTrait { type Assoc; }",
+  "charCount": {
+    "leading": 0,
+    "trailing": 0
+  },
+  "language": "Rust",
+  "metaVariables": {
+    "single": {
+      "TRAIT_NAME": {
+        "text": "SomeTrait",
+        "range": {
+          "byteOffset": {
+            "start": 494,
+            "end": 503
+          },
+          "start": {
+            "line": 31,
+            "column": 6
+          },
+          "end": {
+            "line": 31,
+            "column": 15
+          }
+        }
+      },
+      "TRAIT_BODY": {
+        "text": "trait SomeTrait { type Assoc; }",
+        "range": {
+          "byteOffset": {
+            "start": 488,
+            "end": 519
+          },
+          "start": {
+            "line": 31,
+            "column": 0
+          },
+          "end": {
+            "line": 31,
+            "column": 31
+          }
+        }
+      }
+    },
+    "multi": {
+      "secondary": [
+        {
+          "text": "SomeTrait",
+          "range": {
+            "byteOffset": {
+              "start": 494,
+              "end": 503
+            },
+            "start": {
+              "line": 31,
+              "column": 6
+            },
+            "end": {
+              "line": 31,
+              "column": 15
+            }
+          }
+        }
+      ]
+    },
+    "transformed": {}
+  },
+  "ruleId": "find-all-syntactic-elements",
+  "severity": "hint",
+  "note": null,
+  "message": "",
+  "labels": [
+    {
+      "text": "trait SomeTrait { type Assoc; }",
+      "range": {
+        "byteOffset": {
+          "start": 488,
+          "end": 519
+        },
+        "start": {
+          "line": 31,
+          "column": 0
+        },
+        "end": {
+          "line": 31,
+          "column": 31
+        }
+      },
+      "style": "primary"
+    },
+    {
+      "text": "SomeTrait",
+      "range": {
+        "byteOffset": {
+          "start": 494,
+          "end": 503
+        },
+        "start": {
+          "line": 31,
+          "column": 6
+        },
+        "end": {
+          "line": 31,
+          "column": 15
+        }
+      },
+      "style": "secondary"
+    }
+  ]
+},
+{
+  "text": "trait SomeTrait { fn trait_function(t: T) -> Self { Wrapper(t) }}",
+  "range": {
+    "byteOffset": {
+      "start": 520,
+      "end": 585
+    },
+    "start": {
+      "line": 32,
+      "column": 0
+    },
+    "end": {
+      "line": 32,
+      "column": 65
+    }
+  },
+  "file": "sample_program.rs",
+  "lines": "trait SomeTrait { fn trait_function(t: T) -> Self { Wrapper(t) }}",
+  "charCount": {
+    "leading": 0,
+    "trailing": 0
+  },
+  "language": "Rust",
+  "metaVariables": {
+    "single": {
+      "TRAIT_BODY": {
+        "text": "trait SomeTrait { fn trait_function(t: T) -> Self { Wrapper(t) }}",
+        "range": {
+          "byteOffset": {
+            "start": 520,
+            "end": 585
+          },
+          "start": {
+            "line": 32,
+            "column": 0
+          },
+          "end": {
+            "line": 32,
+            "column": 65
+          }
+        }
+      },
+      "TRAIT_NAME": {
+        "text": "SomeTrait",
+        "range": {
+          "byteOffset": {
+            "start": 526,
+            "end": 535
+          },
+          "start": {
+            "line": 32,
+            "column": 6
+          },
+          "end": {
+            "line": 32,
+            "column": 15
+          }
+        }
+      }
+    },
+    "multi": {
+      "secondary": [
+        {
+          "text": "SomeTrait",
+          "range": {
+            "byteOffset": {
+              "start": 526,
+              "end": 535
+            },
+            "start": {
+              "line": 32,
+              "column": 6
+            },
+            "end": {
+              "line": 32,
+              "column": 15
+            }
+          }
+        }
+      ]
+    },
+    "transformed": {}
+  },
+  "ruleId": "find-all-syntactic-elements",
+  "severity": "hint",
+  "note": null,
+  "message": "",
+  "labels": [
+    {
+      "text": "trait SomeTrait { fn trait_function(t: T) -> Self { Wrapper(t) }}",
+      "range": {
+        "byteOffset": {
+          "start": 520,
+          "end": 585
+        },
+        "start": {
+          "line": 32,
+          "column": 0
+        },
+        "end": {
+          "line": 32,
+          "column": 65
+        }
+      },
+      "style": "primary"
+    },
+    {
+      "text": "SomeTrait",
+      "range": {
+        "byteOffset": {
+          "start": 526,
+          "end": 535
+        },
+        "start": {
+          "line": 32,
+          "column": 6
+        },
+        "end": {
+          "line": 32,
+          "column": 15
+        }
+      },
+      "style": "secondary"
+    }
+  ]
+},
+{
+  "text": "fn trait_function(t: T) -> Self { Wrapper(t) }",
+  "range": {
+    "byteOffset": {
+      "start": 538,
+      "end": 584
+    },
+    "start": {
+      "line": 32,
+      "column": 18
+    },
+    "end": {
+      "line": 32,
+      "column": 64
+    }
+  },
+  "file": "sample_program.rs",
+  "lines": "trait SomeTrait { fn trait_function(t: T) -> Self { Wrapper(t) }}",
+  "charCount": {
+    "leading": 18,
+    "trailing": 1
+  },
+  "language": "Rust",
+  "metaVariables": {
+    "single": {
+      "TRAIT_METHOD_BODY": {
+        "text": "fn trait_function(t: T) -> Self { Wrapper(t) }",
+        "range": {
+          "byteOffset": {
+            "start": 538,
+            "end": 584
+          },
+          "start": {
+            "line": 32,
+            "column": 18
+          },
+          "end": {
+            "line": 32,
+            "column": 64
+          }
+        }
+      },
+      "TRAIT_NAME_WITH_METHOD": {
+        "text": "SomeTrait",
+        "range": {
+          "byteOffset": {
+            "start": 526,
+            "end": 535
+          },
+          "start": {
+            "line": 32,
+            "column": 6
+          },
+          "end": {
+            "line": 32,
+            "column": 15
+          }
+        }
+      },
+      "TRAIT_METHOD_NAME": {
+        "text": "trait_function",
+        "range": {
+          "byteOffset": {
+            "start": 541,
+            "end": 555
+          },
+          "start": {
+            "line": 32,
+            "column": 21
+          },
+          "end": {
+            "line": 32,
+            "column": 35
+          }
+        }
+      },
+      "TRAIT_BODY_WITH_METHOD": {
+        "text": "trait SomeTrait { fn trait_function(t: T) -> Self { Wrapper(t) }}",
+        "range": {
+          "byteOffset": {
+            "start": 520,
+            "end": 585
+          },
+          "start": {
+            "line": 32,
+            "column": 0
+          },
+          "end": {
+            "line": 32,
+            "column": 65
+          }
+        }
+      }
+    },
+    "multi": {
+      "secondary": [
+        {
+          "text": "trait_function",
+          "range": {
+            "byteOffset": {
+              "start": 541,
+              "end": 555
+            },
+            "start": {
+              "line": 32,
+              "column": 21
+            },
+            "end": {
+              "line": 32,
+              "column": 35
+            }
+          }
+        },
+        {
+          "text": "SomeTrait",
+          "range": {
+            "byteOffset": {
+              "start": 526,
+              "end": 535
+            },
+            "start": {
+              "line": 32,
+              "column": 6
+            },
+            "end": {
+              "line": 32,
+              "column": 15
+            }
+          }
+        },
+        {
+          "text": "trait SomeTrait { fn trait_function(t: T) -> Self { Wrapper(t) }}",
+          "range": {
+            "byteOffset": {
+              "start": 520,
+              "end": 585
+            },
+            "start": {
+              "line": 32,
+              "column": 0
+            },
+            "end": {
+              "line": 32,
+              "column": 65
+            }
+          }
+        }
+      ]
+    },
+    "transformed": {}
+  },
+  "ruleId": "find-all-syntactic-elements",
+  "severity": "hint",
+  "note": null,
+  "message": "",
+  "labels": [
+    {
+      "text": "fn trait_function(t: T) -> Self { Wrapper(t) }",
+      "range": {
+        "byteOffset": {
+          "start": 538,
+          "end": 584
+        },
+        "start": {
+          "line": 32,
+          "column": 18
+        },
+        "end": {
+          "line": 32,
+          "column": 64
+        }
+      },
+      "style": "primary"
+    },
+    {
+      "text": "trait_function",
+      "range": {
+        "byteOffset": {
+          "start": 541,
+          "end": 555
+        },
+        "start": {
+          "line": 32,
+          "column": 21
+        },
+        "end": {
+          "line": 32,
+          "column": 35
+        }
+      },
+      "style": "secondary"
+    },
+    {
+      "text": "SomeTrait",
+      "range": {
+        "byteOffset": {
+          "start": 526,
+          "end": 535
+        },
+        "start": {
+          "line": 32,
+          "column": 6
+        },
+        "end": {
+          "line": 32,
+          "column": 15
+        }
+      },
+      "style": "secondary"
+    },
+    {
+      "text": "trait SomeTrait { fn trait_function(t: T) -> Self { Wrapper(t) }}",
+      "range": {
+        "byteOffset": {
+          "start": 520,
+          "end": 585
+        },
+        "start": {
+          "line": 32,
+          "column": 0
+        },
+        "end": {
+          "line": 32,
+          "column": 65
+        }
+      },
+      "style": "secondary"
+    }
+  ]
+},
+{
+  "text": "trait TraitToImpl {}",
+  "range": {
+    "byteOffset": {
+      "start": 586,
+      "end": 606
+    },
+    "start": {
+      "line": 33,
+      "column": 0
+    },
+    "end": {
+      "line": 33,
+      "column": 20
+    }
+  },
+  "file": "sample_program.rs",
+  "lines": "trait TraitToImpl {}",
+  "charCount": {
+    "leading": 0,
+    "trailing": 0
+  },
+  "language": "Rust",
+  "metaVariables": {
+    "single": {
+      "TRAIT_BODY": {
+        "text": "trait TraitToImpl {}",
+        "range": {
+          "byteOffset": {
+            "start": 586,
+            "end": 606
+          },
+          "start": {
+            "line": 33,
+            "column": 0
+          },
+          "end": {
+            "line": 33,
+            "column": 20
+          }
+        }
+      },
+      "TRAIT_NAME": {
+        "text": "TraitToImpl",
+        "range": {
+          "byteOffset": {
+            "start": 592,
+            "end": 603
+          },
+          "start": {
+            "line": 33,
+            "column": 6
+          },
+          "end": {
+            "line": 33,
+            "column": 17
+          }
+        }
+      }
+    },
+    "multi": {
+      "secondary": [
+        {
+          "text": "TraitToImpl",
+          "range": {
+            "byteOffset": {
+              "start": 592,
+              "end": 603
+            },
+            "start": {
+              "line": 33,
+              "column": 6
+            },
+            "end": {
+              "line": 33,
+              "column": 17
+            }
+          }
+        }
+      ]
+    },
+    "transformed": {}
+  },
+  "ruleId": "find-all-syntactic-elements",
+  "severity": "hint",
+  "note": null,
+  "message": "",
+  "labels": [
+    {
+      "text": "trait TraitToImpl {}",
+      "range": {
+        "byteOffset": {
+          "start": 586,
+          "end": 606
+        },
+        "start": {
+          "line": 33,
+          "column": 0
+        },
+        "end": {
+          "line": 33,
+          "column": 20
+        }
+      },
+      "style": "primary"
+    },
+    {
+      "text": "TraitToImpl",
+      "range": {
+        "byteOffset": {
+          "start": 592,
+          "end": 603
+        },
+        "start": {
+          "line": 33,
+          "column": 6
+        },
+        "end": {
+          "line": 33,
+          "column": 17
+        }
+      },
+      "style": "secondary"
+    }
+  ]
+},
+{
+  "text": "impl<T> SomeTrait for Wrapper<T> {\n    type Assoc = Wrapper<T>;\n}",
+  "range": {
+    "byteOffset": {
+      "start": 608,
+      "end": 673
+    },
+    "start": {
+      "line": 35,
+      "column": 0
+    },
+    "end": {
+      "line": 37,
+      "column": 1
+    }
+  },
+  "file": "sample_program.rs",
+  "lines": "impl<T> SomeTrait for Wrapper<T> {\n    type Assoc = Wrapper<T>;\n}",
+  "charCount": {
+    "leading": 0,
+    "trailing": 0
+  },
+  "language": "Rust",
+  "metaVariables": {
+    "single": {
+      "IMPL_BODY": {
+        "text": "impl<T> SomeTrait for Wrapper<T> {\n    type Assoc = Wrapper<T>;\n}",
+        "range": {
+          "byteOffset": {
+            "start": 608,
+            "end": 673
+          },
+          "start": {
+            "line": 35,
+            "column": 0
+          },
+          "end": {
+            "line": 37,
+            "column": 1
+          }
+        }
+      }
+    },
+    "multi": {},
+    "transformed": {}
+  },
+  "ruleId": "find-all-syntactic-elements",
+  "severity": "hint",
+  "note": null,
+  "message": "",
+  "labels": [
+    {
+      "text": "impl<T> SomeTrait for Wrapper<T> {\n    type Assoc = Wrapper<T>;\n}",
+      "range": {
+        "byteOffset": {
+          "start": 608,
+          "end": 673
+        },
+        "start": {
+          "line": 35,
+          "column": 0
+        },
+        "end": {
+          "line": 37,
+          "column": 1
+        }
+      },
+      "style": "primary"
+    }
+  ]
+},
+{
+  "text": "type Assoc = Wrapper<T>;",
+  "range": {
+    "byteOffset": {
+      "start": 647,
+      "end": 671
+    },
+    "start": {
+      "line": 36,
+      "column": 4
+    },
+    "end": {
+      "line": 36,
+      "column": 28
+    }
+  },
+  "file": "sample_program.rs",
+  "lines": "    type Assoc = Wrapper<T>;",
+  "charCount": {
+    "leading": 4,
+    "trailing": 0
+  },
+  "language": "Rust",
+  "metaVariables": {
+    "single": {
+      "TYPE_ALIAS_NAME": {
+        "text": "Assoc",
+        "range": {
+          "byteOffset": {
+            "start": 652,
+            "end": 657
+          },
+          "start": {
+            "line": 36,
+            "column": 9
+          },
+          "end": {
+            "line": 36,
+            "column": 14
+          }
+        }
+      },
+      "TYPE_ALIAS_BODY": {
+        "text": "type Assoc = Wrapper<T>;",
+        "range": {
+          "byteOffset": {
+            "start": 647,
+            "end": 671
+          },
+          "start": {
+            "line": 36,
+            "column": 4
+          },
+          "end": {
+            "line": 36,
+            "column": 28
+          }
+        }
+      }
+    },
+    "multi": {
+      "secondary": [
+        {
+          "text": "Assoc",
+          "range": {
+            "byteOffset": {
+              "start": 652,
+              "end": 657
+            },
+            "start": {
+              "line": 36,
+              "column": 9
+            },
+            "end": {
+              "line": 36,
+              "column": 14
+            }
+          }
+        }
+      ]
+    },
+    "transformed": {}
+  },
+  "ruleId": "find-all-syntactic-elements",
+  "severity": "hint",
+  "note": null,
+  "message": "",
+  "labels": [
+    {
+      "text": "type Assoc = Wrapper<T>;",
+      "range": {
+        "byteOffset": {
+          "start": 647,
+          "end": 671
+        },
+        "start": {
+          "line": 36,
+          "column": 4
+        },
+        "end": {
+          "line": 36,
+          "column": 28
+        }
+      },
+      "style": "primary"
+    },
+    {
+      "text": "Assoc",
+      "range": {
+        "byteOffset": {
+          "start": 652,
+          "end": 657
+        },
+        "start": {
+          "line": 36,
+          "column": 9
+        },
+        "end": {
+          "line": 36,
+          "column": 14
+        }
+      },
+      "style": "secondary"
+    }
+  ]
+},
+{
+  "text": "impl MyType {\n    fn inherent_method(&self) {}\n}",
+  "range": {
+    "byteOffset": {
+      "start": 674,
+      "end": 722
+    },
+    "start": {
+      "line": 38,
+      "column": 0
+    },
+    "end": {
+      "line": 40,
+      "column": 1
+    }
+  },
+  "file": "sample_program.rs",
+  "lines": "impl MyType {\n    fn inherent_method(&self) {}\n}",
+  "charCount": {
+    "leading": 0,
+    "trailing": 0
+  },
+  "language": "Rust",
+  "metaVariables": {
+    "single": {
+      "IMPL_BODY": {
+        "text": "impl MyType {\n    fn inherent_method(&self) {}\n}",
+        "range": {
+          "byteOffset": {
+            "start": 674,
+            "end": 722
+          },
+          "start": {
+            "line": 38,
+            "column": 0
+          },
+          "end": {
+            "line": 40,
+            "column": 1
+          }
+        }
+      }
+    },
+    "multi": {},
+    "transformed": {}
+  },
+  "ruleId": "find-all-syntactic-elements",
+  "severity": "hint",
+  "note": null,
+  "message": "",
+  "labels": [
+    {
+      "text": "impl MyType {\n    fn inherent_method(&self) {}\n}",
+      "range": {
+        "byteOffset": {
+          "start": 674,
+          "end": 722
+        },
+        "start": {
+          "line": 38,
+          "column": 0
+        },
+        "end": {
+          "line": 40,
+          "column": 1
+        }
+      },
+      "style": "primary"
+    }
+  ]
+},
+{
+  "text": "fn inherent_method(&self) {}",
+  "range": {
+    "byteOffset": {
+      "start": 692,
+      "end": 720
+    },
+    "start": {
+      "line": 39,
+      "column": 4
+    },
+    "end": {
+      "line": 39,
+      "column": 32
+    }
+  },
+  "file": "sample_program.rs",
+  "lines": "    fn inherent_method(&self) {}",
+  "charCount": {
+    "leading": 4,
+    "trailing": 0
+  },
+  "language": "Rust",
+  "metaVariables": {
+    "single": {
+      "METHOD_NAME": {
+        "text": "inherent_method",
+        "range": {
+          "byteOffset": {
+            "start": 695,
+            "end": 710
+          },
+          "start": {
+            "line": 39,
+            "column": 7
+          },
+          "end": {
+            "line": 39,
+            "column": 22
+          }
+        }
+      },
+      "METHOD_BODY": {
+        "text": "fn inherent_method(&self) {}",
+        "range": {
+          "byteOffset": {
+            "start": 692,
+            "end": 720
+          },
+          "start": {
+            "line": 39,
+            "column": 4
+          },
+          "end": {
+            "line": 39,
+            "column": 32
+          }
+        }
+      },
+      "METHOD_IMPL_BODY": {
+        "text": "impl MyType {\n    fn inherent_method(&self) {}\n}",
+        "range": {
+          "byteOffset": {
+            "start": 674,
+            "end": 722
+          },
+          "start": {
+            "line": 38,
+            "column": 0
+          },
+          "end": {
+            "line": 40,
+            "column": 1
+          }
+        }
+      }
+    },
+    "multi": {
+      "secondary": [
+        {
+          "text": "impl MyType {\n    fn inherent_method(&self) {}\n}",
+          "range": {
+            "byteOffset": {
+              "start": 674,
+              "end": 722
+            },
+            "start": {
+              "line": 38,
+              "column": 0
+            },
+            "end": {
+              "line": 40,
+              "column": 1
+            }
+          }
+        },
+        {
+          "text": "inherent_method",
+          "range": {
+            "byteOffset": {
+              "start": 695,
+              "end": 710
+            },
+            "start": {
+              "line": 39,
+              "column": 7
+            },
+            "end": {
+              "line": 39,
+              "column": 22
+            }
+          }
+        }
+      ]
+    },
+    "transformed": {}
+  },
+  "ruleId": "find-all-syntactic-elements",
+  "severity": "hint",
+  "note": null,
+  "message": "",
+  "labels": [
+    {
+      "text": "fn inherent_method(&self) {}",
+      "range": {
+        "byteOffset": {
+          "start": 692,
+          "end": 720
+        },
+        "start": {
+          "line": 39,
+          "column": 4
+        },
+        "end": {
+          "line": 39,
+          "column": 32
+        }
+      },
+      "style": "primary"
+    },
+    {
+      "text": "impl MyType {\n    fn inherent_method(&self) {}\n}",
+      "range": {
+        "byteOffset": {
+          "start": 674,
+          "end": 722
+        },
+        "start": {
+          "line": 38,
+          "column": 0
+        },
+        "end": {
+          "line": 40,
+          "column": 1
+        }
+      },
+      "style": "secondary"
+    },
+    {
+      "text": "inherent_method",
+      "range": {
+        "byteOffset": {
+          "start": 695,
+          "end": 710
+        },
+        "start": {
+          "line": 39,
+          "column": 7
+        },
+        "end": {
+          "line": 39,
+          "column": 22
+        }
+      },
+      "style": "secondary"
+    }
+  ]
+},
+{
+  "text": "impl<'a, T: Clone, const N: usize> Array<T, N>\nwhere\n    T: std::fmt::Debug + Deserialize,\n{\n    fn new_from_slice(_s: &'a [T]) -> Self { unimplemented!() }\n}",
+  "range": {
+    "byteOffset": {
+      "start": 804,
+      "end": 962
+    },
+    "start": {
+      "line": 43,
+      "column": 0
+    },
+    "end": {
+      "line": 48,
+      "column": 1
+    }
+  },
+  "file": "sample_program.rs",
+  "lines": "impl<'a, T: Clone, const N: usize> Array<T, N>\nwhere\n    T: std::fmt::Debug + Deserialize,\n{\n    fn new_from_slice(_s: &'a [T]) -> Self { unimplemented!() }\n}",
+  "charCount": {
+    "leading": 0,
+    "trailing": 0
+  },
+  "language": "Rust",
+  "metaVariables": {
+    "single": {
+      "IMPL_BODY": {
+        "text": "impl<'a, T: Clone, const N: usize> Array<T, N>\nwhere\n    T: std::fmt::Debug + Deserialize,\n{\n    fn new_from_slice(_s: &'a [T]) -> Self { unimplemented!() }\n}",
+        "range": {
+          "byteOffset": {
+            "start": 804,
+            "end": 962
+          },
+          "start": {
+            "line": 43,
+            "column": 0
+          },
+          "end": {
+            "line": 48,
+            "column": 1
+          }
+        }
+      }
+    },
+    "multi": {},
+    "transformed": {}
+  },
+  "ruleId": "find-all-syntactic-elements",
+  "severity": "hint",
+  "note": null,
+  "message": "",
+  "labels": [
+    {
+      "text": "impl<'a, T: Clone, const N: usize> Array<T, N>\nwhere\n    T: std::fmt::Debug + Deserialize,\n{\n    fn new_from_slice(_s: &'a [T]) -> Self { unimplemented!() }\n}",
+      "range": {
+        "byteOffset": {
+          "start": 804,
+          "end": 962
+        },
+        "start": {
+          "line": 43,
+          "column": 0
+        },
+        "end": {
+          "line": 48,
+          "column": 1
+        }
+      },
+      "style": "primary"
+    }
+  ]
+},
+{
+  "text": "fn new_from_slice(_s: &'a [T]) -> Self { unimplemented!() }",
+  "range": {
+    "byteOffset": {
+      "start": 901,
+      "end": 960
+    },
+    "start": {
+      "line": 47,
+      "column": 4
+    },
+    "end": {
+      "line": 47,
+      "column": 63
+    }
+  },
+  "file": "sample_program.rs",
+  "lines": "    fn new_from_slice(_s: &'a [T]) -> Self { unimplemented!() }",
+  "charCount": {
+    "leading": 4,
+    "trailing": 0
+  },
+  "language": "Rust",
+  "metaVariables": {
+    "single": {
+      "METHOD_BODY": {
+        "text": "fn new_from_slice(_s: &'a [T]) -> Self { unimplemented!() }",
+        "range": {
+          "byteOffset": {
+            "start": 901,
+            "end": 960
+          },
+          "start": {
+            "line": 47,
+            "column": 4
+          },
+          "end": {
+            "line": 47,
+            "column": 63
+          }
+        }
+      },
+      "METHOD_IMPL_BODY": {
+        "text": "impl<'a, T: Clone, const N: usize> Array<T, N>\nwhere\n    T: std::fmt::Debug + Deserialize,\n{\n    fn new_from_slice(_s: &'a [T]) -> Self { unimplemented!() }\n}",
+        "range": {
+          "byteOffset": {
+            "start": 804,
+            "end": 962
+          },
+          "start": {
+            "line": 43,
+            "column": 0
+          },
+          "end": {
+            "line": 48,
+            "column": 1
+          }
+        }
+      },
+      "METHOD_NAME": {
+        "text": "new_from_slice",
+        "range": {
+          "byteOffset": {
+            "start": 904,
+            "end": 918
+          },
+          "start": {
+            "line": 47,
+            "column": 7
+          },
+          "end": {
+            "line": 47,
+            "column": 21
+          }
+        }
+      }
+    },
+    "multi": {
+      "secondary": [
+        {
+          "text": "impl<'a, T: Clone, const N: usize> Array<T, N>\nwhere\n    T: std::fmt::Debug + Deserialize,\n{\n    fn new_from_slice(_s: &'a [T]) -> Self { unimplemented!() }\n}",
+          "range": {
+            "byteOffset": {
+              "start": 804,
+              "end": 962
+            },
+            "start": {
+              "line": 43,
+              "column": 0
+            },
+            "end": {
+              "line": 48,
+              "column": 1
+            }
+          }
+        },
+        {
+          "text": "new_from_slice",
+          "range": {
+            "byteOffset": {
+              "start": 904,
+              "end": 918
+            },
+            "start": {
+              "line": 47,
+              "column": 7
+            },
+            "end": {
+              "line": 47,
+              "column": 21
+            }
+          }
+        }
+      ]
+    },
+    "transformed": {}
+  },
+  "ruleId": "find-all-syntactic-elements",
+  "severity": "hint",
+  "note": null,
+  "message": "",
+  "labels": [
+    {
+      "text": "fn new_from_slice(_s: &'a [T]) -> Self { unimplemented!() }",
+      "range": {
+        "byteOffset": {
+          "start": 901,
+          "end": 960
+        },
+        "start": {
+          "line": 47,
+          "column": 4
+        },
+        "end": {
+          "line": 47,
+          "column": 63
+        }
+      },
+      "style": "primary"
+    },
+    {
+      "text": "impl<'a, T: Clone, const N: usize> Array<T, N>\nwhere\n    T: std::fmt::Debug + Deserialize,\n{\n    fn new_from_slice(_s: &'a [T]) -> Self { unimplemented!() }\n}",
+      "range": {
+        "byteOffset": {
+          "start": 804,
+          "end": 962
+        },
+        "start": {
+          "line": 43,
+          "column": 0
+        },
+        "end": {
+          "line": 48,
+          "column": 1
+        }
+      },
+      "style": "secondary"
+    },
+    {
+      "text": "new_from_slice",
+      "range": {
+        "byteOffset": {
+          "start": 904,
+          "end": 918
+        },
+        "start": {
+          "line": 47,
+          "column": 7
+        },
+        "end": {
+          "line": 47,
+          "column": 21
+        }
+      },
+      "style": "secondary"
+    }
+  ]
+},
+{
+  "text": "impl std::fmt::Display for MyType {\n    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {\n        write!(f, \"MyType\")\n    }\n}",
+  "range": {
+    "byteOffset": {
+      "start": 987,
+      "end": 1131
+    },
+    "start": {
+      "line": 51,
+      "column": 0
+    },
+    "end": {
+      "line": 55,
+      "column": 1
+    }
+  },
+  "file": "sample_program.rs",
+  "lines": "impl std::fmt::Display for MyType {\n    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {\n        write!(f, \"MyType\")\n    }\n}",
+  "charCount": {
+    "leading": 0,
+    "trailing": 0
+  },
+  "language": "Rust",
+  "metaVariables": {
+    "single": {
+      "IMPL_BODY": {
+        "text": "impl std::fmt::Display for MyType {\n    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {\n        write!(f, \"MyType\")\n    }\n}",
+        "range": {
+          "byteOffset": {
+            "start": 987,
+            "end": 1131
+          },
+          "start": {
+            "line": 51,
+            "column": 0
+          },
+          "end": {
+            "line": 55,
+            "column": 1
+          }
+        }
+      }
+    },
+    "multi": {},
+    "transformed": {}
+  },
+  "ruleId": "find-all-syntactic-elements",
+  "severity": "hint",
+  "note": null,
+  "message": "",
+  "labels": [
+    {
+      "text": "impl std::fmt::Display for MyType {\n    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {\n        write!(f, \"MyType\")\n    }\n}",
+      "range": {
+        "byteOffset": {
+          "start": 987,
+          "end": 1131
+        },
+        "start": {
+          "line": 51,
+          "column": 0
+        },
+        "end": {
+          "line": 55,
+          "column": 1
+        }
+      },
+      "style": "primary"
+    }
+  ]
+},
+{
+  "text": "fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {\n        write!(f, \"MyType\")\n    }",
+  "range": {
+    "byteOffset": {
+      "start": 1027,
+      "end": 1129
+    },
+    "start": {
+      "line": 52,
+      "column": 4
+    },
+    "end": {
+      "line": 54,
+      "column": 5
+    }
+  },
+  "file": "sample_program.rs",
+  "lines": "    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {\n        write!(f, \"MyType\")\n    }",
+  "charCount": {
+    "leading": 4,
+    "trailing": 0
+  },
+  "language": "Rust",
+  "metaVariables": {
+    "single": {
+      "METHOD_IMPL_BODY": {
+        "text": "impl std::fmt::Display for MyType {\n    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {\n        write!(f, \"MyType\")\n    }\n}",
+        "range": {
+          "byteOffset": {
+            "start": 987,
+            "end": 1131
+          },
+          "start": {
+            "line": 51,
+            "column": 0
+          },
+          "end": {
+            "line": 55,
+            "column": 1
+          }
+        }
+      },
+      "METHOD_NAME": {
+        "text": "fmt",
+        "range": {
+          "byteOffset": {
+            "start": 1030,
+            "end": 1033
+          },
+          "start": {
+            "line": 52,
+            "column": 7
+          },
+          "end": {
+            "line": 52,
+            "column": 10
+          }
+        }
+      },
+      "METHOD_BODY": {
+        "text": "fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {\n        write!(f, \"MyType\")\n    }",
+        "range": {
+          "byteOffset": {
+            "start": 1027,
+            "end": 1129
+          },
+          "start": {
+            "line": 52,
+            "column": 4
+          },
+          "end": {
+            "line": 54,
+            "column": 5
+          }
+        }
+      }
+    },
+    "multi": {
+      "secondary": [
+        {
+          "text": "impl std::fmt::Display for MyType {\n    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {\n        write!(f, \"MyType\")\n    }\n}",
+          "range": {
+            "byteOffset": {
+              "start": 987,
+              "end": 1131
+            },
+            "start": {
+              "line": 51,
+              "column": 0
+            },
+            "end": {
+              "line": 55,
+              "column": 1
+            }
+          }
+        },
+        {
+          "text": "fmt",
+          "range": {
+            "byteOffset": {
+              "start": 1030,
+              "end": 1033
+            },
+            "start": {
+              "line": 52,
+              "column": 7
+            },
+            "end": {
+              "line": 52,
+              "column": 10
+            }
+          }
+        }
+      ]
+    },
+    "transformed": {}
+  },
+  "ruleId": "find-all-syntactic-elements",
+  "severity": "hint",
+  "note": null,
+  "message": "",
+  "labels": [
+    {
+      "text": "fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {\n        write!(f, \"MyType\")\n    }",
+      "range": {
+        "byteOffset": {
+          "start": 1027,
+          "end": 1129
+        },
+        "start": {
+          "line": 52,
+          "column": 4
+        },
+        "end": {
+          "line": 54,
+          "column": 5
+        }
+      },
+      "style": "primary"
+    },
+    {
+      "text": "impl std::fmt::Display for MyType {\n    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {\n        write!(f, \"MyType\")\n    }\n}",
+      "range": {
+        "byteOffset": {
+          "start": 987,
+          "end": 1131
+        },
+        "start": {
+          "line": 51,
+          "column": 0
+        },
+        "end": {
+          "line": 55,
+          "column": 1
+        }
+      },
+      "style": "secondary"
+    },
+    {
+      "text": "fmt",
+      "range": {
+        "byteOffset": {
+          "start": 1030,
+          "end": 1033
+        },
+        "start": {
+          "line": 52,
+          "column": 7
+        },
+        "end": {
+          "line": 52,
+          "column": 10
+        }
+      },
+      "style": "secondary"
+    }
+  ]
+},
+{
+  "text": "impl<T> From<T> for Wrapper<T>\nwhere\n    T: Sized,\n{\n    fn from(t: T) -> Self { Wrapper(t) }\n}",
+  "range": {
+    "byteOffset": {
+      "start": 1178,
+      "end": 1273
+    },
+    "start": {
+      "line": 58,
+      "column": 0
+    },
+    "end": {
+      "line": 63,
+      "column": 1
+    }
+  },
+  "file": "sample_program.rs",
+  "lines": "impl<T> From<T> for Wrapper<T>\nwhere\n    T: Sized,\n{\n    fn from(t: T) -> Self { Wrapper(t) }\n}",
+  "charCount": {
+    "leading": 0,
+    "trailing": 0
+  },
+  "language": "Rust",
+  "metaVariables": {
+    "single": {
+      "IMPL_BODY": {
+        "text": "impl<T> From<T> for Wrapper<T>\nwhere\n    T: Sized,\n{\n    fn from(t: T) -> Self { Wrapper(t) }\n}",
+        "range": {
+          "byteOffset": {
+            "start": 1178,
+            "end": 1273
+          },
+          "start": {
+            "line": 58,
+            "column": 0
+          },
+          "end": {
+            "line": 63,
+            "column": 1
+          }
+        }
+      }
+    },
+    "multi": {},
+    "transformed": {}
+  },
+  "ruleId": "find-all-syntactic-elements",
+  "severity": "hint",
+  "note": null,
+  "message": "",
+  "labels": [
+    {
+      "text": "impl<T> From<T> for Wrapper<T>\nwhere\n    T: Sized,\n{\n    fn from(t: T) -> Self { Wrapper(t) }\n}",
+      "range": {
+        "byteOffset": {
+          "start": 1178,
+          "end": 1273
+        },
+        "start": {
+          "line": 58,
+          "column": 0
+        },
+        "end": {
+          "line": 63,
+          "column": 1
+        }
+      },
+      "style": "primary"
+    }
+  ]
+},
+{
+  "text": "fn from(t: T) -> Self { Wrapper(t) }",
+  "range": {
+    "byteOffset": {
+      "start": 1235,
+      "end": 1271
+    },
+    "start": {
+      "line": 62,
+      "column": 4
+    },
+    "end": {
+      "line": 62,
+      "column": 40
+    }
+  },
+  "file": "sample_program.rs",
+  "lines": "    fn from(t: T) -> Self { Wrapper(t) }",
+  "charCount": {
+    "leading": 4,
+    "trailing": 0
+  },
+  "language": "Rust",
+  "metaVariables": {
+    "single": {
+      "METHOD_NAME": {
+        "text": "from",
+        "range": {
+          "byteOffset": {
+            "start": 1238,
+            "end": 1242
+          },
+          "start": {
+            "line": 62,
+            "column": 7
+          },
+          "end": {
+            "line": 62,
+            "column": 11
+          }
+        }
+      },
+      "METHOD_IMPL_BODY": {
+        "text": "impl<T> From<T> for Wrapper<T>\nwhere\n    T: Sized,\n{\n    fn from(t: T) -> Self { Wrapper(t) }\n}",
+        "range": {
+          "byteOffset": {
+            "start": 1178,
+            "end": 1273
+          },
+          "start": {
+            "line": 58,
+            "column": 0
+          },
+          "end": {
+            "line": 63,
+            "column": 1
+          }
+        }
+      },
+      "METHOD_BODY": {
+        "text": "fn from(t: T) -> Self { Wrapper(t) }",
+        "range": {
+          "byteOffset": {
+            "start": 1235,
+            "end": 1271
+          },
+          "start": {
+            "line": 62,
+            "column": 4
+          },
+          "end": {
+            "line": 62,
+            "column": 40
+          }
+        }
+      }
+    },
+    "multi": {
+      "secondary": [
+        {
+          "text": "impl<T> From<T> for Wrapper<T>\nwhere\n    T: Sized,\n{\n    fn from(t: T) -> Self { Wrapper(t) }\n}",
+          "range": {
+            "byteOffset": {
+              "start": 1178,
+              "end": 1273
+            },
+            "start": {
+              "line": 58,
+              "column": 0
+            },
+            "end": {
+              "line": 63,
+              "column": 1
+            }
+          }
+        },
+        {
+          "text": "from",
+          "range": {
+            "byteOffset": {
+              "start": 1238,
+              "end": 1242
+            },
+            "start": {
+              "line": 62,
+              "column": 7
+            },
+            "end": {
+              "line": 62,
+              "column": 11
+            }
+          }
+        }
+      ]
+    },
+    "transformed": {}
+  },
+  "ruleId": "find-all-syntactic-elements",
+  "severity": "hint",
+  "note": null,
+  "message": "",
+  "labels": [
+    {
+      "text": "fn from(t: T) -> Self { Wrapper(t) }",
+      "range": {
+        "byteOffset": {
+          "start": 1235,
+          "end": 1271
+        },
+        "start": {
+          "line": 62,
+          "column": 4
+        },
+        "end": {
+          "line": 62,
+          "column": 40
+        }
+      },
+      "style": "primary"
+    },
+    {
+      "text": "impl<T> From<T> for Wrapper<T>\nwhere\n    T: Sized,\n{\n    fn from(t: T) -> Self { Wrapper(t) }\n}",
+      "range": {
+        "byteOffset": {
+          "start": 1178,
+          "end": 1273
+        },
+        "start": {
+          "line": 58,
+          "column": 0
+        },
+        "end": {
+          "line": 63,
+          "column": 1
+        }
+      },
+      "style": "secondary"
+    },
+    {
+      "text": "from",
+      "range": {
+        "byteOffset": {
+          "start": 1238,
+          "end": 1242
+        },
+        "start": {
+          "line": 62,
+          "column": 7
+        },
+        "end": {
+          "line": 62,
+          "column": 11
+        }
+      },
+      "style": "secondary"
+    }
+  ]
+},
+{
+  "text": "unsafe impl Send for Wrapper<u8> {}",
+  "range": {
+    "byteOffset": {
+      "start": 1344,
+      "end": 1379
+    },
+    "start": {
+      "line": 66,
+      "column": 0
+    },
+    "end": {
+      "line": 66,
+      "column": 35
+    }
+  },
+  "file": "sample_program.rs",
+  "lines": "unsafe impl Send for Wrapper<u8> {}",
+  "charCount": {
+    "leading": 0,
+    "trailing": 0
+  },
+  "language": "Rust",
+  "metaVariables": {
+    "single": {
+      "IMPL_BODY": {
+        "text": "unsafe impl Send for Wrapper<u8> {}",
+        "range": {
+          "byteOffset": {
+            "start": 1344,
+            "end": 1379
+          },
+          "start": {
+            "line": 66,
+            "column": 0
+          },
+          "end": {
+            "line": 66,
+            "column": 35
+          }
+        }
+      }
+    },
+    "multi": {},
+    "transformed": {}
+  },
+  "ruleId": "find-all-syntactic-elements",
+  "severity": "hint",
+  "note": null,
+  "message": "",
+  "labels": [
+    {
+      "text": "unsafe impl Send for Wrapper<u8> {}",
+      "range": {
+        "byteOffset": {
+          "start": 1344,
+          "end": 1379
+        },
+        "start": {
+          "line": 66,
+          "column": 0
+        },
+        "end": {
+          "line": 66,
+          "column": 35
+        }
+      },
+      "style": "primary"
+    }
+  ]
+},
+{
+  "text": "impl<T> TraitToImpl for <T as SomeTrait>::Assoc\nwhere\n    T: SomeTrait,\n{\n    // empty body allowed\n    fn make_iter() -> impl Iterator<Item = u8> {\n        std::iter::once(1u8)\n    }\n}",
+  "range": {
+    "byteOffset": {
+      "start": 1650,
+      "end": 1835
+    },
+    "start": {
+      "line": 72,
+      "column": 0
+    },
+    "end": {
+      "line": 80,
+      "column": 1
+    }
+  },
+  "file": "sample_program.rs",
+  "lines": "impl<T> TraitToImpl for <T as SomeTrait>::Assoc\nwhere\n    T: SomeTrait,\n{\n    // empty body allowed\n    fn make_iter() -> impl Iterator<Item = u8> {\n        std::iter::once(1u8)\n    }\n}",
+  "charCount": {
+    "leading": 0,
+    "trailing": 0
+  },
+  "language": "Rust",
+  "metaVariables": {
+    "single": {
+      "IMPL_BODY": {
+        "text": "impl<T> TraitToImpl for <T as SomeTrait>::Assoc\nwhere\n    T: SomeTrait,\n{\n    // empty body allowed\n    fn make_iter() -> impl Iterator<Item = u8> {\n        std::iter::once(1u8)\n    }\n}",
+        "range": {
+          "byteOffset": {
+            "start": 1650,
+            "end": 1835
+          },
+          "start": {
+            "line": 72,
+            "column": 0
+          },
+          "end": {
+            "line": 80,
+            "column": 1
+          }
+        }
+      }
+    },
+    "multi": {},
+    "transformed": {}
+  },
+  "ruleId": "find-all-syntactic-elements",
+  "severity": "hint",
+  "note": null,
+  "message": "",
+  "labels": [
+    {
+      "text": "impl<T> TraitToImpl for <T as SomeTrait>::Assoc\nwhere\n    T: SomeTrait,\n{\n    // empty body allowed\n    fn make_iter() -> impl Iterator<Item = u8> {\n        std::iter::once(1u8)\n    }\n}",
+      "range": {
+        "byteOffset": {
+          "start": 1650,
+          "end": 1835
+        },
+        "start": {
+          "line": 72,
+          "column": 0
+        },
+        "end": {
+          "line": 80,
+          "column": 1
+        }
+      },
+      "style": "primary"
+    }
+  ]
+},
+{
+  "text": "fn make_iter() -> impl Iterator<Item = u8> {\n        std::iter::once(1u8)\n    }",
+  "range": {
+    "byteOffset": {
+      "start": 1754,
+      "end": 1833
+    },
+    "start": {
+      "line": 77,
+      "column": 4
+    },
+    "end": {
+      "line": 79,
+      "column": 5
+    }
+  },
+  "file": "sample_program.rs",
+  "lines": "    fn make_iter() -> impl Iterator<Item = u8> {\n        std::iter::once(1u8)\n    }",
+  "charCount": {
+    "leading": 4,
+    "trailing": 0
+  },
+  "language": "Rust",
+  "metaVariables": {
+    "single": {
+      "METHOD_IMPL_BODY": {
+        "text": "impl<T> TraitToImpl for <T as SomeTrait>::Assoc\nwhere\n    T: SomeTrait,\n{\n    // empty body allowed\n    fn make_iter() -> impl Iterator<Item = u8> {\n        std::iter::once(1u8)\n    }\n}",
+        "range": {
+          "byteOffset": {
+            "start": 1650,
+            "end": 1835
+          },
+          "start": {
+            "line": 72,
+            "column": 0
+          },
+          "end": {
+            "line": 80,
+            "column": 1
+          }
+        }
+      },
+      "METHOD_BODY": {
+        "text": "fn make_iter() -> impl Iterator<Item = u8> {\n        std::iter::once(1u8)\n    }",
+        "range": {
+          "byteOffset": {
+            "start": 1754,
+            "end": 1833
+          },
+          "start": {
+            "line": 77,
+            "column": 4
+          },
+          "end": {
+            "line": 79,
+            "column": 5
+          }
+        }
+      },
+      "METHOD_NAME": {
+        "text": "make_iter",
+        "range": {
+          "byteOffset": {
+            "start": 1757,
+            "end": 1766
+          },
+          "start": {
+            "line": 77,
+            "column": 7
+          },
+          "end": {
+            "line": 77,
+            "column": 16
+          }
+        }
+      }
+    },
+    "multi": {
+      "secondary": [
+        {
+          "text": "impl<T> TraitToImpl for <T as SomeTrait>::Assoc\nwhere\n    T: SomeTrait,\n{\n    // empty body allowed\n    fn make_iter() -> impl Iterator<Item = u8> {\n        std::iter::once(1u8)\n    }\n}",
+          "range": {
+            "byteOffset": {
+              "start": 1650,
+              "end": 1835
+            },
+            "start": {
+              "line": 72,
+              "column": 0
+            },
+            "end": {
+              "line": 80,
+              "column": 1
+            }
+          }
+        },
+        {
+          "text": "make_iter",
+          "range": {
+            "byteOffset": {
+              "start": 1757,
+              "end": 1766
+            },
+            "start": {
+              "line": 77,
+              "column": 7
+            },
+            "end": {
+              "line": 77,
+              "column": 16
+            }
+          }
+        }
+      ]
+    },
+    "transformed": {}
+  },
+  "ruleId": "find-all-syntactic-elements",
+  "severity": "hint",
+  "note": null,
+  "message": "",
+  "labels": [
+    {
+      "text": "fn make_iter() -> impl Iterator<Item = u8> {\n        std::iter::once(1u8)\n    }",
+      "range": {
+        "byteOffset": {
+          "start": 1754,
+          "end": 1833
+        },
+        "start": {
+          "line": 77,
+          "column": 4
+        },
+        "end": {
+          "line": 79,
+          "column": 5
+        }
+      },
+      "style": "primary"
+    },
+    {
+      "text": "impl<T> TraitToImpl for <T as SomeTrait>::Assoc\nwhere\n    T: SomeTrait,\n{\n    // empty body allowed\n    fn make_iter() -> impl Iterator<Item = u8> {\n        std::iter::once(1u8)\n    }\n}",
+      "range": {
+        "byteOffset": {
+          "start": 1650,
+          "end": 1835
+        },
+        "start": {
+          "line": 72,
+          "column": 0
+        },
+        "end": {
+          "line": 80,
+          "column": 1
+        }
+      },
+      "style": "secondary"
+    },
+    {
+      "text": "make_iter",
+      "range": {
+        "byteOffset": {
+          "start": 1757,
+          "end": 1766
+        },
+        "start": {
+          "line": 77,
+          "column": 7
+        },
+        "end": {
+          "line": 77,
+          "column": 16
+        }
+      },
+      "style": "secondary"
+    }
+  ]
+},
+{
+  "text": "fn make_iter() -> impl Iterator<Item = u8> {\n    std::iter::once(1u8)\n}",
+  "range": {
+    "byteOffset": {
+      "start": 1895,
+      "end": 1966
+    },
+    "start": {
+      "line": 83,
+      "column": 0
+    },
+    "end": {
+      "line": 85,
+      "column": 1
+    }
+  },
+  "file": "sample_program.rs",
+  "lines": "fn make_iter() -> impl Iterator<Item = u8> {\n    std::iter::once(1u8)\n}",
+  "charCount": {
+    "leading": 0,
+    "trailing": 0
+  },
+  "language": "Rust",
+  "metaVariables": {
+    "single": {
+      "FUNCTION_NAME": {
+        "text": "make_iter",
+        "range": {
+          "byteOffset": {
+            "start": 1898,
+            "end": 1907
+          },
+          "start": {
+            "line": 83,
+            "column": 3
+          },
+          "end": {
+            "line": 83,
+            "column": 12
+          }
+        }
+      },
+      "FUNCTION_BODY": {
+        "text": "fn make_iter() -> impl Iterator<Item = u8> {\n    std::iter::once(1u8)\n}",
+        "range": {
+          "byteOffset": {
+            "start": 1895,
+            "end": 1966
+          },
+          "start": {
+            "line": 83,
+            "column": 0
+          },
+          "end": {
+            "line": 85,
+            "column": 1
+          }
+        }
+      }
+    },
+    "multi": {
+      "secondary": [
+        {
+          "text": "make_iter",
+          "range": {
+            "byteOffset": {
+              "start": 1898,
+              "end": 1907
+            },
+            "start": {
+              "line": 83,
+              "column": 3
+            },
+            "end": {
+              "line": 83,
+              "column": 12
+            }
+          }
+        }
+      ]
+    },
+    "transformed": {}
+  },
+  "ruleId": "find-all-syntactic-elements",
+  "severity": "hint",
+  "note": null,
+  "message": "",
+  "labels": [
+    {
+      "text": "fn make_iter() -> impl Iterator<Item = u8> {\n    std::iter::once(1u8)\n}",
+      "range": {
+        "byteOffset": {
+          "start": 1895,
+          "end": 1966
+        },
+        "start": {
+          "line": 83,
+          "column": 0
+        },
+        "end": {
+          "line": 85,
+          "column": 1
+        }
+      },
+      "style": "primary"
+    },
+    {
+      "text": "make_iter",
+      "range": {
+        "byteOffset": {
+          "start": 1898,
+          "end": 1907
+        },
+        "start": {
+          "line": 83,
+          "column": 3
+        },
+        "end": {
+          "line": 83,
+          "column": 12
+        }
+      },
+      "style": "secondary"
+    }
+  ]
+}
+]
