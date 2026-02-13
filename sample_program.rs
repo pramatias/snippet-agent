@@ -1,9 +1,15 @@
+impl<'tcx> BasicBlocks<'tcx> {
+    #[inline]
+    pub fn new(basic_blocks: IndexVec<BasicBlock, BasicBlockData<'tcx>>) -> Self {
+        BasicBlocks { basic_blocks, cache: Arc::new(Cache::default()) }
+    }
+}
+
 #[cfg(test)]
 mod tests {
     #[test]
     fn test_json_selectors_ast_grep() {
         use super::*;
-        let temp_dir = tempfile::tempdir().expect("Failed to create temp directory");
     }
 }
 

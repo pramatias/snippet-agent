@@ -100,21 +100,6 @@ rule:
           pattern: $ATTRIBUTES
 
     # ------------------------------------------------------------
-    # TRAIT DECLARATION (capture the trait itself)
-    # ------------------------------------------------------------
-    # Matches a `trait_item` and captures:
-    # - $TRAIT_BODY      : the whole trait declaration node
-    # - $TRAIT_NAME      : the name of the trait (a type_identifier)
-    # ------------------------------------------------------------
-    - all:
-        - kind: trait_item
-          pattern: $TRAIT_BODY
-        - has:
-            field: name
-            kind: type_identifier
-            pattern: $TRAIT_NAME
-
-    # ------------------------------------------------------------
     # METHOD SIGNATURES INSIDE TRAITS (no body)
     # ------------------------------------------------------------
     # Matches `function_signature_item` nodes (method signatures inside traits — declaration only).
@@ -165,6 +150,21 @@ rule:
               field: name
               kind: type_identifier
               pattern: $TRAIT_NAME_WITH_METHOD
+
+    # ------------------------------------------------------------
+    # TRAIT DECLARATION (capture the trait itself)
+    # ------------------------------------------------------------
+    # Matches a `trait_item` and captures:
+    # - $TRAIT_BODY      : the whole trait declaration node
+    # - $TRAIT_NAME      : the name of the trait (a type_identifier)
+    # ------------------------------------------------------------
+    - all:
+        - kind: trait_item
+          pattern: $TRAIT_BODY
+        - has:
+            field: name
+            kind: type_identifier
+            pattern: $TRAIT_NAME
 
     # ------------------------------------------------------------
     # TYPE ALIAS (type_item with its identifier)

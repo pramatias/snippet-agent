@@ -1,6 +1,6 @@
-use crate::impl_sig_types::*;
+use crate::syn::impl_sig_types::*;
 use crate::json_selection::unprocessed_elements::*;
-use crate::syn_elements::*;
+use crate::syn::syn_elements::*;
 use syntax_queries::RustParser;
 
 impl From<UnprocessedMethod> for SynMethod {

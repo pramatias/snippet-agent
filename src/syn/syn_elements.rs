@@ -1,6 +1,6 @@
 use serde::Deserialize;
 use crate::json_selection::unprocessed_elements::*;
-use crate::impl_sig_types::*;
+use crate::syn::impl_sig_types::*;
 
 pub type ImplSignature = String;
 pub type FunctionSignature = String;
@@ -16,12 +16,12 @@ pub type SynTraitMethodDefs = UnprocessedTraitMethodDefs;
 pub type SynTypeAliases = UnprocessedTypeAliases;
 pub type SynEnums = UnprocessedEnums;
 pub type SynUnions = UnprocessedUnions;
+pub type SynImpls = UnprocessedImpls;
 
 #[derive(Debug, Deserialize, Clone)]
 pub struct SynMethod {
     pub file: FilePath,
 
-    // original raw elements (keeps source text + range)
     pub impl_body: MethodImplBody,
     pub method_body: MethodBody,
     pub method_name: MethodName,
@@ -33,45 +33,7 @@ pub struct SynMethod {
 
 }
 
-#[derive(Debug, Deserialize, Clone)]
-pub struct SynImpl {
-    pub file: FilePath,
-
-    // original impl body
-    pub impl_body: ImplBody,
-
-    // additional metadata you commonly want from an impl
-    /// Optional target type this impl is for (e.g. "MyType" or "MyType<T>")
-    pub for_type: Option<String>,
-    /// Whether the impl is `unsafe` (best-effort)
-    pub is_unsafe: bool,
-    /// Generics string, if applicable (best-effort)
-    pub generics: Option<String>,
-    /// Attributes that were attached to this impl (e.g. doc, cfg) - extracted/normalized
-    pub attributes: Vec<String>,
-
-    /// Methods that belong to this impl — initially empty when converting from raw; you can populate this
-    /// by matching `unprocessed_methods` to the impl (e.g. by `file` + byte ranges) in a later pass.
-    pub methods: Vec<SynMethod>,
-}
-
-impl From<UnprocessedImpl> for SynImpl {
-    fn from(u: UnprocessedImpl) -> Self {
-        SynImpl {
-            file: u.file,
-            impl_body: u.impl_body,
-            for_type: None,
-            is_unsafe: false,
-            generics: None,
-            attributes: Vec::new(),
-            methods: Vec::new(),
-        }
-    }
-}
-
-// SynCollections (vectors) for the richer types
 pub type SynMethods = Vec<SynMethod>;
-pub type SynImpls = Vec<SynImpl>;
 
 #[derive(Debug, Clone)]
 pub struct AllSynElements {
@@ -103,18 +65,12 @@ impl AllSynElements {
             .map(SynMethod::from)
             .collect();
 
-        let syn_impls: SynImpls = u
-            .unprocessed_impls
-            .into_iter()
-            .map(SynImpl::from)
-            .collect();
-
         AllSynElements {
             syn_attributes: u.unprocessed_attributes,
             syn_tests_mods: u.unprocessed_tests_mods,
             syn_functions: u.unprocessed_functions,
             syn_methods,
-            syn_impls,
+            syn_impls: u.unprocessed_impls,
             syn_structs: u.unprocessed_structs,
             syn_traits: u.unprocessed_traits,
             syn_trait_method_sigs: u.unprocessed_trait_method_sigs,
