@@ -1,12 +1,25 @@
-use serde::Deserialize;
 use crate::json_selection::unprocessed_elements::*;
-use crate::syn::impl_sig_types::*;
+use serde::Deserialize;
+use std::collections::{HashMap, HashSet};
+use syntax_queries::{ByteRange, HasByteRange};
 
 pub type ImplSignature = String;
 pub type FunctionSignature = String;
 pub type DSName = String;
 
-pub type SynAttributes = UnprocessedAttributes;
+pub type TypeVariable = String;
+pub type ConcreteType = String;
+pub type TypeSet = HashSet<String>;
+pub type CTypeSet = HashSet<ConcreteType>;
+
+pub type TypeVariableMap = HashMap<TypeVariable, TypeSet>;
+
+#[derive(Debug, Clone, Default, Deserialize)]
+pub struct TypeIdentifiers {
+    pub type_variables: Option<TypeVariableMap>,
+    pub concrete_types: Option<CTypeSet>,
+}
+
 pub type SynTestsMods = UnprocessedTestsMods;
 pub type SynFunctions = UnprocessedFunctions;
 pub type SynStructs = UnprocessedStructs;
@@ -30,10 +43,21 @@ pub struct SynMethod {
     pub function_signature: FunctionSignature,
     pub ds_structure: DSName,
     pub type_identifiers: TypeIdentifiers,
-
 }
 
 pub type SynMethods = Vec<SynMethod>;
+
+pub type AttributeContextLines = String;
+
+#[derive(Debug, Clone)]
+pub struct SynAttribute {
+    pub file: FilePath,
+
+    pub attribute_body: AttributeBody,
+    pub context_lines: AttributeContextLines,
+}
+
+pub type SynAttributes = Vec<SynAttribute>;
 
 #[derive(Debug, Clone)]
 pub struct AllSynElements {
@@ -51,43 +75,53 @@ pub struct AllSynElements {
     pub syn_unions: SynUnions,
 }
 
-impl AllSynElements {
-    /// Convert an `AllUnprocessedElements` into `AllSynElements`.
-    /// This conversion is shallow: it copies/aliases the unchanged collections and converts
-    /// `UnprocessedImpl`s and `UnprocessedMethod`s into `SynImpl`/`SynMethod` with default
-    /// processed fields. You can extend this to parse signatures/attributes and to attach
-    /// methods to their impls by matching ranges/locations.
-    pub fn from_unprocessed(u: AllUnprocessedElements) -> Self {
-        // convert methods and impls using From implementations above
-        let syn_methods: SynMethods = u
-            .unprocessed_methods
-            .into_iter()
-            .map(SynMethod::from)
-            .collect();
+impl HasByteRange for SynElement {
+    fn byte_range(&self) -> &ByteRange {
+        &self.range.byte_range
+    }
+}
 
-        AllSynElements {
-            syn_attributes: u.unprocessed_attributes,
-            syn_tests_mods: u.unprocessed_tests_mods,
-            syn_functions: u.unprocessed_functions,
-            syn_methods,
-            syn_impls: u.unprocessed_impls,
-            syn_structs: u.unprocessed_structs,
-            syn_traits: u.unprocessed_traits,
-            syn_trait_method_sigs: u.unprocessed_trait_method_sigs,
-            syn_trait_method_defs: u.unprocessed_trait_method_defs,
-            syn_type_aliases: u.unprocessed_type_aliases,
-            syn_enums: u.unprocessed_enums,
-            syn_unions: u.unprocessed_unions,
+impl HasByteRange for &SynElement {
+    fn byte_range(&self) -> &ByteRange {
+        &self.range.byte_range
+    }
+}
+
+///merge
+impl SynElement {
+    /// Merge two `SynElement`s whose source regions are adjacent (or
+    /// separated only by whitespace).  Text is joined with a newline;
+    /// the range spans both elements.
+    pub fn merge(&self, other: &SynElement) -> SynElement {
+        SynElement {
+            text: format!("{}\n{}", self.text, other.text),
+            range: self.range.merge(&other.range),
         }
     }
 }
 
-#[allow(dead_code)]
-fn context(){
-    const CONTEXT: &str = r#"
-// use crate::raw_elements::*;
-// use crate::raw_syn_casting::*;
+///whitespace between
+impl SynElement {
+    /// Return true when the source region between `self` and `other`
+    /// (inside `file_content`) is entirely whitespace.
+    ///
+    /// Assumes `self` ends before `other` starts (i.e. `self.before(other)`).
+    pub fn only_whitespace_between(&self, other: &SynElement, file_content: &str) -> bool {
+        let start = self.range.byte_range.end as usize;
+        let end = other.range.byte_range.start as usize;
+        if start > end {
+            return false;
+        }
+        file_content
+            .get(start..end)
+            .map(|gap| gap.chars().all(char::is_whitespace))
+            .unwrap_or(false)
+    }
+}
 
+#[allow(dead_code)]
+fn context() {
+    const CONTEXT: &str = r#"
 pub type UnprocessedAttributes = Vec<UnprocessedAttribute>;
 pub type UnprocessedTestsMods = Vec<UnprocessedTestsMod>;
 pub type UnprocessedFunctions = Vec<UnprocessedFunction>;
@@ -275,5 +309,21 @@ pub struct UnprocessedStruct {
     pub struct_body: StructBody,
     pub struct_name: StructName,
 }
+
+pub trait HasByteRange {
+    fn byte_range(&self) -> &ByteRange;
+
+    fn before(&self, other: &impl HasByteRange) -> bool
+    fn after(&self, other: &impl HasByteRange) -> bool
+    fn contains(&self, other: &impl HasByteRange) -> bool
+
+impl HasByteRange for ByteRange {
+    fn byte_range(&self) -> &ByteRange
+}
+
+impl HasByteRange for NodeMatch {
+    fn byte_range(&self) -> &ByteRange
+}
+
 "#;
 }

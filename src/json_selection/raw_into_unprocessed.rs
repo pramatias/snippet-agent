@@ -35,18 +35,18 @@ impl AllUnprocessedElements {
         ) = extract_selections_from_ast_grep_json(json)?;
 
         Ok(AllUnprocessedElements {
-            unprocessed_attributes:        collect_unprocessed!(raw_attributes        => UnprocessedAttributes),
-            unprocessed_tests_mods:        collect_unprocessed!(raw_tests_mods        => UnprocessedTestsMods),
-            unprocessed_functions:         collect_unprocessed!(raw_functions         => UnprocessedFunctions),
-            unprocessed_methods:           collect_unprocessed!(raw_methods           => UnprocessedMethods),
-            unprocessed_impls:             collect_unprocessed!(raw_impls             => UnprocessedImpls),
-            unprocessed_structs:           collect_unprocessed!(raw_structs           => UnprocessedStructs),
-            unprocessed_traits:            collect_unprocessed!(raw_traits            => UnprocessedTraits),
+            unprocessed_attributes: collect_unprocessed!(raw_attributes        => UnprocessedAttributes),
+            unprocessed_tests_mods: collect_unprocessed!(raw_tests_mods        => UnprocessedTestsMods),
+            unprocessed_functions: collect_unprocessed!(raw_functions         => UnprocessedFunctions),
+            unprocessed_methods: collect_unprocessed!(raw_methods           => UnprocessedMethods),
+            unprocessed_impls: collect_unprocessed!(raw_impls             => UnprocessedImpls),
+            unprocessed_structs: collect_unprocessed!(raw_structs           => UnprocessedStructs),
+            unprocessed_traits: collect_unprocessed!(raw_traits            => UnprocessedTraits),
             unprocessed_trait_method_sigs: collect_unprocessed!(raw_trait_method_sigs => UnprocessedTraitMethodSigs),
             unprocessed_trait_method_defs: collect_unprocessed!(raw_trait_method_defs => UnprocessedTraitMethodDefs),
-            unprocessed_type_aliases:      collect_unprocessed!(raw_type_aliases      => UnprocessedTypeAliases),
-            unprocessed_enums:             collect_unprocessed!(raw_enums             => UnprocessedEnums),
-            unprocessed_unions:            collect_unprocessed!(raw_unions            => UnprocessedUnions),
+            unprocessed_type_aliases: collect_unprocessed!(raw_type_aliases      => UnprocessedTypeAliases),
+            unprocessed_enums: collect_unprocessed!(raw_enums             => UnprocessedEnums),
+            unprocessed_unions: collect_unprocessed!(raw_unions            => UnprocessedUnions),
         })
     }
 }

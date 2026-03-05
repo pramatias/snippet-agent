@@ -1,5 +1,6 @@
 use crate::json_selection::raw_elements::*;
 use crate::json_selection::unprocessed_elements::*;
+use syntax_queries::{ByteRange, CharactersDimension, SynPosition, SynRange};
 
 impl From<ByteOffset> for ByteRange {
     fn from(b: ByteOffset) -> Self {

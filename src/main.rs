@@ -1,7 +1,7 @@
-mod init;
-mod path;
 mod ast_grep;
+mod init;
 mod json_selection;
+mod path;
 mod syn;
 
 use clap::{ArgAction, Args, Parser, Subcommand};
@@ -9,17 +9,17 @@ use init::init::initialize_logger;
 use log::LevelFilter;
 
 use anyhow::{Context, Result, anyhow};
-use std::path::Path;
-use log::{debug, error};
+use log::error;
 
-// use crate::syn::impl_sig_types::*;
-use crate::path::path_resolution::resolve_path;
-use crate::json_selection::unprocessed_elements::AllUnprocessedElements;
 use crate::ast_grep::ast_grep_yaml_rules::run_ast_grep_rule;
+use crate::json_selection::unprocessed_elements::AllUnprocessedElements;
+use crate::path::path_resolution::resolve_path;
+use crate::syn::syn_elements::AllSynElements;
 
-use syntax_queries::RustParser;
+use crate::json_selection::unprocessed_elements::FilePath;
+use crate::path::path_resolution::read_rs_files;
+use std::collections::HashMap;
 
-/// Configure logging verbosity using -v/--verbose and -q/--quiet flags.
 #[derive(Args, Debug)]
 pub struct Verbosity {
     /// Increase the level of verbosity (repeatable).
@@ -45,7 +45,6 @@ impl Verbosity {
     }
 }
 
-/// Mode-line interface for the module management tool.
 #[derive(Parser, Debug)]
 #[command(
     author = "you",
@@ -60,7 +59,6 @@ struct Cli {
     command: Mode,
 }
 
-/// CLI modes (each takes a directory parameter).
 #[derive(Subcommand, Debug)]
 enum Mode {
     /// Inspect/transform a method in the given directory
@@ -116,9 +114,33 @@ struct FunctionArgs {
 
 #[derive(Args, Debug)]
 struct StructArgs {
-    /// Directory to process
+    /// File to process (highest priority)
+    #[arg(short = 'n', long = "name", help = "Struct name")]
+    pub name: Option<String>,
+
+    /// File to process (highest priority)
+    #[arg(short = 'f', long = "file", help = "File to inspect/process")]
+    pub file: Option<String>,
+
+    /// Crate/directory to process
+    #[arg(
+        short = 'c',
+        long = "crate",
+        help = "Crate or directory to inspect/process"
+    )]
+    pub crate_dir: bool,
+
+    /// Use the project root (auto-detected by walking up to Cargo.toml)
+    #[arg(short = 'r', long = "root", help = "Use project root (auto-detected)")]
+    pub root: bool,
+
+    /// Directory to process (overrides auto-detection)
     #[arg(short = 'd', long = "directory", help = "Directory to inspect/process")]
-    directory: String,
+    pub directory: Option<String>,
+
+    /// Emit JSON
+    #[arg(long = "json", help = "Emit JSON")]
+    pub json: bool,
 }
 
 #[derive(Args, Debug)]
@@ -134,12 +156,63 @@ fn run_function(args: &FunctionArgs) -> Result<()> {
 }
 
 fn run_struct(args: &StructArgs) -> Result<()> {
-    // TODO: implement struct mode
-    todo!("run_struct for directory = {}", args.directory);
+    let resolved_path = resolve_path(
+        args.file.clone(),
+        args.directory.clone(),
+        args.crate_dir,
+        args.root,
+    )
+    .map_err(|e| {
+        error!("resolve_path error: {}", e);
+        anyhow!("Path resolution failed: {}", e)
+    })?;
+
+    let ag_dir = resolved_path.to_string_lossy().into_owned();
+
+    let ag_json = run_ast_grep_rule(&ag_dir).map_err(|e| {
+        error!("run_ast_grep_rule failed: {:?}", e);
+        anyhow!("ast-grep run failed: {:?}", e)
+    })?;
+
+    let all_unprocessed = AllUnprocessedElements::from_raw_json(&ag_json).map_err(|e| {
+        error!("AllUnprocessedElements::from_raw_json failed: {}", e);
+        anyhow!("Failed parsing ast-grep JSON: {}", e)
+    })?;
+
+    let file_contents: HashMap<FilePath, String> = read_rs_files(
+        args.file.clone(),
+        args.directory.clone(),
+        args.crate_dir,
+        args.root,
+    )
+    .map_err(|e| {
+        error!("read_rs_files failed: {}", e);
+        anyhow!("Failed reading source files: {}", e)
+    })?
+    .into_iter()
+    .map(|(contents, path)| (path, contents))
+    .collect();
+
+    let mut all_syn = AllSynElements::from_unprocessed(all_unprocessed, &file_contents);
+    all_syn.pick_blanket_impls();
+    all_syn.print_impls();
+    all_syn.print_attributes();
+    all_syn.print_tests_mods();
+    all_syn.print_functions();
+    all_syn.print_methods();
+    all_syn.print_structs();
+    all_syn.print_traits();
+    all_syn.print_trait_method_sigs();
+    all_syn.print_trait_method_defs();
+    all_syn.print_type_aliases();
+    all_syn.print_enums();
+    all_syn.print_unions();
+
+    Ok(())
 }
 
 fn run_struct_methods(args: &StructMethodsArgs) -> Result<()> {
-    // TODO: implement struct_methods mode
+    // TODO: implement struct mode
     todo!("run_struct_methods for directory = {}", args.directory);
 }
 
@@ -179,12 +252,7 @@ fn main() -> Result<()> {
     Ok(())
 }
 
-/// `run_method` uses `MethodDataMatch::from_ast_grep_match` to
-/// create each match. The initializer takes an `AstGrepMatch`, initializes the
-/// common fields, and runs the existing `extract_signatures_impl_fn` method twice to
-/// populate the two signature fields.
 pub fn run_method(args: &MethodArgs) -> Result<String> {
-    // Resolve path as before
     let resolved_path = resolve_path(
         args.file.clone(),
         args.directory.clone(),
@@ -196,25 +264,36 @@ pub fn run_method(args: &MethodArgs) -> Result<String> {
         anyhow!("Path resolution failed: {}", e)
     })?;
 
-    // Use provided method name or empty string.
-    let _method_name = args.name.clone().unwrap_or_default();
-
     let ag_dir = resolved_path.to_string_lossy().into_owned();
 
-    // Run ast-grep rule, get JSON
     let ag_json = run_ast_grep_rule(&ag_dir).map_err(|e| {
         error!("run_ast_grep_rule failed: {:?}", e);
         anyhow!("ast-grep run failed: {:?}", e)
     })?;
 
-    // Parse JSON into AllSynElements
-    let all_syn = AllUnprocessedElements::from_raw_json(&ag_json).map_err(|e| {
-        error!("AllSynElements::from_json failed: {}", e);
+    let all_unprocessed = AllUnprocessedElements::from_raw_json(&ag_json).map_err(|e| {
+        error!("AllUnprocessedElements::from_raw_json failed: {}", e);
         anyhow!("Failed parsing ast-grep JSON: {}", e)
     })?;
 
-    // all_syn.print_all();
+    let file_contents: HashMap<FilePath, String> = read_rs_files(
+        args.file.clone(),
+        args.directory.clone(),
+        args.crate_dir,
+        args.root,
+    )
+    .map_err(|e| {
+        error!("read_rs_files failed: {}", e);
+        anyhow!("Failed reading source files: {}", e)
+    })?
+    .into_iter()
+    .map(|(contents, path)| (path, contents))
+    .collect();
+
+    let mut all_syn = AllSynElements::from_unprocessed(all_unprocessed, &file_contents);
+    all_syn.pick_blanket_impls();
+    all_syn.merge_adjacent_attrs();
+    all_syn.print_attrs();
 
     Ok("found method".to_string())
 }
-

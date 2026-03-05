@@ -1,6 +1,5 @@
 use serde::Deserialize;
-// use crate::raw_elements::*;
-// use crate::raw_syn_casting::*;
+use syntax_queries::SynRange;
 
 pub type UnprocessedAttributes = Vec<UnprocessedAttribute>;
 pub type UnprocessedTestsMods = Vec<UnprocessedTestsMod>;
@@ -32,34 +31,6 @@ pub struct AllUnprocessedElements {
 }
 
 pub type FilePath = String;
-
-#[allow(dead_code)]
-#[derive(Debug, Deserialize, Clone)]
-pub struct SynPosition {
-    pub line: u64,
-    pub column: u64,
-}
-
-#[allow(dead_code)]
-#[derive(Debug, Deserialize, Clone, Eq, PartialEq)]
-pub struct ByteRange {
-    pub start: u64,
-    pub end: u64,
-}
-
-#[allow(dead_code)]
-#[derive(Debug, Deserialize, Clone)]
-pub struct CharactersDimension {
-    pub start: SynPosition,
-    pub end: SynPosition,
-}
-
-#[allow(dead_code)]
-#[derive(Debug, Deserialize, Clone)]
-pub struct SynRange {
-    pub byte_range: ByteRange,
-    pub characters_dimension: CharactersDimension,
-}
 
 #[derive(Debug, Deserialize, Clone)]
 pub struct SynElement {
@@ -101,6 +72,7 @@ pub struct UnprocessedMethod {
     pub method_name: MethodName,
 }
 
+#[allow(dead_code)]
 #[derive(Debug, Deserialize, Clone)]
 pub struct UnprocessedTraitMethodDefinition {
     pub file: FilePath,
@@ -111,6 +83,7 @@ pub struct UnprocessedTraitMethodDefinition {
     pub trait_name: TraitName,
 }
 
+#[allow(dead_code)]
 #[derive(Debug, Deserialize, Clone)]
 pub struct UnprocessedTypeAlias {
     pub file: FilePath,
@@ -119,6 +92,7 @@ pub struct UnprocessedTypeAlias {
     pub type_name: TypeAliasName,
 }
 
+#[allow(dead_code)]
 #[derive(Debug, Deserialize, Clone)]
 pub struct UnprocessedEnum {
     pub file: FilePath,
@@ -127,6 +101,7 @@ pub struct UnprocessedEnum {
     pub enum_name: EnumName,
 }
 
+#[allow(dead_code)]
 #[derive(Debug, Deserialize, Clone)]
 pub struct UnprocessedUnion {
     pub file: FilePath,
@@ -135,6 +110,7 @@ pub struct UnprocessedUnion {
     pub union_name: UnionName,
 }
 
+#[allow(dead_code)]
 #[derive(Debug, Deserialize, Clone)]
 pub struct UnprocessedTestsMod {
     pub file: FilePath,
@@ -142,6 +118,7 @@ pub struct UnprocessedTestsMod {
     pub tests_mod_body: TestsModBody,
 }
 
+#[allow(dead_code)]
 #[derive(Debug, Deserialize, Clone)]
 pub struct UnprocessedFunction {
     pub file: FilePath,
@@ -150,6 +127,7 @@ pub struct UnprocessedFunction {
     pub function_name: FunctionName,
 }
 
+#[allow(dead_code)]
 #[derive(Debug, Deserialize, Clone)]
 pub struct UnprocessedTrait {
     pub file: FilePath,
@@ -158,6 +136,7 @@ pub struct UnprocessedTrait {
     pub trait_name: TraitName,
 }
 
+#[allow(dead_code)]
 #[derive(Debug, Deserialize, Clone)]
 pub struct UnprocessedTraitMethodSignature {
     pub file: FilePath,
@@ -168,6 +147,7 @@ pub struct UnprocessedTraitMethodSignature {
     pub trait_name: TraitName,
 }
 
+#[allow(dead_code)]
 #[derive(Debug, Deserialize, Clone)]
 pub struct UnprocessedAttribute {
     pub file: FilePath,
@@ -175,6 +155,7 @@ pub struct UnprocessedAttribute {
     pub attribute_body: AttributeBody,
 }
 
+#[allow(dead_code)]
 #[derive(Debug, Deserialize, Clone)]
 pub struct UnprocessedImpl {
     pub file: FilePath,
@@ -182,6 +163,7 @@ pub struct UnprocessedImpl {
     pub impl_body: ImplBody,
 }
 
+#[allow(dead_code)]
 #[derive(Debug, Deserialize, Clone)]
 pub struct UnprocessedStruct {
     pub file: FilePath,

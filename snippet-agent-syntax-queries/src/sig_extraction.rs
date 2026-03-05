@@ -1,3 +1,4 @@
+pub use crate::ordering::*;
 use std::result::Result;
 use tree_sitter::{Node, Parser, Tree};
 
@@ -9,43 +10,66 @@ pub struct RustParser<'a> {
     pub target_node_text: String,
 }
 
-///find function item
+///find all
 impl<'a> RustParser<'a> {
-    /// Given a `function_item` node, attempt to find its identifier/name.
-    /// Prefer the child found by the field name "name" (if present),
-    /// otherwise fall back to searching for the first `identifier` node.
-    ///
-    /// Returns `None` if no identifier could be located.
-    pub fn find_identifier_in_function(&self, func_node: Node<'a>) -> Option<String> {
-        // Try the conventional named field first
-        if let Some(name_node) = func_node.child_by_field_name("name") {
-            if name_node.kind() == "identifier" {
-                if let Ok(txt) = name_node.utf8_text(self.source.as_bytes()) {
-                    return Some(txt.to_string());
-                }
-            } else {
-                // sometimes the field exists but is a different node kind (defensive)
-                if let Ok(txt) = name_node.utf8_text(self.source.as_bytes()) {
-                    return Some(txt.to_string());
-                }
-            }
-        }
+    /// Find all nodes whose kind equals `self.target_node_text`.
+    /// Returns Some(Vec) if any matches are found, None otherwise.
+    /// Traverses the tree in source (left-to-right) order.
+    pub fn find_all(&self) -> Option<Vec<NodeMatch>> {
+        let root = self.tree.root_node();
+        let kind = &self.target_node_text;
+        let mut results = Vec::new();
 
-        // Fallback: find first `identifier` node inside the function node
-        let mut stack = vec![func_node];
+        // Iterative DFS that preserves left-to-right order by pushing children in reverse.
+        let mut stack = vec![root];
         while let Some(node) = stack.pop() {
-            if node.kind() == "identifier" {
-                if let Ok(txt) = node.utf8_text(self.source.as_bytes()) {
-                    return Some(txt.to_string());
-                }
+            if node.kind() == kind {
+                let start_byte = node.start_byte();
+                let end_byte = node.end_byte();
+                let start_pos = node.start_position();
+                let end_pos = node.end_position();
+
+                // Extract the text
+                let text = self
+                    .source
+                    .get(start_byte..end_byte)
+                    .unwrap_or("")
+                    .to_owned();
+
+                let range = SynRange {
+                    byte_range: ByteRange {
+                        start: start_byte as u64,
+                        end: end_byte as u64,
+                    },
+                    characters_dimension: CharactersDimension {
+                        start: SynPosition {
+                            line: start_pos.row as u64,
+                            column: start_pos.column as u64,
+                        },
+                        end: SynPosition {
+                            line: end_pos.row as u64,
+                            column: end_pos.column as u64,
+                        },
+                    },
+                };
+
+                results.push(NodeMatch { text, range: range });
             }
-            let mut child_walk = node.walk();
-            for child in node.children(&mut child_walk) {
-                stack.push(child);
+
+            let child_count = node.child_count();
+            // push children in reverse so the left-most child is processed first
+            for i in (0..child_count).rev() {
+                if let Some(child) = node.child(i as u32) {
+                    stack.push(child);
+                }
             }
         }
 
-        None
+        if results.is_empty() {
+            None
+        } else {
+            Some(results)
+        }
     }
 }
 
@@ -99,38 +123,6 @@ impl<'a> RustParser<'a> {
     }
 }
 
-///save type identifier
-impl<'a> RustParser<'a> {
-    /// Populate `out` with the text of every node whose kind equals
-    /// `self.target_node_text`. Traverses the tree in source (left-to-right)
-    /// order and pushes each match into `out`.
-    pub fn save_type_identifiers(&self, out: &mut Vec<String>) {
-        let root = self.tree.root_node();
-        let kind = &self.target_node_text;
-
-        // Iterative DFS that preserves left-to-right order by pushing children in reverse.
-        let mut stack = vec![root];
-
-        while let Some(node) = stack.pop() {
-            if node.kind() == kind {
-                let start = node.start_byte();
-                let end = node.end_byte();
-                // use get(..).unwrap_or("") to avoid panics on invalid slicing
-                let text = self.source.get(start..end).unwrap_or("").to_owned();
-                out.push(text);
-            }
-
-            let child_count = node.child_count();
-            // push children in reverse so the left-most child is processed first
-            for i in (0..child_count).rev() {
-                if let Some(child) = node.child(i) {
-                    stack.push(child);
-                }
-            }
-        }
-    }
-}
-
 ///select last
 impl<'a> RustParser<'a> {
     /// Return the source text of the *last* node whose kind equals
@@ -154,7 +146,7 @@ impl<'a> RustParser<'a> {
 
             let child_count = node.child_count();
             for i in 0..child_count {
-                if let Some(child) = node.child(i) {
+                if let Some(child) = node.child(i as u32) {
                     stack.push(child);
                 }
             }
@@ -187,7 +179,7 @@ impl<'a> RustParser<'a> {
 
             let child_count = node.child_count();
             for i in 0..child_count {
-                if let Some(child) = node.child(i) {
+                if let Some(child) = node.child(i as u32) {
                     collect_ranges(child, kind, out);
                 }
             }
@@ -259,7 +251,7 @@ impl<'a> RustParser<'a> {
     pub fn new(source: &'a str, target_node_text: &str) -> Result<Self, String> {
         let mut parser = Parser::new();
         parser
-            .set_language(&tree_sitter_rust::language())
+            .set_language(&tree_sitter_rust::LANGUAGE.into())
             .map_err(|e| format!("failed to set language: {:?}", e))?;
 
         let tree = parser
@@ -277,6 +269,59 @@ impl<'a> RustParser<'a> {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn find_for_keyword() {
+        let source = r#"impl<T> From<T> for Wrapper<T> {}
+"#;
+
+        let parser = RustParser::new(source, "for").expect("failed to create RustParser");
+
+        let root = parser.tree.root_node();
+
+        // The 'for' keyword is a node with kind "for"
+        let for_node = RustParser::find_node_of_kind(root, "for");
+
+        assert!(for_node.is_some(), "Expected to find 'for' keyword");
+
+        if let Some(node) = for_node {
+            let text = &source[node.start_byte()..node.end_byte()];
+            assert_eq!(text, "for");
+        }
+    }
+
+    #[test]
+    fn find_where_clause_exists() {
+        let source = r#"impl<T> MyStruct<T> where T: Clone + Debug {
+    fn some_method(&self) {}
+}"#;
+
+        let parser = RustParser::new(source, "where_clause").expect("failed to create RustParser");
+
+        let root = parser.tree.root_node();
+        let node = RustParser::find_node_of_kind(root, "where_clause");
+
+        assert!(node.is_some(), "Expected to find where_clause but got None");
+
+        if let Some(found) = node {
+            let text = &source[found.start_byte()..found.end_byte()];
+            assert!(text.contains("where T: Clone + Debug"));
+        }
+    }
+
+    #[test]
+    fn find_where_clause_not_exists() {
+        let source = r#"impl<T> MyStruct<T> {
+    fn some_method(&self) {}
+}"#;
+
+        let parser = RustParser::new(source, "where_clause").expect("failed to create RustParser");
+
+        let root = parser.tree.root_node();
+        let node = RustParser::find_node_of_kind(root, "where_clause");
+
+        assert!(node.is_none(), "Expected None but found a where_clause");
+    }
 
     #[test]
     fn delete_till_start_type_parameters() {
@@ -368,17 +413,18 @@ mod tests {
         let expected = "Wrapper";
         assert_eq!(result, expected);
     }
-
     #[test]
     fn collects_fn_type_identifiers() {
         // simple, predictable source with three type identifiers in left-to-right order
         let source = r#"fn f() -> (A, B, C) {}"#;
         let target = "type_identifier";
-
         let parser = RustParser::new(source, target).expect("failed to create RustParser");
-        let mut types: Vec<String> = Vec::new();
-        parser.save_type_identifiers(&mut types);
-
+        let types: Vec<String> = parser
+            .find_all()
+            .expect("should find type identifiers")
+            .iter()
+            .map(|m| m.text.clone())
+            .collect();
         let expected = vec!["A".to_string(), "B".to_string(), "C".to_string()];
         assert_eq!(types, expected);
     }
@@ -389,11 +435,13 @@ mod tests {
         let source = r#"impl<'a, T: Clone, const N: usize> Array<T, N> where T: std::fmt::Debug,
 "#;
         let target = "type_identifier";
-
         let parser = RustParser::new(source, target).expect("failed to create RustParser");
-        let mut types: Vec<String> = Vec::new();
-        parser.save_type_identifiers(&mut types);
-
+        let types: Vec<String> = parser
+            .find_all()
+            .expect("should find type identifiers")
+            .iter()
+            .map(|m| m.text.clone())
+            .collect();
         let expected = vec![
             "T".to_string(),
             "Clone".to_string(),
@@ -412,11 +460,13 @@ mod tests {
         let source = r#"impl<'a, T: Clone, const N: usize> Array<T, N> where T: std::fmt::Debug,
 "#;
         let target = "trait_bounds";
-
         let parser = RustParser::new(source, target).expect("failed to create RustParser");
-        let mut types: Vec<String> = Vec::new();
-        parser.save_type_identifiers(&mut types);
-
+        let types: Vec<String> = parser
+            .find_all()
+            .expect("should find trait bounds")
+            .iter()
+            .map(|m| m.text.clone())
+            .collect();
         let expected = vec![": Clone".to_string(), ": std::fmt::Debug".to_string()];
         assert_eq!(types, expected);
     }
@@ -424,15 +474,17 @@ mod tests {
     #[test]
     fn collects_const_parameter() {
         // simple, predictable source with three type identifiers in left-to-right order
-        let source = r#"impl<'a, T: Clone, const N: usize> Array<T, N> where T: std::fmt::Debug,
+        let source = r#"impl<'a, T: Clone, const N: usize, const K: usize> Array<T, N> where T: std::fmt::Debug,
 "#;
         let target = "const_parameter";
-
         let parser = RustParser::new(source, target).expect("failed to create RustParser");
-        let mut types: Vec<String> = Vec::new();
-        parser.save_type_identifiers(&mut types);
-
-        let expected = vec!["const N: usize".to_string()];
+        let types: Vec<String> = parser
+            .find_all()
+            .expect("should find const parameters")
+            .iter()
+            .map(|m| m.text.clone())
+            .collect();
+        let expected = vec!["const N: usize".to_string(), "const K: usize".to_string()];
         assert_eq!(types, expected);
     }
 }

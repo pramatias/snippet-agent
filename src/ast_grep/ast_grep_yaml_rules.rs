@@ -89,17 +89,6 @@ rule:
             pattern: $STRUCT_NAME
 
     # ------------------------------------------------------------
-    # ATTRIBUTE ITEMS
-    # ------------------------------------------------------------
-    # Matches attribute nodes such as `#[derive(...)]`, `#![no_std]`, or inner
-    # attributes. Captures:
-    # - $ATTRIBUTES      : the attribute_item node(s)
-    # ------------------------------------------------------------
-    - all:
-        - kind: attribute_item
-          pattern: $ATTRIBUTES
-
-    # ------------------------------------------------------------
     # METHOD SIGNATURES INSIDE TRAITS (no body)
     # ------------------------------------------------------------
     # Matches `function_signature_item` nodes (method signatures inside traits — declaration only).
@@ -252,5 +241,16 @@ rule:
     - all:
         - kind: impl_item
           pattern: $IMPL_BODY
+
+    # ------------------------------------------------------------
+    # ATTRIBUTE ITEMS
+    # ------------------------------------------------------------
+    # Matches attribute nodes such as `#[derive(...)]`, `#![no_std]`, or inner
+    # attributes. Captures:
+    # - $ATTRIBUTES      : the attribute_item node(s)
+    # ------------------------------------------------------------
+    - all:
+        - kind: attribute_item
+          pattern: $ATTRIBUTES
 
 "#;
