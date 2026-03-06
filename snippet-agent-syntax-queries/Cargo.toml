@@ -10,9 +10,8 @@ keywords = ["tree-sitter", "parser", "rag"]
 
 [dependencies]
 log = "0.4.29"
-serde = { version = "1.0", features = ["derive"] }
-tree-sitter = { version = "0.26.3" }
-tree-sitter-rust = { version = "0.24.0" }
+tree-sitter = "0.22"
+tree-sitter-rust = "0.21"
 
 [build-dependencies]
 cc="1"

@@ -1,0 +1,966 @@
+[
+{
+  "text": "trait SomeTrait<T> {\n    fn my_function();\n}",
+  "range": {
+    "byteOffset": {
+      "start": 443,
+      "end": 487
+    },
+    "start": {
+      "line": 28,
+      "column": 0
+    },
+    "end": {
+      "line": 30,
+      "column": 1
+    }
+  },
+  "file": "sample_program.rs",
+  "lines": "trait SomeTrait<T> {\n    fn my_function();\n}",
+  "charCount": {
+    "leading": 0,
+    "trailing": 0
+  },
+  "language": "Rust",
+  "metaVariables": {
+    "single": {
+      "TRAIT_BODY": {
+        "text": "trait SomeTrait<T> {\n    fn my_function();\n}",
+        "range": {
+          "byteOffset": {
+            "start": 443,
+            "end": 487
+          },
+          "start": {
+            "line": 28,
+            "column": 0
+          },
+          "end": {
+            "line": 30,
+            "column": 1
+          }
+        }
+      },
+      "TRAIT_NAME": {
+        "text": "SomeTrait",
+        "range": {
+          "byteOffset": {
+            "start": 449,
+            "end": 458
+          },
+          "start": {
+            "line": 28,
+            "column": 6
+          },
+          "end": {
+            "line": 28,
+            "column": 15
+          }
+        }
+      }
+    },
+    "multi": {
+      "secondary": [
+        {
+          "text": "SomeTrait",
+          "range": {
+            "byteOffset": {
+              "start": 449,
+              "end": 458
+            },
+            "start": {
+              "line": 28,
+              "column": 6
+            },
+            "end": {
+              "line": 28,
+              "column": 15
+            }
+          }
+        }
+      ]
+    },
+    "transformed": {}
+  },
+  "ruleId": "traits",
+  "severity": "hint",
+  "note": null,
+  "message": "",
+  "labels": [
+    {
+      "text": "trait SomeTrait<T> {\n    fn my_function();\n}",
+      "range": {
+        "byteOffset": {
+          "start": 443,
+          "end": 487
+        },
+        "start": {
+          "line": 28,
+          "column": 0
+        },
+        "end": {
+          "line": 30,
+          "column": 1
+        }
+      },
+      "style": "primary"
+    },
+    {
+      "text": "SomeTrait",
+      "range": {
+        "byteOffset": {
+          "start": 449,
+          "end": 458
+        },
+        "start": {
+          "line": 28,
+          "column": 6
+        },
+        "end": {
+          "line": 28,
+          "column": 15
+        }
+      },
+      "style": "secondary"
+    }
+  ]
+},
+{
+  "text": "fn my_function();",
+  "range": {
+    "byteOffset": {
+      "start": 468,
+      "end": 485
+    },
+    "start": {
+      "line": 29,
+      "column": 4
+    },
+    "end": {
+      "line": 29,
+      "column": 21
+    }
+  },
+  "file": "sample_program.rs",
+  "lines": "    fn my_function();",
+  "charCount": {
+    "leading": 4,
+    "trailing": 0
+  },
+  "language": "Rust",
+  "metaVariables": {
+    "single": {
+      "TRAIT_NAME_METHOD_SIGNATURE": {
+        "text": "SomeTrait",
+        "range": {
+          "byteOffset": {
+            "start": 449,
+            "end": 458
+          },
+          "start": {
+            "line": 28,
+            "column": 6
+          },
+          "end": {
+            "line": 28,
+            "column": 15
+          }
+        }
+      },
+      "TRAIT_METHOD_SIGNATURE_NAME": {
+        "text": "my_function",
+        "range": {
+          "byteOffset": {
+            "start": 471,
+            "end": 482
+          },
+          "start": {
+            "line": 29,
+            "column": 7
+          },
+          "end": {
+            "line": 29,
+            "column": 18
+          }
+        }
+      },
+      "TRAIT_METHOD_SIGNATURE": {
+        "text": "fn my_function();",
+        "range": {
+          "byteOffset": {
+            "start": 468,
+            "end": 485
+          },
+          "start": {
+            "line": 29,
+            "column": 4
+          },
+          "end": {
+            "line": 29,
+            "column": 21
+          }
+        }
+      },
+      "TRAIT_BODY_WITH_METHOD_SIGNATURE": {
+        "text": "trait SomeTrait<T> {\n    fn my_function();\n}",
+        "range": {
+          "byteOffset": {
+            "start": 443,
+            "end": 487
+          },
+          "start": {
+            "line": 28,
+            "column": 0
+          },
+          "end": {
+            "line": 30,
+            "column": 1
+          }
+        }
+      }
+    },
+    "multi": {
+      "secondary": [
+        {
+          "text": "my_function",
+          "range": {
+            "byteOffset": {
+              "start": 471,
+              "end": 482
+            },
+            "start": {
+              "line": 29,
+              "column": 7
+            },
+            "end": {
+              "line": 29,
+              "column": 18
+            }
+          }
+        },
+        {
+          "text": "SomeTrait",
+          "range": {
+            "byteOffset": {
+              "start": 449,
+              "end": 458
+            },
+            "start": {
+              "line": 28,
+              "column": 6
+            },
+            "end": {
+              "line": 28,
+              "column": 15
+            }
+          }
+        },
+        {
+          "text": "trait SomeTrait<T> {\n    fn my_function();\n}",
+          "range": {
+            "byteOffset": {
+              "start": 443,
+              "end": 487
+            },
+            "start": {
+              "line": 28,
+              "column": 0
+            },
+            "end": {
+              "line": 30,
+              "column": 1
+            }
+          }
+        }
+      ]
+    },
+    "transformed": {}
+  },
+  "ruleId": "traits",
+  "severity": "hint",
+  "note": null,
+  "message": "",
+  "labels": [
+    {
+      "text": "fn my_function();",
+      "range": {
+        "byteOffset": {
+          "start": 468,
+          "end": 485
+        },
+        "start": {
+          "line": 29,
+          "column": 4
+        },
+        "end": {
+          "line": 29,
+          "column": 21
+        }
+      },
+      "style": "primary"
+    },
+    {
+      "text": "my_function",
+      "range": {
+        "byteOffset": {
+          "start": 471,
+          "end": 482
+        },
+        "start": {
+          "line": 29,
+          "column": 7
+        },
+        "end": {
+          "line": 29,
+          "column": 18
+        }
+      },
+      "style": "secondary"
+    },
+    {
+      "text": "SomeTrait",
+      "range": {
+        "byteOffset": {
+          "start": 449,
+          "end": 458
+        },
+        "start": {
+          "line": 28,
+          "column": 6
+        },
+        "end": {
+          "line": 28,
+          "column": 15
+        }
+      },
+      "style": "secondary"
+    },
+    {
+      "text": "trait SomeTrait<T> {\n    fn my_function();\n}",
+      "range": {
+        "byteOffset": {
+          "start": 443,
+          "end": 487
+        },
+        "start": {
+          "line": 28,
+          "column": 0
+        },
+        "end": {
+          "line": 30,
+          "column": 1
+        }
+      },
+      "style": "secondary"
+    }
+  ]
+},
+{
+  "text": "trait SomeTrait { type Assoc; }",
+  "range": {
+    "byteOffset": {
+      "start": 488,
+      "end": 519
+    },
+    "start": {
+      "line": 31,
+      "column": 0
+    },
+    "end": {
+      "line": 31,
+      "column": 31
+    }
+  },
+  "file": "sample_program.rs",
+  "lines": "trait SomeTrait { type Assoc; }",
+  "charCount": {
+    "leading": 0,
+    "trailing": 0
+  },
+  "language": "Rust",
+  "metaVariables": {
+    "single": {
+      "TRAIT_NAME": {
+        "text": "SomeTrait",
+        "range": {
+          "byteOffset": {
+            "start": 494,
+            "end": 503
+          },
+          "start": {
+            "line": 31,
+            "column": 6
+          },
+          "end": {
+            "line": 31,
+            "column": 15
+          }
+        }
+      },
+      "TRAIT_BODY": {
+        "text": "trait SomeTrait { type Assoc; }",
+        "range": {
+          "byteOffset": {
+            "start": 488,
+            "end": 519
+          },
+          "start": {
+            "line": 31,
+            "column": 0
+          },
+          "end": {
+            "line": 31,
+            "column": 31
+          }
+        }
+      }
+    },
+    "multi": {
+      "secondary": [
+        {
+          "text": "SomeTrait",
+          "range": {
+            "byteOffset": {
+              "start": 494,
+              "end": 503
+            },
+            "start": {
+              "line": 31,
+              "column": 6
+            },
+            "end": {
+              "line": 31,
+              "column": 15
+            }
+          }
+        }
+      ]
+    },
+    "transformed": {}
+  },
+  "ruleId": "traits",
+  "severity": "hint",
+  "note": null,
+  "message": "",
+  "labels": [
+    {
+      "text": "trait SomeTrait { type Assoc; }",
+      "range": {
+        "byteOffset": {
+          "start": 488,
+          "end": 519
+        },
+        "start": {
+          "line": 31,
+          "column": 0
+        },
+        "end": {
+          "line": 31,
+          "column": 31
+        }
+      },
+      "style": "primary"
+    },
+    {
+      "text": "SomeTrait",
+      "range": {
+        "byteOffset": {
+          "start": 494,
+          "end": 503
+        },
+        "start": {
+          "line": 31,
+          "column": 6
+        },
+        "end": {
+          "line": 31,
+          "column": 15
+        }
+      },
+      "style": "secondary"
+    }
+  ]
+},
+{
+  "text": "trait SomeTrait { fn trait_function(t: T) -> Self { Wrapper(t) }}",
+  "range": {
+    "byteOffset": {
+      "start": 520,
+      "end": 585
+    },
+    "start": {
+      "line": 32,
+      "column": 0
+    },
+    "end": {
+      "line": 32,
+      "column": 65
+    }
+  },
+  "file": "sample_program.rs",
+  "lines": "trait SomeTrait { fn trait_function(t: T) -> Self { Wrapper(t) }}",
+  "charCount": {
+    "leading": 0,
+    "trailing": 0
+  },
+  "language": "Rust",
+  "metaVariables": {
+    "single": {
+      "TRAIT_NAME": {
+        "text": "SomeTrait",
+        "range": {
+          "byteOffset": {
+            "start": 526,
+            "end": 535
+          },
+          "start": {
+            "line": 32,
+            "column": 6
+          },
+          "end": {
+            "line": 32,
+            "column": 15
+          }
+        }
+      },
+      "TRAIT_BODY": {
+        "text": "trait SomeTrait { fn trait_function(t: T) -> Self { Wrapper(t) }}",
+        "range": {
+          "byteOffset": {
+            "start": 520,
+            "end": 585
+          },
+          "start": {
+            "line": 32,
+            "column": 0
+          },
+          "end": {
+            "line": 32,
+            "column": 65
+          }
+        }
+      }
+    },
+    "multi": {
+      "secondary": [
+        {
+          "text": "SomeTrait",
+          "range": {
+            "byteOffset": {
+              "start": 526,
+              "end": 535
+            },
+            "start": {
+              "line": 32,
+              "column": 6
+            },
+            "end": {
+              "line": 32,
+              "column": 15
+            }
+          }
+        }
+      ]
+    },
+    "transformed": {}
+  },
+  "ruleId": "traits",
+  "severity": "hint",
+  "note": null,
+  "message": "",
+  "labels": [
+    {
+      "text": "trait SomeTrait { fn trait_function(t: T) -> Self { Wrapper(t) }}",
+      "range": {
+        "byteOffset": {
+          "start": 520,
+          "end": 585
+        },
+        "start": {
+          "line": 32,
+          "column": 0
+        },
+        "end": {
+          "line": 32,
+          "column": 65
+        }
+      },
+      "style": "primary"
+    },
+    {
+      "text": "SomeTrait",
+      "range": {
+        "byteOffset": {
+          "start": 526,
+          "end": 535
+        },
+        "start": {
+          "line": 32,
+          "column": 6
+        },
+        "end": {
+          "line": 32,
+          "column": 15
+        }
+      },
+      "style": "secondary"
+    }
+  ]
+},
+{
+  "text": "fn trait_function(t: T) -> Self { Wrapper(t) }",
+  "range": {
+    "byteOffset": {
+      "start": 538,
+      "end": 584
+    },
+    "start": {
+      "line": 32,
+      "column": 18
+    },
+    "end": {
+      "line": 32,
+      "column": 64
+    }
+  },
+  "file": "sample_program.rs",
+  "lines": "trait SomeTrait { fn trait_function(t: T) -> Self { Wrapper(t) }}",
+  "charCount": {
+    "leading": 18,
+    "trailing": 1
+  },
+  "language": "Rust",
+  "metaVariables": {
+    "single": {
+      "TRAIT_NAME_WITH_METHOD": {
+        "text": "SomeTrait",
+        "range": {
+          "byteOffset": {
+            "start": 526,
+            "end": 535
+          },
+          "start": {
+            "line": 32,
+            "column": 6
+          },
+          "end": {
+            "line": 32,
+            "column": 15
+          }
+        }
+      },
+      "TRAIT_METHOD_BODY": {
+        "text": "fn trait_function(t: T) -> Self { Wrapper(t) }",
+        "range": {
+          "byteOffset": {
+            "start": 538,
+            "end": 584
+          },
+          "start": {
+            "line": 32,
+            "column": 18
+          },
+          "end": {
+            "line": 32,
+            "column": 64
+          }
+        }
+      },
+      "TRAIT_BODY_WITH_METHOD": {
+        "text": "trait SomeTrait { fn trait_function(t: T) -> Self { Wrapper(t) }}",
+        "range": {
+          "byteOffset": {
+            "start": 520,
+            "end": 585
+          },
+          "start": {
+            "line": 32,
+            "column": 0
+          },
+          "end": {
+            "line": 32,
+            "column": 65
+          }
+        }
+      },
+      "TRAIT_METHOD_NAME": {
+        "text": "trait_function",
+        "range": {
+          "byteOffset": {
+            "start": 541,
+            "end": 555
+          },
+          "start": {
+            "line": 32,
+            "column": 21
+          },
+          "end": {
+            "line": 32,
+            "column": 35
+          }
+        }
+      }
+    },
+    "multi": {
+      "secondary": [
+        {
+          "text": "trait_function",
+          "range": {
+            "byteOffset": {
+              "start": 541,
+              "end": 555
+            },
+            "start": {
+              "line": 32,
+              "column": 21
+            },
+            "end": {
+              "line": 32,
+              "column": 35
+            }
+          }
+        },
+        {
+          "text": "SomeTrait",
+          "range": {
+            "byteOffset": {
+              "start": 526,
+              "end": 535
+            },
+            "start": {
+              "line": 32,
+              "column": 6
+            },
+            "end": {
+              "line": 32,
+              "column": 15
+            }
+          }
+        },
+        {
+          "text": "trait SomeTrait { fn trait_function(t: T) -> Self { Wrapper(t) }}",
+          "range": {
+            "byteOffset": {
+              "start": 520,
+              "end": 585
+            },
+            "start": {
+              "line": 32,
+              "column": 0
+            },
+            "end": {
+              "line": 32,
+              "column": 65
+            }
+          }
+        }
+      ]
+    },
+    "transformed": {}
+  },
+  "ruleId": "traits",
+  "severity": "hint",
+  "note": null,
+  "message": "",
+  "labels": [
+    {
+      "text": "fn trait_function(t: T) -> Self { Wrapper(t) }",
+      "range": {
+        "byteOffset": {
+          "start": 538,
+          "end": 584
+        },
+        "start": {
+          "line": 32,
+          "column": 18
+        },
+        "end": {
+          "line": 32,
+          "column": 64
+        }
+      },
+      "style": "primary"
+    },
+    {
+      "text": "trait_function",
+      "range": {
+        "byteOffset": {
+          "start": 541,
+          "end": 555
+        },
+        "start": {
+          "line": 32,
+          "column": 21
+        },
+        "end": {
+          "line": 32,
+          "column": 35
+        }
+      },
+      "style": "secondary"
+    },
+    {
+      "text": "SomeTrait",
+      "range": {
+        "byteOffset": {
+          "start": 526,
+          "end": 535
+        },
+        "start": {
+          "line": 32,
+          "column": 6
+        },
+        "end": {
+          "line": 32,
+          "column": 15
+        }
+      },
+      "style": "secondary"
+    },
+    {
+      "text": "trait SomeTrait { fn trait_function(t: T) -> Self { Wrapper(t) }}",
+      "range": {
+        "byteOffset": {
+          "start": 520,
+          "end": 585
+        },
+        "start": {
+          "line": 32,
+          "column": 0
+        },
+        "end": {
+          "line": 32,
+          "column": 65
+        }
+      },
+      "style": "secondary"
+    }
+  ]
+},
+{
+  "text": "trait TraitToImpl {}",
+  "range": {
+    "byteOffset": {
+      "start": 586,
+      "end": 606
+    },
+    "start": {
+      "line": 33,
+      "column": 0
+    },
+    "end": {
+      "line": 33,
+      "column": 20
+    }
+  },
+  "file": "sample_program.rs",
+  "lines": "trait TraitToImpl {}",
+  "charCount": {
+    "leading": 0,
+    "trailing": 0
+  },
+  "language": "Rust",
+  "metaVariables": {
+    "single": {
+      "TRAIT_NAME": {
+        "text": "TraitToImpl",
+        "range": {
+          "byteOffset": {
+            "start": 592,
+            "end": 603
+          },
+          "start": {
+            "line": 33,
+            "column": 6
+          },
+          "end": {
+            "line": 33,
+            "column": 17
+          }
+        }
+      },
+      "TRAIT_BODY": {
+        "text": "trait TraitToImpl {}",
+        "range": {
+          "byteOffset": {
+            "start": 586,
+            "end": 606
+          },
+          "start": {
+            "line": 33,
+            "column": 0
+          },
+          "end": {
+            "line": 33,
+            "column": 20
+          }
+        }
+      }
+    },
+    "multi": {
+      "secondary": [
+        {
+          "text": "TraitToImpl",
+          "range": {
+            "byteOffset": {
+              "start": 592,
+              "end": 603
+            },
+            "start": {
+              "line": 33,
+              "column": 6
+            },
+            "end": {
+              "line": 33,
+              "column": 17
+            }
+          }
+        }
+      ]
+    },
+    "transformed": {}
+  },
+  "ruleId": "traits",
+  "severity": "hint",
+  "note": null,
+  "message": "",
+  "labels": [
+    {
+      "text": "trait TraitToImpl {}",
+      "range": {
+        "byteOffset": {
+          "start": 586,
+          "end": 606
+        },
+        "start": {
+          "line": 33,
+          "column": 0
+        },
+        "end": {
+          "line": 33,
+          "column": 20
+        }
+      },
+      "style": "primary"
+    },
+    {
+      "text": "TraitToImpl",
+      "range": {
+        "byteOffset": {
+          "start": 592,
+          "end": 603
+        },
+        "start": {
+          "line": 33,
+          "column": 6
+        },
+        "end": {
+          "line": 33,
+          "column": 17
+        }
+      },
+      "style": "secondary"
+    }
+  ]
+}
+]

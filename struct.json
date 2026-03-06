@@ -1,0 +1,220 @@
+[
+{
+  "text": "pub struct MethodFind {\n    pub directory: String,\n    /// the method name to search (will be placed into the rule's regex)\n    pub method: String,\n    /// stored matches from the latest run\n    pub matches: Vec<AstGrepMatch>,\n}",
+  "range": {
+    "byteOffset": {
+      "start": 251,
+      "end": 479
+    },
+    "start": {
+      "line": 8,
+      "column": 0
+    },
+    "end": {
+      "line": 14,
+      "column": 1
+    }
+  },
+  "file": "src/method_find.rs",
+  "lines": "pub struct MethodFind {\n    pub directory: String,\n    /// the method name to search (will be placed into the rule's regex)\n    pub method: String,\n    /// stored matches from the latest run\n    pub matches: Vec<AstGrepMatch>,\n}",
+  "charCount": {
+    "leading": 0,
+    "trailing": 0
+  },
+  "language": "Rust",
+  "metaVariables": {
+    "single": {
+      "NAME": {
+        "text": "MethodFind",
+        "range": {
+          "byteOffset": {
+            "start": 262,
+            "end": 272
+          },
+          "start": {
+            "line": 8,
+            "column": 11
+          },
+          "end": {
+            "line": 8,
+            "column": 21
+          }
+        }
+      }
+    },
+    "multi": {
+      "secondary": [
+        {
+          "text": "MethodFind",
+          "range": {
+            "byteOffset": {
+              "start": 262,
+              "end": 272
+            },
+            "start": {
+              "line": 8,
+              "column": 11
+            },
+            "end": {
+              "line": 8,
+              "column": 21
+            }
+          }
+        }
+      ]
+    },
+    "transformed": {}
+  },
+  "ruleId": "find-struct-by-name-and-fields",
+  "severity": "hint",
+  "note": null,
+  "message": "",
+  "labels": [
+    {
+      "text": "pub struct MethodFind {\n    pub directory: String,\n    /// the method name to search (will be placed into the rule's regex)\n    pub method: String,\n    /// stored matches from the latest run\n    pub matches: Vec<AstGrepMatch>,\n}",
+      "range": {
+        "byteOffset": {
+          "start": 251,
+          "end": 479
+        },
+        "start": {
+          "line": 8,
+          "column": 0
+        },
+        "end": {
+          "line": 14,
+          "column": 1
+        }
+      },
+      "style": "primary"
+    },
+    {
+      "text": "MethodFind",
+      "range": {
+        "byteOffset": {
+          "start": 262,
+          "end": 272
+        },
+        "start": {
+          "line": 8,
+          "column": 11
+        },
+        "end": {
+          "line": 8,
+          "column": 21
+        }
+      },
+      "style": "secondary"
+    }
+  ]
+},
+{
+  "text": "pub struct AstGrepMatch {\n    pub file: FilePath,\n    /// the node's top-level text\n    pub method_body: MethodBody,\n    pub method_body_range: ByteRange,\n\n    /// impl block text and its byte range\n    pub impl_body: ImplBody,\n    pub impl_body_range: ByteRange,\n\n    /// method / function body text and its byte range\n    pub method_name: MethodName,\n    pub method_name_range: ByteRange,\n}",
+  "range": {
+    "byteOffset": {
+      "start": 883,
+      "end": 1275
+    },
+    "start": {
+      "line": 25,
+      "column": 0
+    },
+    "end": {
+      "line": 38,
+      "column": 1
+    }
+  },
+  "file": "src/method_find.rs",
+  "lines": "pub struct AstGrepMatch {\n    pub file: FilePath,\n    /// the node's top-level text\n    pub method_body: MethodBody,\n    pub method_body_range: ByteRange,\n\n    /// impl block text and its byte range\n    pub impl_body: ImplBody,\n    pub impl_body_range: ByteRange,\n\n    /// method / function body text and its byte range\n    pub method_name: MethodName,\n    pub method_name_range: ByteRange,\n}",
+  "charCount": {
+    "leading": 0,
+    "trailing": 0
+  },
+  "language": "Rust",
+  "metaVariables": {
+    "single": {
+      "NAME": {
+        "text": "AstGrepMatch",
+        "range": {
+          "byteOffset": {
+            "start": 894,
+            "end": 906
+          },
+          "start": {
+            "line": 25,
+            "column": 11
+          },
+          "end": {
+            "line": 25,
+            "column": 23
+          }
+        }
+      }
+    },
+    "multi": {
+      "secondary": [
+        {
+          "text": "AstGrepMatch",
+          "range": {
+            "byteOffset": {
+              "start": 894,
+              "end": 906
+            },
+            "start": {
+              "line": 25,
+              "column": 11
+            },
+            "end": {
+              "line": 25,
+              "column": 23
+            }
+          }
+        }
+      ]
+    },
+    "transformed": {}
+  },
+  "ruleId": "find-struct-by-name-and-fields",
+  "severity": "hint",
+  "note": null,
+  "message": "",
+  "labels": [
+    {
+      "text": "pub struct AstGrepMatch {\n    pub file: FilePath,\n    /// the node's top-level text\n    pub method_body: MethodBody,\n    pub method_body_range: ByteRange,\n\n    /// impl block text and its byte range\n    pub impl_body: ImplBody,\n    pub impl_body_range: ByteRange,\n\n    /// method / function body text and its byte range\n    pub method_name: MethodName,\n    pub method_name_range: ByteRange,\n}",
+      "range": {
+        "byteOffset": {
+          "start": 883,
+          "end": 1275
+        },
+        "start": {
+          "line": 25,
+          "column": 0
+        },
+        "end": {
+          "line": 38,
+          "column": 1
+        }
+      },
+      "style": "primary"
+    },
+    {
+      "text": "AstGrepMatch",
+      "range": {
+        "byteOffset": {
+          "start": 894,
+          "end": 906
+        },
+        "start": {
+          "line": 25,
+          "column": 11
+        },
+        "end": {
+          "line": 25,
+          "column": 23
+        }
+      },
+      "style": "secondary"
+    }
+  ]
+}
+]
