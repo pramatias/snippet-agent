@@ -279,12 +279,86 @@ fn extract_structs(
     }
 }
 
+fn extract_mods(
+    file: &str,
+    single_map: &HashMap<String, MetaVarItem>,
+) -> Option<Vec<ModSelection>> {
+    if let (Some(body), Some(name)) = (single_map.get("MOD_BODY"), single_map.get("MOD_NAME")) {
+        return Some(vec![ModSelection {
+            file: file.to_string(),
+            mod_body_text: body.text.clone(),
+            mod_body_range: body.range.clone(),
+            mod_name_text: name.text.clone(),
+            mod_name_range: name.range.clone(),
+        }]);
+    }
+    None
+}
+
+fn extract_expression_statements(
+    file: &str,
+    single_map: &HashMap<String, MetaVarItem>,
+) -> Option<Vec<ExpressionStatementSelection>> {
+    single_map.get("EXPRESSION_STATEMENT").map(|expr| {
+        vec![ExpressionStatementSelection {
+            file: file.to_string(),
+            expression_text: expr.text.clone(),
+            expression_range: expr.range.clone(),
+        }]
+    })
+}
+
+fn extract_use_declarations(
+    file: &str,
+    single_map: &HashMap<String, MetaVarItem>,
+) -> Option<Vec<UseDeclarationSelection>> {
+    single_map.get("USE_DECLARATION").map(|use_decl| {
+        vec![UseDeclarationSelection {
+            file: file.to_string(),
+            use_text: use_decl.text.clone(),
+            use_range: use_decl.range.clone(),
+        }]
+    })
+}
+
+fn extract_macro_definitions(
+    file: &str,
+    single_map: &HashMap<String, MetaVarItem>,
+) -> Option<Vec<MacroDefinitionSelection>> {
+    if let (Some(body), Some(name)) = (
+        single_map.get("MACRO_DEFINITION_BODY"),
+        single_map.get("MACRO_DEFINITION_NAME"),
+    ) {
+        return Some(vec![MacroDefinitionSelection {
+            file: file.to_string(),
+            macro_body_text: body.text.clone(),
+            macro_body_range: body.range.clone(),
+            macro_name_text: name.text.clone(),
+            macro_name_range: name.range.clone(),
+        }]);
+    }
+    None
+}
+
+fn extract_macro_invocations(
+    file: &str,
+    single_map: &HashMap<String, MetaVarItem>,
+) -> Option<Vec<MacroInvocationSelection>> {
+    single_map.get("MACRO_INVOCATION").map(|inv| {
+        vec![MacroInvocationSelection {
+            file: file.to_string(),
+            invocation_text: inv.text.clone(),
+            invocation_range: inv.range.clone(),
+        }]
+    })
+}
+
 /// Extract the requested selections from a JSON string (ast-grep output).
 /// Returns `Option<Vec<...>>` for each selection type; `None` means no matches were
 /// produced by the corresponding extractor across the entire JSON.
 pub fn extract_selections_from_ast_grep_json(
     json: &str,
-) -> Result<
+) -> Result
     (
         Option<Vec<AttributeSelection>>,
         Option<Vec<TestsModSelection>>,
@@ -298,105 +372,67 @@ pub fn extract_selections_from_ast_grep_json(
         Option<Vec<TypeAliasSelection>>,
         Option<Vec<EnumSelection>>,
         Option<Vec<UnionSelection>>,
+        Option<Vec<ModSelection>>,
+        Option<Vec<ExpressionStatementSelection>>,
+        Option<Vec<UseDeclarationSelection>>,
+        Option<Vec<MacroDefinitionSelection>>,
+        Option<Vec<MacroInvocationSelection>>,
     ),
     serde_json::Error,
 > {
     let raw_matches: Vec<RawMatch> = serde_json::from_str(json)?;
 
-    let mut attributes: Option<Vec<AttributeSelection>> = None;
-    let mut tests_mods: Option<Vec<TestsModSelection>> = None;
-    let mut functions: Option<Vec<FunctionSelection>> = None;
-    let mut methods: Option<Vec<MethodSelection>> = None;
-    let mut impls: Option<Vec<ImplSelection>> = None;
-    let mut structs: Option<Vec<StructSelection>> = None;
-    let mut traits: Option<Vec<TraitSelection>> = None;
-    let mut trait_method_sigs: Option<Vec<TraitMethodSignatureSelection>> = None;
-    let mut enums: Option<Vec<EnumSelection>> = None;
-    let mut unions: Option<Vec<UnionSelection>> = None;
-    let mut trait_method_defs: Option<Vec<TraitMethodDefinitionSelection>> = None;
-    let mut type_aliases: Option<Vec<TypeAliasSelection>> = None;
+    let mut attributes:           Option<Vec<AttributeSelection>>              = None;
+    let mut tests_mods:           Option<Vec<TestsModSelection>>               = None;
+    let mut functions:            Option<Vec<FunctionSelection>>               = None;
+    let mut methods:              Option<Vec<MethodSelection>>                 = None;
+    let mut impls:                Option<Vec<ImplSelection>>                   = None;
+    let mut structs:              Option<Vec<StructSelection>>                 = None;
+    let mut traits:               Option<Vec<TraitSelection>>                  = None;
+    let mut trait_method_sigs:    Option<Vec<TraitMethodSignatureSelection>>   = None;
+    let mut trait_method_defs:    Option<Vec<TraitMethodDefinitionSelection>>  = None;
+    let mut type_aliases:         Option<Vec<TypeAliasSelection>>              = None;
+    let mut enums:                Option<Vec<EnumSelection>>                   = None;
+    let mut unions:               Option<Vec<UnionSelection>>                  = None;
+    let mut mods:                 Option<Vec<ModSelection>>                    = None;
+    let mut expression_stmts:     Option<Vec<ExpressionStatementSelection>>    = None;
+    let mut use_declarations:     Option<Vec<UseDeclarationSelection>>         = None;
+    let mut macro_definitions:    Option<Vec<MacroDefinitionSelection>>        = None;
+    let mut macro_invocations:    Option<Vec<MacroInvocationSelection>>        = None;
 
     for m in &raw_matches {
-        let file = m.file.clone();
+        let Some(meta_vars) = &m.meta_variables else { continue };
+        let Some(single_map) = &meta_vars.single else { continue };
+        let file = m.file.as_str();
 
-        if let Some(meta_vars) = &m.meta_variables {
-            if let Some(single_map) = &meta_vars.single {
-                if let Some(v) = extract_attributes(&file, single_map) {
-                    match &mut attributes {
+        macro_rules! accumulate {
+            ($acc:ident, $extractor:ident) => {
+                if let Some(v) = $extractor(file, single_map) {
+                    match &mut $acc {
                         Some(vec) => vec.extend(v),
-                        None => attributes = Some(v),
+                        None => $acc = Some(v),
                     }
                 }
-                if let Some(v) = extract_tests_mods(&file, single_map) {
-                    match &mut tests_mods {
-                        Some(vec) => vec.extend(v),
-                        None => tests_mods = Some(v),
-                    }
-                }
-                if let Some(v) = extract_functions(&file, single_map) {
-                    match &mut functions {
-                        Some(vec) => vec.extend(v),
-                        None => functions = Some(v),
-                    }
-                }
-                if let Some(v) = extract_methods(&file, single_map) {
-                    match &mut methods {
-                        Some(vec) => vec.extend(v),
-                        None => methods = Some(v),
-                    }
-                }
-                if let Some(v) = extract_impls(&file, single_map) {
-                    match &mut impls {
-                        Some(vec) => vec.extend(v),
-                        None => impls = Some(v),
-                    }
-                }
-                if let Some(v) = extract_structs(&file, single_map) {
-                    match &mut structs {
-                        Some(vec) => vec.extend(v),
-                        None => structs = Some(v),
-                    }
-                }
-
-                if let Some(v) = extract_traits(&file, single_map) {
-                    match &mut traits {
-                        Some(vec) => vec.extend(v),
-                        None => traits = Some(v),
-                    }
-                }
-                if let Some(v) = extract_trait_method_signatures(&file, single_map) {
-                    match &mut trait_method_sigs {
-                        Some(vec) => vec.extend(v),
-                        None => trait_method_sigs = Some(v),
-                    }
-                }
-
-                if let Some(v) = extract_trait_methods(&file, single_map) {
-                    match &mut trait_method_defs {
-                        Some(vec) => vec.extend(v),
-                        None => trait_method_defs = Some(v),
-                    }
-                }
-                if let Some(v) = extract_type_aliases(&file, single_map) {
-                    match &mut type_aliases {
-                        Some(vec) => vec.extend(v),
-                        None => type_aliases = Some(v),
-                    }
-                }
-                if let Some(v) = extract_enums(&file, single_map) {
-                    match &mut enums {
-                        Some(vec) => vec.extend(v),
-                        None => enums = Some(v),
-                    }
-                }
-                if let Some(v) = extract_unions(&file, single_map) {
-                    match &mut unions {
-                        Some(vec) => vec.extend(v),
-                        None => unions = Some(v),
-                    }
-                }
-            }
+            };
         }
+
+        accumulate!(attributes,        extract_attributes);
+        accumulate!(tests_mods,        extract_tests_mods);
+        accumulate!(functions,         extract_functions);
+        accumulate!(methods,           extract_methods);
+        accumulate!(impls,             extract_impls);
+        accumulate!(structs,           extract_structs);
+        accumulate!(traits,            extract_traits);
+        accumulate!(trait_method_sigs, extract_trait_method_signatures);
+        accumulate!(trait_method_defs, extract_trait_methods);
+        accumulate!(type_aliases,      extract_type_aliases);
+        accumulate!(enums,             extract_enums);
+        accumulate!(unions,            extract_unions);
+        accumulate!(mods,              extract_mods);
+        accumulate!(expression_stmts,  extract_expression_statements);
+        accumulate!(use_declarations,  extract_use_declarations);
+        accumulate!(macro_definitions, extract_macro_definitions);
+        accumulate!(macro_invocations, extract_macro_invocations);
     }
 
     Ok((
@@ -412,6 +448,11 @@ pub fn extract_selections_from_ast_grep_json(
         type_aliases,
         enums,
         unions,
+        mods,
+        expression_stmts,
+        use_declarations,
+        macro_definitions,
+        macro_invocations,
     ))
 }
 

@@ -89,17 +89,6 @@ rule:
             pattern: $STRUCT_NAME
 
     # ------------------------------------------------------------
-    # ATTRIBUTE ITEMS
-    # ------------------------------------------------------------
-    # Matches attribute nodes such as `#[derive(...)]`, `#![no_std]`, or inner
-    # attributes. Captures:
-    # - $ATTRIBUTES      : the attribute_item node(s)
-    # ------------------------------------------------------------
-    - all:
-        - kind: attribute_item
-          pattern: $ATTRIBUTES
-
-    # ------------------------------------------------------------
     # METHOD SIGNATURES INSIDE TRAITS (no body)
     # ------------------------------------------------------------
     # Matches `function_signature_item` nodes (method signatures inside traits — declaration only).
@@ -252,5 +241,78 @@ rule:
     - all:
         - kind: impl_item
           pattern: $IMPL_BODY
+
+    # ------------------------------------------------------------
+    # ATTRIBUTE ITEMS
+    # ------------------------------------------------------------
+    # Matches attribute nodes such as `#[derive(...)]`, `#![no_std]`, or inner
+    # attributes. Captures:
+    # - $ATTRIBUTES      : the attribute_item node(s)
+    # ------------------------------------------------------------
+    - all:
+        - kind: attribute_item
+          pattern: $ATTRIBUTES
+
+    # ------------------------------------------------------------
+    # MOD ITEM (general — any named module)
+    # ------------------------------------------------------------
+    # Captures:
+    # - $MOD_BODY : the entire mod_item node
+    # - $MOD_NAME : the identifier node for the module name
+    # ------------------------------------------------------------
+    - all:
+        - kind: mod_item
+          pattern: $MOD_BODY
+        - has:
+            kind: identifier
+            field: name
+            pattern: $MOD_NAME
+
+    # ------------------------------------------------------------
+    # EXPRESSION STATEMENT
+    # ------------------------------------------------------------
+    # Captures:
+    # - $EXPRESSION_STATEMENT : the expression_statement node
+    # ------------------------------------------------------------
+    - all:
+        - kind: expression_statement
+          pattern: $EXPRESSION_STATEMENT
+
+    # ------------------------------------------------------------
+    # USE DECLARATION
+    # ------------------------------------------------------------
+    # Captures:
+    # - $USE_DECLARATION : the use_declaration node
+    # ------------------------------------------------------------
+    - all:
+        - kind: use_declaration
+          pattern: $USE_DECLARATION
+
+    # ------------------------------------------------------------
+    # MACRO DEFINITION
+    # ------------------------------------------------------------
+    # Captures:
+    # - $MACRO_DEFINITION_BODY : the entire macro_definition node
+    # - $MACRO_DEFINITION_NAME : the identifier node for the macro name
+    # ------------------------------------------------------------
+    - all:
+        - kind: macro_definition
+          pattern: $MACRO_DEFINITION_BODY
+        - has:
+            kind: identifier
+            field: name
+            pattern: $MACRO_DEFINITION_NAME
+
+    # ------------------------------------------------------------
+    # MACRO INVOCATION
+    # ------------------------------------------------------------
+    - all:
+        - kind: macro_invocation
+          pattern: $MACRO_INVOCATION
+        - inside:
+            kind: expression_statement
+            inside:
+              kind: source_file
+
 
 "#;

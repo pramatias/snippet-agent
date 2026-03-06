@@ -128,6 +128,45 @@ pub struct StructSelection {
     pub name_range: Range,
 }
 
+#[derive(Debug)]
+pub struct ModSelection {
+    pub file: String,
+    pub mod_body_text: String,
+    pub mod_body_range: Range,
+    pub mod_name_text: String,
+    pub mod_name_range: Range,
+}
+
+#[derive(Debug)]
+pub struct ExpressionStatementSelection {
+    pub file: String,
+    pub expression_text: String,
+    pub expression_range: Range,
+}
+
+#[derive(Debug)]
+pub struct UseDeclarationSelection {
+    pub file: String,
+    pub use_text: String,
+    pub use_range: Range,
+}
+
+#[derive(Debug)]
+pub struct MacroDefinitionSelection {
+    pub file: String,
+    pub macro_body_text: String,
+    pub macro_body_range: Range,
+    pub macro_name_text: String,
+    pub macro_name_range: Range,
+}
+
+#[derive(Debug)]
+pub struct MacroInvocationSelection {
+    pub file: String,
+    pub invocation_text: String,
+    pub invocation_range: Range,
+}
+
 #[derive(Debug, Deserialize, Clone)]
 #[serde(rename_all = "camelCase")]
 pub struct Position {
