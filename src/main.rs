@@ -11,6 +11,10 @@ use log::LevelFilter;
 use anyhow::{Context, Result, anyhow};
 use std::path::Path;
 use log::{debug, error};
+use crate::json_selection::unprocessed_elements::FilePath;
+use std::collections::HashMap;
+use crate::path::path_resolution::read_rs_files;
+use crate::syn::syn_elements::AllSynElements;
 
 // use crate::syn::impl_sig_types::*;
 use crate::path::path_resolution::resolve_path;
@@ -116,9 +120,33 @@ struct FunctionArgs {
 
 #[derive(Args, Debug)]
 struct StructArgs {
-    /// Directory to process
+        /// File to process (highest priority)
+    #[arg(short = 'n', long = "name", help = "Method name")]
+    pub name: Option<String>,
+
+    /// File to process (highest priority)
+    #[arg(short = 'f', long = "file", help = "File to inspect/process")]
+    pub file: Option<String>,
+
+    /// Crate/directory to process
+    #[arg(
+        short = 'c',
+        long = "crate",
+        help = "Crate or directory to inspect/process"
+    )]
+    pub crate_dir: bool,
+
+    /// Use the project root (auto-detected by walking up to Cargo.toml)
+    #[arg(short = 'r', long = "root", help = "Use project root (auto-detected)")]
+    pub root: bool,
+
+    /// Directory to process (overrides auto-detection)
     #[arg(short = 'd', long = "directory", help = "Directory to inspect/process")]
-    directory: String,
+    pub directory: Option<String>,
+
+    /// Emit JSON
+    #[arg(long = "json", help = "Emit JSON")]
+    pub json: bool,
 }
 
 #[derive(Args, Debug)]
@@ -134,8 +162,60 @@ fn run_function(args: &FunctionArgs) -> Result<()> {
 }
 
 fn run_struct(args: &StructArgs) -> Result<()> {
-    // TODO: implement struct mode
-    todo!("run_struct for directory = {}", args.directory);
+    let resolved_path = resolve_path(
+        args.file.clone(),
+        args.directory.clone(),
+        args.crate_dir,
+        args.root,
+    )
+    .map_err(|e| {
+        error!("resolve_path error: {}", e);
+        anyhow!("Path resolution failed: {}", e)
+    })?;
+
+    let ag_dir = resolved_path.to_string_lossy().into_owned();
+
+    let ag_json = run_ast_grep_rule(&ag_dir).map_err(|e| {
+        error!("run_ast_grep_rule failed: {:?}", e);
+        anyhow!("ast-grep run failed: {:?}", e)
+    })?;
+
+    let all_unprocessed = AllUnprocessedElements::from_raw_json(&ag_json).map_err(|e| {
+        error!("AllUnprocessedElements::from_raw_json failed: {}", e);
+        anyhow!("Failed parsing ast-grep JSON: {}", e)
+    })?;
+
+    let file_contents: HashMap<FilePath, String> = read_rs_files(
+        args.file.clone(),
+        args.directory.clone(),
+        args.crate_dir,
+        args.root,
+    )
+    .map_err(|e| {
+        error!("read_rs_files failed: {}", e);
+        anyhow!("Failed reading source files: {}", e)
+    })?
+    .into_iter()
+    .map(|(contents, path)| (path, contents))
+    .collect();
+
+    let mut all_syn = AllSynElements::from_unprocessed(all_unprocessed, &file_contents);
+    all_syn.pick_blanket_impls();
+
+    all_syn.print_impls();
+    all_syn.print_attributes();
+    all_syn.print_tests_mods();
+    all_syn.print_functions();
+    all_syn.print_methods();
+    all_syn.print_structs();
+    all_syn.print_traits();
+    all_syn.print_trait_method_sigs();
+    all_syn.print_trait_method_defs();
+    all_syn.print_type_aliases();
+    all_syn.print_enums();
+    all_syn.print_unions();
+
+    Ok(())
 }
 
 fn run_struct_methods(args: &StructMethodsArgs) -> Result<()> {

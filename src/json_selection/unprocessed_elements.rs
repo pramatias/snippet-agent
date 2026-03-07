@@ -14,6 +14,11 @@ pub type UnprocessedTraitMethodDefs = Vec<UnprocessedTraitMethodDefinition>;
 pub type UnprocessedTypeAliases = Vec<UnprocessedTypeAlias>;
 pub type UnprocessedEnums = Vec<UnprocessedEnum>;
 pub type UnprocessedUnions = Vec<UnprocessedUnion>;
+pub type UnprocessedMods                 = Vec<UnprocessedMod>;
+pub type UnprocessedExpressionStatements = Vec<UnprocessedExpressionStatement>;
+pub type UnprocessedUseDeclarations      = Vec<UnprocessedUseDeclaration>;
+pub type UnprocessedMacroDefinitions     = Vec<UnprocessedMacroDefinition>;
+pub type UnprocessedMacroInvocations     = Vec<UnprocessedMacroInvocation>;
 
 #[derive(Debug, Clone)]
 pub struct AllUnprocessedElements {
@@ -29,6 +34,11 @@ pub struct AllUnprocessedElements {
     pub unprocessed_type_aliases: UnprocessedTypeAliases,
     pub unprocessed_enums: UnprocessedEnums,
     pub unprocessed_unions: UnprocessedUnions,
+    pub unprocessed_mods:                  UnprocessedMods,
+pub unprocessed_expression_statements: UnprocessedExpressionStatements,
+pub unprocessed_use_declarations:      UnprocessedUseDeclarations,
+pub unprocessed_macro_definitions:     UnprocessedMacroDefinitions,
+pub unprocessed_macro_invocations:     UnprocessedMacroInvocations,
 }
 
 pub type FilePath = String;
@@ -91,6 +101,13 @@ pub type AttributeBody = SynElement;
 pub type ImplBody = SynElement;
 pub type StructBody = SynElement;
 pub type StructName = SynElement;
+pub type ModBody                  = SynElement;
+pub type ModName                  = SynElement;
+pub type ExpressionStatementBody  = SynElement;
+pub type UseDeclarationBody       = SynElement;
+pub type MacroDefinitionBody      = SynElement;
+pub type MacroDefinitionName      = SynElement;
+pub type MacroInvocationBody      = SynElement;
 
 #[derive(Debug, Deserialize, Clone)]
 pub struct UnprocessedMethod {
@@ -188,4 +205,36 @@ pub struct UnprocessedStruct {
 
     pub struct_body: StructBody,
     pub struct_name: StructName,
+}
+
+#[derive(Debug, Deserialize, Clone)]
+pub struct UnprocessedMod {
+    pub file: FilePath,
+    pub mod_body: ModBody,
+    pub mod_name: ModName,
+}
+
+#[derive(Debug, Deserialize, Clone)]
+pub struct UnprocessedExpressionStatement {
+    pub file: FilePath,
+    pub expression_body: ExpressionStatementBody,
+}
+
+#[derive(Debug, Deserialize, Clone)]
+pub struct UnprocessedUseDeclaration {
+    pub file: FilePath,
+    pub use_body: UseDeclarationBody,
+}
+
+#[derive(Debug, Deserialize, Clone)]
+pub struct UnprocessedMacroDefinition {
+    pub file: FilePath,
+    pub macro_body: MacroDefinitionBody,
+    pub macro_name: MacroDefinitionName,
+}
+
+#[derive(Debug, Deserialize, Clone)]
+pub struct UnprocessedMacroInvocation {
+    pub file: FilePath,
+    pub invocation_body: MacroInvocationBody,
 }

@@ -358,7 +358,7 @@ fn extract_macro_invocations(
 /// produced by the corresponding extractor across the entire JSON.
 pub fn extract_selections_from_ast_grep_json(
     json: &str,
-) -> Result
+) -> Result<
     (
         Option<Vec<AttributeSelection>>,
         Option<Vec<TestsModSelection>>,

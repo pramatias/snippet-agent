@@ -116,3 +116,25 @@ impl_from_selection!(StructSelection => UnprocessedStruct {
     struct_body: StructBody { body_text, body_range },
     struct_name: StructName { name_text, name_range },
 });
+
+impl_from_selection!(ModSelection => UnprocessedMod {
+    mod_body: ModBody { mod_body_text, mod_body_range },
+    mod_name: ModName { mod_name_text, mod_name_range },
+});
+
+impl_from_selection!(ExpressionStatementSelection => UnprocessedExpressionStatement {
+    expression_body: ExpressionStatementBody { expression_text, expression_range },
+});
+
+impl_from_selection!(UseDeclarationSelection => UnprocessedUseDeclaration {
+    use_body: UseDeclarationBody { use_text, use_range },
+});
+
+impl_from_selection!(MacroDefinitionSelection => UnprocessedMacroDefinition {
+    macro_body: MacroDefinitionBody { macro_body_text, macro_body_range },
+    macro_name: MacroDefinitionName { macro_name_text, macro_name_range },
+});
+
+impl_from_selection!(MacroInvocationSelection => UnprocessedMacroInvocation {
+    invocation_body: MacroInvocationBody { invocation_text, invocation_range },
+});
