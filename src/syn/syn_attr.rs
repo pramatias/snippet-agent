@@ -1,3 +1,8 @@
+//syn_attr.rs
+use crate::syn::syn_elements::SynAttribute;
+use crate::syn::file_syn_elements::FileSynElements;
+use syntax_queries::byte_range_ordering::HasByteRange;
+use crate::syn::file_syn_elements::AnyFileSynElement;
 
 ///merge_attrs
 impl SynAttribute {

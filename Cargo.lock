@@ -660,6 +660,8 @@ version = "0.1.2"
 dependencies = [
  "cc",
  "log",
+ "serde",
+ "serde_json",
  "tree-sitter",
  "tree-sitter-rust",
 ]

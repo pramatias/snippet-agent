@@ -1,10 +1,11 @@
 // file_syn_elements.rs
 use crate::json_selection::unprocessed_elements::*;
-use syntax_queries::{ByteRange, HasByteRange};
+use syntax_queries::byte_range_ordering::{ByteRange, HasByteRange};
 use std::collections::BTreeMap;
 use crate::syn::syn_elements::SynAttribute;
 use crate::syn::syn_elements::SynMethod;
 use crate::AllSynElements;
+use crate::syn::FilePath;
 
 #[derive(Debug, Clone)]
 pub enum AnyFileSynElement {

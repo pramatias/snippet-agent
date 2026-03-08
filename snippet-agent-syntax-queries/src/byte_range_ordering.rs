@@ -1,3 +1,33 @@
+//byte_range_ordering.rs
+use serde::Deserialize;
+
+macro_rules! filter_range_all {
+    ($method:ident, $items:expr, $divider:expr) => {
+        $items
+            .iter()
+            .filter(|item| item.$method($divider))
+            .collect()
+    };
+}
+
+macro_rules! filter_range_immediate {
+    ($method:ident, $extremum:ident, $key:ident, $items:expr, $limit:expr) => {
+        $items
+            .iter()
+            .filter(|item| item.$method($limit))
+            .$extremum(|item| item.byte_range().$key)
+    };
+}
+
+macro_rules! filter_range_contained {
+    ($extremum:ident, $items:expr, $container:expr) => {
+        $items
+            .iter()
+            .filter(|item| $container.contains(*item))
+            .$extremum(|item| item.byte_range().start)
+    };
+}
+
 pub trait HasByteRange {
     fn byte_range(&self) -> &ByteRange;
 

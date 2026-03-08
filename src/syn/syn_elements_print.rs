@@ -1,3 +1,8 @@
+//syn_elements_print.rs
+use crate::json_selection::unprocessed_elements::*;
+use crate::syn::syn_elements::*;
+use crate::syn::SynElement;
+
 use crate::json_selection::unprocessed_elements::*;
 use crate::syn::syn_elements::*;
 
@@ -145,8 +150,8 @@ impl_print_syn_collection!(print_use_declarations => syn_use_declarations {
 });
 impl_print_syn_collection!(print_macro_definitions => syn_macro_definitions {
     macro_definition_name,
-    macro_definition_body,
+    macro_body,
 });
 impl_print_syn_collection!(print_macro_invocations => syn_macro_invocations {
-    macro_invocation_body,
+    invocation_body,
 });

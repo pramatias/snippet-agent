@@ -1,5 +1,7 @@
+//sig_extraction.rs
 use std::result::Result;
 use tree_sitter::{Node, Parser, Tree};
+use crate::byte_range_ordering::{NodeMatch, SynRange, CharactersDimension, ByteRange, SynPosition};
 
 pub struct RustParser<'a> {
     /// Borrowed source (lifetime tied to the caller's source buffer).
@@ -7,6 +9,63 @@ pub struct RustParser<'a> {
     pub tree: Tree,
     /// The piece of text to look for inside the node we want to delete.
     pub target_node_text: String,
+}
+
+///find all
+impl<'a> RustParser<'a> {
+    /// Find all nodes whose kind equals self.target_node_text.
+    /// Returns Some(Vec) if any matches are found, None otherwise.
+    /// Traverses the tree in source (left-to-right) order.
+    pub fn find_all(&self) -> Option<Vec<NodeMatch>> {
+        let root = self.tree.root_node();
+        let kind = &self.target_node_text;
+        let mut results = Vec::new();
+        // Iterative DFS that preserves left-to-right order by pushing children in reverse.
+        let mut stack = vec![root];
+        while let Some(node) = stack.pop() {
+            if node.kind() == kind {
+                let start_byte = node.start_byte();
+                let end_byte = node.end_byte();
+                let start_pos = node.start_position();
+                let end_pos = node.end_position();
+                // Extract the text
+                let text = self
+                    .source
+                    .get(start_byte..end_byte)
+                    .unwrap_or("")
+                    .to_owned();
+                let range = SynRange {
+                    byte_range: ByteRange {
+                        start: start_byte as u64,
+                        end: end_byte as u64,
+                    },
+                    characters_dimension: CharactersDimension {
+                        start: SynPosition {
+                            line: start_pos.row as u64,
+                            column: start_pos.column as u64,
+                        },
+                        end: SynPosition {
+                            line: end_pos.row as u64,
+                            column: end_pos.column as u64,
+                        },
+                    },
+                };
+                results.push(NodeMatch { text, range: range });
+            }
+            let child_count = node.child_count();
+            // push children in reverse so the left-most child is processed first
+            for i in (0..child_count).rev() {
+                if let Some(child) = node.child(i) {
+                    stack.push(child);
+                }
+            }
+        }
+        if results.is_empty() {
+            None
+        } else {
+            Some(results)
+        }
+    }
 }
 
 ///find function item
@@ -277,6 +336,21 @@ impl<'a> RustParser<'a> {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+        #[test]
+    fn find_for_keyword() {
+        let source = r#"impl<T> From<T> for Wrapper<T> {}
+"#;
+        let parser = RustParser::new(source, "for").expect("failed to create RustParser");
+        let root = parser.tree.root_node();
+        // The 'for' keyword is a node with kind "for"
+        let for_node = RustParser::find_node_of_kind(root, "for");
+        assert!(for_node.is_some(), "Expected to find 'for' keyword");
+        if let Some(node) = for_node {
+            let text = &source[node.start_byte()..node.end_byte()];
+            assert_eq!(text, "for");
+        }
+    }
 
     #[test]
     fn delete_till_start_type_parameters() {
