@@ -9,20 +9,16 @@ use init::init::initialize_logger;
 use log::LevelFilter;
 
 use anyhow::{Context, Result, anyhow};
-use std::path::Path;
-use log::{debug, error};
+use log::error;
 use crate::syn::syn_element::FilePath;
 
 use std::collections::HashMap;
 use crate::path::path_resolution::read_rs_files;
 use crate::syn::syn_elements::AllSynElements;
 
-// use crate::syn::impl_sig_types::*;
 use crate::path::path_resolution::resolve_path;
 use crate::json_selection::unprocessed_elements::AllUnprocessedElements;
 use crate::ast_grep::ast_grep_yaml_rules::run_ast_grep_rule;
-
-use syntax_queries::RustParser;
 
 /// Configure logging verbosity using -v/--verbose and -q/--quiet flags.
 #[derive(Args, Debug)]
@@ -232,7 +228,7 @@ pub fn run_method(args: &MethodArgs) -> Result<String> {
     })?;
 
     // Parse JSON into AllSynElements
-    let all_syn = AllUnprocessedElements::from_raw_json(&ag_json).map_err(|e| {
+    let _all_syn = AllUnprocessedElements::from_raw_json(&ag_json).map_err(|e| {
         error!("AllSynElements::from_json failed: {}", e);
         anyhow!("Failed parsing ast-grep JSON: {}", e)
     })?;
@@ -266,19 +262,15 @@ fn run_struct(args: &StructArgs) -> Result<()> {
         anyhow!("Failed parsing ast-grep JSON: {}", e)
     })?;
 
-    let file_contents: HashMap<FilePath, String> = read_rs_files(
-        args.file.clone(),
-        args.directory.clone(),
-        args.crate_dir,
-        args.root,
-    )
-    .map_err(|e| {
-        error!("read_rs_files failed: {}", e);
-        anyhow!("Failed reading source files: {}", e)
-    })?
-    .into_iter()
-    .map(|(contents, path)| (path, contents))
-    .collect();
+    let file_contents: HashMap<FilePath, String> =
+        read_rs_files(args.file.clone(), args.directory.clone(), args.crate_dir, args.root)
+            .map_err(|e| {
+                error!("read_rs_files failed: {}", e);
+                anyhow!("Failed reading source files: {}", e)
+            })?
+            .into_iter()
+            .map(|(contents, path)| (path, contents))
+            .collect();
 
     let mut all_syn = AllSynElements::from_unprocessed(all_unprocessed, &file_contents);
     all_syn.pick_blanket_impls();
@@ -295,6 +287,11 @@ fn run_struct(args: &StructArgs) -> Result<()> {
     all_syn.print_type_aliases();
     all_syn.print_enums();
     all_syn.print_unions();
+    all_syn.print_mods();
+    all_syn.print_expression_statements();
+    all_syn.print_use_declarations();
+    all_syn.print_macro_definitions();
+    all_syn.print_macro_invocations();
 
     Ok(())
 }

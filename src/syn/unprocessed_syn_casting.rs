@@ -2,13 +2,12 @@
 use crate::json_selection::unprocessed_elements::*;
 use crate::syn::syn_elements::*;
 use std::collections::HashMap;
-use syntax_queries::byte_range_ordering::HasByteRange;
-use crate::syn::FilePath;
 
+// ── Macro: simple 1-to-1 field mapping (all fields must share names) ──────────
 macro_rules! impl_unprocessed_to_syn {
-    ($source:ty => $target:ty [$($field:ident),+ $(,)?]) => {
-        impl From<$source> for $target {
-            fn from(u: $source) -> Self {
+    ($from:ty => $to:ty [$($field:ident),+ $(,)?]) => {
+        impl $to {
+            pub fn from_unprocessed(u: $from) -> Self {
                 Self {
                     file: u.file,
                     $($field: u.$field,)+
@@ -19,110 +18,160 @@ macro_rules! impl_unprocessed_to_syn {
 }
 
 impl_unprocessed_to_syn!(UnprocessedMod                 => SynMod                 [mod_name, mod_body]);
-impl_unprocessed_to_syn!(UnprocessedExpressionStatement  => SynExpressionStatement  [expression_body]);
-impl_unprocessed_to_syn!(UnprocessedUseDeclaration       => SynUseDeclaration       [use_body]);
-impl_unprocessed_to_syn!(UnprocessedMacroDefinition      => SynMacroDefinition      [macro_name, macro_body]);
-impl_unprocessed_to_syn!(UnprocessedMacroInvocation      => SynMacroInvocation      [invocation_body]);
+impl_unprocessed_to_syn!(UnprocessedExpressionStatement => SynExpressionStatement [expression_body]);
+impl_unprocessed_to_syn!(UnprocessedUseDeclaration      => SynUseDeclaration      [use_body]);
+impl_unprocessed_to_syn!(UnprocessedMacroInvocation     => SynMacroInvocation     [invocation_body]);
 
-// ─── from_unprocessed ────────────────────────────────────────────────────────
-impl AllSynElements {
-    pub fn from_unprocessed(u: AllUnprocessedElements) -> Self {
-        AllSynElements {
-            syn_attributes:            u.unprocessed_attributes
-                                        .into_iter()
-                                        .map(|raw| SynAttribute::from_unprocessed(raw, ""))
-                                        .collect(),
-            syn_methods:               u.unprocessed_methods.into_iter().map(SynMethod::from).collect(),
-            syn_mods:                  u.unprocessed_mods.into_iter().map(SynMod::from).collect(),
-            syn_expression_statements: u.unprocessed_expression_statements.into_iter().map(SynExpressionStatement::from).collect(),
-            syn_use_declarations:      u.unprocessed_use_declarations.into_iter().map(SynUseDeclaration::from).collect(),
-            syn_macro_definitions:     u.unprocessed_macro_definitions.into_iter().map(SynMacroDefinition::from).collect(),
-            syn_macro_invocations:     u.unprocessed_macro_invocations.into_iter().map(SynMacroInvocation::from).collect(),
-            syn_tests_mods:            u.unprocessed_tests_mods,
-            syn_functions:             u.unprocessed_functions,
-            syn_impls:                 u.unprocessed_impls,
-            syn_structs:               u.unprocessed_structs,
-            syn_traits:                u.unprocessed_traits,
-            syn_trait_method_sigs:     u.unprocessed_trait_method_sigs,
-            syn_trait_method_defs:     u.unprocessed_trait_method_defs,
-            syn_type_aliases:          u.unprocessed_type_aliases,
-            syn_enums:                 u.unprocessed_enums,
-            syn_unions:                u.unprocessed_unions,
+// ── SynMacroDefinition: field rename (macro_name → macro_definition_name) ────
+//
+// Cannot use the macro above because the field names differ between the two
+// structs.  UnprocessedMacroDefinition::macro_name maps to
+// SynMacroDefinition::macro_definition_name.
+impl SynMacroDefinition {
+    pub fn from_unprocessed(u: UnprocessedMacroDefinition) -> Self {
+        Self {
+            file:                  u.file,
+            macro_definition_name: u.macro_name, // ← renamed field
+            macro_definition_body:            u.macro_body,
         }
     }
 }
 
-// ─── from_unprocessed_with_files ─────────────────────────────────────────────
+// ── SynMethod: enrichment fields start empty / default ───────────────────────
+impl SynMethod {
+    pub fn from_unprocessed(u: UnprocessedMethod) -> Self {
+        Self {
+            file:               u.file,
+            impl_body:          u.impl_body,
+            method_body:        u.method_body,
+            method_name:        u.method_name,
+            impl_signature:     String::new(),
+            function_signature: String::new(),
+            ds_structure:       String::new(),
+            type_identifiers:   TypeIdentifiers::default(),
+        }
+    }
+}
+
+// ── SynAttribute: needs context_lines derived from surrounding file text ──────
+impl SynAttribute {
+    pub fn from_unprocessed(u: UnprocessedAttribute, context: &str) -> Self {
+        Self {
+            file:           u.file,
+            attribute_body: u.attribute_body,
+            context_lines:  context.to_string(),
+        }
+    }
+
+    /// Produce a new `SynAttribute` whose body spans both `self` and `other`,
+    /// with `context` stored as the merged context lines.
+    pub fn merge_with(&self, other: &SynAttribute, context: &str) -> SynAttribute {
+        SynAttribute {
+            file:           self.file.clone(),
+            attribute_body: self.attribute_body.merge(&other.attribute_body),
+            context_lines:  context.to_string(),
+        }
+    }
+}
+
+// ── AllSynElements ────────────────────────────────────────────────────────────
 impl AllSynElements {
-    pub fn from_unprocessed_with_files(
+    pub fn from_unprocessed(
         u: AllUnprocessedElements,
-        file_contents: &HashMap<FilePath, String>,
+        file_contents: &HashMap<String, String>,
     ) -> Self {
-        let resolve = |file: &FilePath| file_contents.get(file).map(String::as_str).unwrap_or("");
+        Self {
+            syn_attributes: build_syn_attributes(u.unprocessed_attributes, file_contents),
 
-        AllSynElements {
-            syn_attributes:            u.unprocessed_attributes
-                                        .into_iter()
-                                        .map(|raw| {
-                                            let content = resolve(&raw.file);
-                                            SynAttribute::from_unprocessed(raw, content)
-                                        })
-                                        .collect(),
-            syn_methods:               u.unprocessed_methods.into_iter().map(SynMethod::from).collect(),
-            syn_mods:                  u.unprocessed_mods.into_iter().map(SynMod::from).collect(),
-            syn_expression_statements: u.unprocessed_expression_statements.into_iter().map(SynExpressionStatement::from).collect(),
-            syn_use_declarations:      u.unprocessed_use_declarations.into_iter().map(SynUseDeclaration::from).collect(),
-            syn_macro_definitions:     u.unprocessed_macro_definitions.into_iter().map(SynMacroDefinition::from).collect(),
-            syn_macro_invocations:     u.unprocessed_macro_invocations.into_iter().map(SynMacroInvocation::from).collect(),
-            syn_tests_mods:            u.unprocessed_tests_mods,
-            syn_functions:             u.unprocessed_functions,
-            syn_impls:                 u.unprocessed_impls,
-            syn_structs:               u.unprocessed_structs,
-            syn_traits:                u.unprocessed_traits,
-            syn_trait_method_sigs:     u.unprocessed_trait_method_sigs,
-            syn_trait_method_defs:     u.unprocessed_trait_method_defs,
-            syn_type_aliases:          u.unprocessed_type_aliases,
-            syn_enums:                 u.unprocessed_enums,
-            syn_unions:                u.unprocessed_unions,
+            // Pass-through collections (SynX = UnprocessedX type aliases)
+            syn_tests_mods:         u.unprocessed_tests_mods,
+            syn_functions:          u.unprocessed_functions,
+            syn_impls:              u.unprocessed_impls,
+            syn_structs:            u.unprocessed_structs,
+            syn_traits:             u.unprocessed_traits,
+            syn_trait_method_sigs:  u.unprocessed_trait_method_sigs,
+            syn_trait_method_defs:  u.unprocessed_trait_method_defs,
+            syn_type_aliases:       u.unprocessed_type_aliases,
+            syn_enums:              u.unprocessed_enums,
+            syn_unions:             u.unprocessed_unions,
+
+            // Enriched collections
+            syn_methods: u.unprocessed_methods
+                .into_iter()
+                .map(SynMethod::from_unprocessed)
+                .collect(),
+
+            syn_mods: u.unprocessed_mods
+                .into_iter()
+                .map(SynMod::from_unprocessed)
+                .collect(),
+
+            syn_expression_statements: u.unprocessed_expression_statements
+                .into_iter()
+                .map(SynExpressionStatement::from_unprocessed)
+                .collect(),
+
+            syn_use_declarations: u.unprocessed_use_declarations
+                .into_iter()
+                .map(SynUseDeclaration::from_unprocessed)
+                .collect(),
+
+            syn_macro_definitions: u.unprocessed_macro_definitions
+                .into_iter()
+                .map(SynMacroDefinition::from_unprocessed)
+                .collect(),
+
+            syn_macro_invocations: u.unprocessed_macro_invocations
+                .into_iter()
+                .map(SynMacroInvocation::from_unprocessed)
+                .collect(),
         }
     }
 }
 
-// ─── merge_adjacent_attributes ───────────────────────────────────────────────
-impl AllSynElements {
-    pub fn merge_adjacent_attributes(
-        &mut self,
-        file_contents: &HashMap<FilePath, String>,
-    ) {
-        let mut by_file: HashMap<FilePath, Vec<SynAttribute>> = HashMap::new();
+// ── Attribute merging helper ──────────────────────────────────────────────────
+//
+// Consecutive attributes that are separated only by whitespace are merged into
+// a single SynAttribute so that multi-line attribute blocks (e.g. a `#[derive]`
+// followed by `#[serde(...)]`) are treated as one unit downstream.
+fn build_syn_attributes(
+    raw: Vec<UnprocessedAttribute>,
+    file_contents: &HashMap<String, String>,
+) -> SynAttributes {
+    let mut accumulated: SynAttributes = Vec::new();
+    let mut pending: Option<SynAttribute> = None;
 
-        for attr in std::mem::take(&mut self.syn_attributes) {
-            let content = file_contents.get(&attr.file).map(String::as_str).unwrap_or("");
-            let syn_attr = SynAttribute::from_unprocessed(attr, content);
-            by_file.entry(syn_attr.file.clone()).or_default().push(syn_attr);
-        }
+    for unprocessed in raw {
+        let content = file_contents
+            .get(&unprocessed.file)
+            .map(String::as_str)
+            .unwrap_or("");
 
-        self.syn_attributes = by_file
-            .into_iter()
-            .flat_map(|(file, mut attrs)| {
-                let content = file_contents.get(&file).map(String::as_str).unwrap_or("");
-                attrs.sort_by_key(|a| a.attribute_body.range.byte_range.start);
+        let current = SynAttribute::from_unprocessed(unprocessed, content);
 
-                let mut accumulated: Vec<SynAttribute> = Vec::with_capacity(attrs.len());
-                for current in attrs {
-                    if let Some(prev) = accumulated.last() {
-                        let is_before = prev.attribute_body.before(&current.attribute_body);
-                        let only_ws   = prev.attribute_body.only_whitespace_between(&current.attribute_body, content);
-                        if is_before && only_ws {
-                            let prev_owned = accumulated.pop().unwrap();
-                            accumulated.push(prev_owned.merge_with(&current, content));
-                            continue;
-                        }
-                    }
-                    accumulated.push(current);
+        match pending.take() {
+            None => {
+                pending = Some(current);
+            }
+            Some(prev_owned) => {
+                if prev_owned
+                    .attribute_body
+                    .only_whitespace_between(&current.attribute_body, content)
+                {
+                    // Adjacent — keep accumulating into a merged attribute.
+                    pending = Some(prev_owned.merge_with(&current, content));
+                } else {
+                    // Gap found — flush the previous group, start a new one.
+                    accumulated.push(prev_owned);
+                    pending = Some(current);
                 }
-                accumulated
-            })
-            .collect();
+            }
+        }
     }
+
+    if let Some(last) = pending {
+        accumulated.push(last);
+    }
+
+    accumulated
 }

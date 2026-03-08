@@ -1,7 +1,5 @@
 //unprocessed elements.rs
-// use crate::raw_elements::*;
-// use crate::raw_syn_casting::*;
-use syntax_queries::byte_range_ordering::{ByteRange, CharactersDimension, SynPosition, SynRange};
+// use syntax_queries::byte_range_ordering::{ByteRange, CharactersDimension, SynPosition, SynRange};
 
 use serde::Deserialize;
 use crate::syn::syn_element::*;

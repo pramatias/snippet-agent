@@ -53,15 +53,6 @@ rule:
     # ------------------------------------------------------------
     # IMPL BLOCK (contains methods with identifiers)
     # ------------------------------------------------------------
-    # Matches an `impl_item` that contains one or more `function_item` nodes
-    # (i.e., methods). Each matched function_item must contain an `identifier`
-    # node for the method name.
-    #
-    # Captures:
-    # - $METHOD_BODY     : each matched function_item node inside the impl
-    # - $METHOD_IMPL_BODY: the matched impl_item node (the whole impl block)
-    # - $METHOD_NAME     : the identifier node for the method's name
-    # ------------------------------------------------------------
     - all:
         - kind: function_item
           pattern: $METHOD_BODY
@@ -73,13 +64,12 @@ rule:
             kind: identifier
             field: name
             pattern: $METHOD_NAME
+        - inside:
+            kind: source_file
+            stopBy: end
 
     # ------------------------------------------------------------
     # STRUCT (with captured name)
-    # ------------------------------------------------------------
-    # Matches a `struct_item` and captures:
-    # - $STRUCT_BODY     : the entire struct_item node (the declaration + body)
-    # - $STRUCT_NAME     : the identifier node that holds the struct's name
     # ------------------------------------------------------------
     - all:
         - kind: struct_item
@@ -87,16 +77,12 @@ rule:
         - has:
             field: name
             pattern: $STRUCT_NAME
+        - inside:
+            kind: source_file
+            stopBy: end
 
     # ------------------------------------------------------------
     # METHOD SIGNATURES INSIDE TRAITS (no body)
-    # ------------------------------------------------------------
-    # Matches `function_signature_item` nodes (method signatures inside traits — declaration only).
-    # Captures:
-    # - $TRAIT_METHOD_SIGNATURE            : the function_signature_item node (the signature, no body)
-    # - $TRAIT_METHOD_SIGNATURE_NAME       : the identifier node for the function name inside the signature
-    # - $TRAIT_BODY_WITH_METHOD_SIGNATURE  : the enclosing trait_item node (the trait that contains the signature)
-    # - $TRAIT_NAME_METHOD_SIGNATURE       : the trait's identifier (type_identifier)
     # ------------------------------------------------------------
     - all:
         - kind: function_signature_item
@@ -113,16 +99,12 @@ rule:
               field: name
               kind: type_identifier
               pattern: $TRAIT_NAME_METHOD_SIGNATURE
+        - inside:
+            kind: source_file
+            stopBy: end
 
     # ------------------------------------------------------------
     # METHOD DEFINITIONS INSIDE TRAITS (with body)
-    # ------------------------------------------------------------
-    # Matches `function_item` nodes (method definitions inside traits — include body).
-    # Captures:
-    # - $TRAIT_METHOD_BODY            : the function_item node (a method definition with a body)
-    # - $TRAIT_METHOD_NAME            : the identifier node for the function name of the method
-    # - $TRAIT_BODY_WITH_METHOD       : the enclosing trait_item node (the trait that contains the method)
-    # - $TRAIT_NAME_WITH_METHOD       : the trait's identifier (type_identifier)
     # ------------------------------------------------------------
     - all:
         - kind: function_item
@@ -139,13 +121,12 @@ rule:
               field: name
               kind: type_identifier
               pattern: $TRAIT_NAME_WITH_METHOD
+        - inside:
+            kind: source_file
+            stopBy: end
 
     # ------------------------------------------------------------
     # TRAIT DECLARATION (capture the trait itself)
-    # ------------------------------------------------------------
-    # Matches a `trait_item` and captures:
-    # - $TRAIT_BODY      : the whole trait declaration node
-    # - $TRAIT_NAME      : the name of the trait (a type_identifier)
     # ------------------------------------------------------------
     - all:
         - kind: trait_item
@@ -154,13 +135,12 @@ rule:
             field: name
             kind: type_identifier
             pattern: $TRAIT_NAME
+        - inside:
+            kind: source_file
+            stopBy: end
 
     # ------------------------------------------------------------
     # TYPE ALIAS (type_item with its identifier)
-    # ------------------------------------------------------------
-    # Matches `type_item` (e.g. `type Foo = ...;`) and captures:
-    # - $TYPE_ALIAS_BODY : the whole type_item node
-    # - $TYPE_ALIAS_NAME : the identifier node (type_identifier) for the alias name
     # ------------------------------------------------------------
     - all:
         - kind: type_item
@@ -169,13 +149,12 @@ rule:
             kind: type_identifier
             field: name
             pattern: $TYPE_ALIAS_NAME
+        - inside:
+            kind: source_file
+            stopBy: end
 
     # ------------------------------------------------------------
     # ENUM ITEM (capture the enum and its name)
-    # ------------------------------------------------------------
-    # Matches an `enum_item` node and captures:
-    # - $ENUM_BODY       : the entire enum declaration node (the whole `enum ... { ... }`)
-    # - $ENUM_NAME       : the identifier node containing the enum's name
     # ------------------------------------------------------------
     - all:
       - kind: enum_item
@@ -183,13 +162,12 @@ rule:
       - has:
           kind: type_identifier
           pattern: $ENUM_NAME
+      - inside:
+          kind: source_file
+          stopBy: end
 
     # ------------------------------------------------------------
     # UNION ITEM (capture the union and its name)
-    # ------------------------------------------------------------
-    # Matches a `union_item` node and captures:
-    # - $UNION_BODY      : the entire union declaration node
-    # - $UNION_NAME      : the identifier node containing the union's name
     # ------------------------------------------------------------
     - all:
       - kind: union_item
@@ -198,13 +176,12 @@ rule:
           kind: type_identifier
           field: name
           pattern: $UNION_NAME
+      - inside:
+          kind: source_file
+          stopBy: end
 
     # ------------------------------------------------------------
     # MOD ITEM with identifier "tests"
-    # ------------------------------------------------------------
-    # Matches a `mod_item` where the module name is exactly "tests"
-    # Captures:
-    # - $TESTS_MOD       : the entire mod_item node
     # ------------------------------------------------------------
     - all:
         - kind: mod_item
@@ -213,16 +190,12 @@ rule:
             kind: identifier
             field: name
             regex: ^tests$
+        - inside:
+            kind: source_file
+            stopBy: end
 
     # ------------------------------------------------------------
     # FREE / TOP-LEVEL FUNCTION (function_item)
-    # ------------------------------------------------------------
-    # Matches any `function_item` (free function or associated function)
-    # that has an `identifier` for the function name.
-    #
-    # Captures:
-    # - $FUNCTION_BODY   : the whole function_item node
-    # - $FUNCTION_NAME   : the identifier node for the function's name
     # ------------------------------------------------------------
     - all:
         - kind: function_item
@@ -231,34 +204,32 @@ rule:
             kind: identifier
             field: name
             pattern: $FUNCTION_NAME
+        - inside:
+            kind: source_file
+            stopBy: end
 
     # ------------------------------------------------------------
     # ALL IMPL BLOCKS
     # ------------------------------------------------------------
-    # Matches every `impl_item`. Captures:
-    # - $IMPL_BODY : the whole impl_item node
-    # ------------------------------------------------------------
     - all:
         - kind: impl_item
           pattern: $IMPL_BODY
+        - inside:
+            kind: source_file
+            stopBy: end
 
     # ------------------------------------------------------------
     # ATTRIBUTE ITEMS
     # ------------------------------------------------------------
-    # Matches attribute nodes such as `#[derive(...)]`, `#![no_std]`, or inner
-    # attributes. Captures:
-    # - $ATTRIBUTES      : the attribute_item node(s)
-    # ------------------------------------------------------------
     - all:
         - kind: attribute_item
           pattern: $ATTRIBUTES
+        - inside:
+            kind: source_file
+            stopBy: end
 
     # ------------------------------------------------------------
     # MOD ITEM (general — any named module)
-    # ------------------------------------------------------------
-    # Captures:
-    # - $MOD_BODY : the entire mod_item node
-    # - $MOD_NAME : the identifier node for the module name
     # ------------------------------------------------------------
     - all:
         - kind: mod_item
@@ -267,33 +238,32 @@ rule:
             kind: identifier
             field: name
             pattern: $MOD_NAME
+        - inside:
+            kind: source_file
+            stopBy: end
 
     # ------------------------------------------------------------
     # EXPRESSION STATEMENT
     # ------------------------------------------------------------
-    # Captures:
-    # - $EXPRESSION_STATEMENT : the expression_statement node
-    # ------------------------------------------------------------
     - all:
         - kind: expression_statement
           pattern: $EXPRESSION_STATEMENT
+        - inside:
+            kind: source_file
+            stopBy: end
 
     # ------------------------------------------------------------
     # USE DECLARATION
     # ------------------------------------------------------------
-    # Captures:
-    # - $USE_DECLARATION : the use_declaration node
-    # ------------------------------------------------------------
     - all:
         - kind: use_declaration
           pattern: $USE_DECLARATION
+        - inside:
+            kind: source_file
+            stopBy: end
 
     # ------------------------------------------------------------
     # MACRO DEFINITION
-    # ------------------------------------------------------------
-    # Captures:
-    # - $MACRO_DEFINITION_BODY : the entire macro_definition node
-    # - $MACRO_DEFINITION_NAME : the identifier node for the macro name
     # ------------------------------------------------------------
     - all:
         - kind: macro_definition
@@ -302,6 +272,9 @@ rule:
             kind: identifier
             field: name
             pattern: $MACRO_DEFINITION_NAME
+        - inside:
+            kind: source_file
+            stopBy: end
 
     # ------------------------------------------------------------
     # MACRO INVOCATION
@@ -313,6 +286,5 @@ rule:
             kind: expression_statement
             inside:
               kind: source_file
-
 
 "#;

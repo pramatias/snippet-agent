@@ -3,7 +3,7 @@ use crate::syn::syn_elements::*;
 use log::debug;
 use std::collections::HashSet;
 use syntax_queries::*;
-use syntax_queries::byte_range_ordering::{HasByteRange, NodeMatch, SynRange, CharactersDimension, ByteRange, SynPosition};
+use syntax_queries::byte_range_ordering::{HasByteRange, NodeMatch};
 
 pub type NodeMatches = Vec<NodeMatch>;
 
@@ -22,16 +22,15 @@ pub type WhereClauseMatches = NodeMatches;
 pub type IdentifierMatches = NodeMatches;
 
 pub type ForKeywordRef<'a> = Option<&'a ForKeywordMatches>;
-pub type AsKeywordRef<'a> = Option<&'a AsKeywordMatches>;
 pub type TypeIdentRef<'a> = Option<&'a TypeIdentMatches>;
 pub type PrimitiveTypeRef<'a> = Option<&'a PrimitiveTypeMatches>;
 pub type TypeArgRef<'a> = Option<&'a TypeArgMatches>;
 pub type BracketedTypeRef<'a> = Option<&'a BracketedTypeMatches>;
 pub type TraitBoundRef<'a> = Option<&'a TraitBoundMatches>;
-pub type ConstParamRef<'a> = Option<&'a ConstParamMatches>;
 pub type TypeParamRef<'a> = Option<&'a TypeParamMatches>;
 pub type WhereClauseRef<'a> = Option<&'a WhereClauseMatches>;
-pub type IdentifierRef<'a> = Option<&'a IdentifierMatches>;
+
+// pub type IdentifierRef<'a> = Option<&'a IdentifierMatches>;
 
 pub type DSAreasToAvoid<'a> = (
     TypeArgRef<'a>,
@@ -40,13 +39,9 @@ pub type DSAreasToAvoid<'a> = (
     TypeParamRef<'a>,
 );
 
-pub type TypeCandidates = (TypeIdentMatches, PrimitiveTypeMatches);
-pub type ConstTypeCandidatesRef<'a> = (TypeIdentRef<'a>, PrimitiveTypeRef<'a>, IdentifierRef<'a>);
-
 pub type TypeCandidatesRef<'a> = (TypeIdentRef<'a>, PrimitiveTypeRef<'a>);
+
 pub type DSTypeCandidatesRef<'a> = TypeCandidatesRef<'a>;
-pub type TraitBoundTypeCandidatesRef<'a> = TypeCandidatesRef<'a>;
-pub type AsKeywordTypeCandidatesRef<'a> = TypeCandidatesRef<'a>;
 
 pub type TypeSetCtypeExtracted = (Option<TypeVariableMap>, Option<CTypeSet>);
 
@@ -60,15 +55,16 @@ pub struct TypeContextRef<'a> {
     pub primitive_types:  PrimitiveTypeRef<'a>,
 }
 
-impl TypeContext {
-    pub fn as_ref(&self) -> TypeContextRef<'_> {
-        TypeContextRef {
-            type_identifiers: Some(&self.type_identifiers),
-            primitive_types:  Some(&self.primitive_types),
-        }
-    }
-}
+// impl TypeContext {
+//     pub fn as_ref(&self) -> TypeContextRef<'_> {
+//         TypeContextRef {
+//             type_identifiers: Some(&self.type_identifiers),
+//             primitive_types:  Some(&self.primitive_types),
+//         }
+//     }
+// }
 
+#[allow(dead_code)]
 pub struct DsStructureInput<'a> {
     pub for_keyword:     NodeMatchesRef<'a>,
     pub type_parameters: NodeMatchesRef<'a>,

@@ -3,7 +3,6 @@ use serde::Deserialize;
 use std::collections::{HashMap, HashSet};
 use crate::syn::syn_element::*;
 use crate::json_selection::unprocessed_elements::*;
-use syntax_queries::byte_range_ordering::HasByteRange;
 
 // ── Type enrichment types (only needed at the syn layer) ──────────────────────
 pub type AttributeContextLines = String;
@@ -77,7 +76,7 @@ pub struct SynUseDeclaration {
 pub struct SynMacroDefinition {
     pub file:                 FilePath,
     pub macro_definition_name: MacroDefinitionName,
-    pub macro_body:           MacroDefinitionBody,
+    pub macro_definition_body: MacroDefinitionBody,
 }
 
 #[derive(Debug, Deserialize, Clone)]
