@@ -1,19 +1,17 @@
 //syn_elements.rs
+use crate::json_selection::unprocessed_elements::*;
+use crate::syn::syn_element::*;
 use serde::Deserialize;
 use std::collections::{HashMap, HashSet};
-use crate::syn::syn_element::*;
-use crate::json_selection::unprocessed_elements::*;
 
 // ── Type enrichment types (only needed at the syn layer) ──────────────────────
 pub type AttributeContextLines = String;
-pub type ImplSignature         = String;
-pub type FunctionSignature     = String;
-pub type DSName                = String;
-pub type TypeVariable          = String;
-pub type ConcreteType          = String;
-pub type TypeSet               = HashSet<String>;
-pub type CTypeSet              = HashSet<ConcreteType>;
-pub type TypeVariableMap       = HashMap<TypeVariable, TypeSet>;
+pub type DSName = String;
+pub type TypeVariable = String;
+pub type ConcreteType = String;
+pub type TypeSet = HashSet<String>;
+pub type CTypeSet = HashSet<ConcreteType>;
+pub type TypeVariableMap = HashMap<TypeVariable, TypeSet>;
 
 #[derive(Debug, Clone, Default, Deserialize)]
 pub struct TypeIdentifiers {
@@ -22,109 +20,108 @@ pub struct TypeIdentifiers {
 }
 
 // ── Pass-through aliases (unprocessed = syn for these types) ──────────────────
-pub type SynTestsMods        = UnprocessedTestsMods;
-pub type SynFunctions        = UnprocessedFunctions;
-pub type SynStructs          = UnprocessedStructs;
-pub type SynTraits           = UnprocessedTraits;
-pub type SynTraitMethodSigs  = UnprocessedTraitMethodSigs;
-pub type SynTraitMethodDefs  = UnprocessedTraitMethodDefs;
-pub type SynTypeAliases      = UnprocessedTypeAliases;
-pub type SynEnums            = UnprocessedEnums;
-pub type SynUnions           = UnprocessedUnions;
-pub type SynImpls            = UnprocessedImpls;
+pub type SynTestsMods = UnprocessedTestsMods;
+pub type SynFunctions = UnprocessedFunctions;
+pub type SynStructs = UnprocessedStructs;
+pub type SynTraits = UnprocessedTraits;
+pub type SynTraitMethodSigs = UnprocessedTraitMethodSigs;
+pub type SynTraitMethodDefs = UnprocessedTraitMethodDefs;
+pub type SynTypeAliases = UnprocessedTypeAliases;
+pub type SynEnums = UnprocessedEnums;
+pub type SynUnions = UnprocessedUnions;
+pub type SynImpls = UnprocessedImpls;
 
 // ── Enriched syn structs ──────────────────────────────────────────────────────
 #[derive(Debug, Deserialize, Clone)]
 pub struct SynMethod {
-    pub file:               FilePath,
-    pub impl_body:          MethodImplBody,
-    pub method_body:        MethodBody,
-    pub method_name:        MethodName,
-    pub impl_signature:     ImplSignature,
+    pub file: FilePath,
+    pub impl_body: MethodImplBody,
+    pub method_body: MethodBody,
+    pub method_name: MethodName,
+    pub impl_signature: ImplSignature,
     pub function_signature: FunctionSignature,
-    pub ds_structure:       DSName,
-    pub type_identifiers:   TypeIdentifiers,
+    pub ds_structure: DSName,
+    pub type_identifiers: TypeIdentifiers,
 }
 
 #[derive(Debug, Clone)]
 pub struct SynAttribute {
-    pub file:           FilePath,
+    pub file: FilePath,
     pub attribute_body: AttributeBody,
-    pub context_lines:  AttributeContextLines,
+    pub context_lines: AttributeContextLines,
 }
 
 #[derive(Debug, Deserialize, Clone)]
 pub struct SynMod {
-    pub file:     FilePath,
+    pub file: FilePath,
     pub mod_name: ModName,
     pub mod_body: ModBody,
 }
 
 #[derive(Debug, Deserialize, Clone)]
 pub struct SynExpressionStatement {
-    pub file:            FilePath,
+    pub file: FilePath,
     pub expression_body: ExpressionStatementBody,
 }
 
 #[derive(Debug, Deserialize, Clone)]
 pub struct SynUseDeclaration {
-    pub file:     FilePath,
+    pub file: FilePath,
     pub use_body: UseDeclarationBody,
 }
 
 #[derive(Debug, Deserialize, Clone)]
 pub struct SynMacroDefinition {
-    pub file:                 FilePath,
+    pub file: FilePath,
     pub macro_definition_name: MacroDefinitionName,
     pub macro_definition_body: MacroDefinitionBody,
 }
 
 #[derive(Debug, Deserialize, Clone)]
 pub struct SynMacroInvocation {
-    pub file:            FilePath,
+    pub file: FilePath,
     pub invocation_body: MacroInvocationBody,
 }
 
 // ── Collection aliases ────────────────────────────────────────────────────────
-pub type SynMethods              = Vec<SynMethod>;
-pub type SynAttributes           = Vec<SynAttribute>;
-pub type SynMods                 = Vec<SynMod>;
+pub type SynMethods = Vec<SynMethod>;
+pub type SynAttributes = Vec<SynAttribute>;
+pub type SynMods = Vec<SynMod>;
 pub type SynExpressionStatements = Vec<SynExpressionStatement>;
-pub type SynUseDeclarations      = Vec<SynUseDeclaration>;
-pub type SynMacroDefinitions     = Vec<SynMacroDefinition>;
-pub type SynMacroInvocations     = Vec<SynMacroInvocation>;
+pub type SynUseDeclarations = Vec<SynUseDeclaration>;
+pub type SynMacroDefinitions = Vec<SynMacroDefinition>;
+pub type SynMacroInvocations = Vec<SynMacroInvocation>;
 
 // ── Aggregate ─────────────────────────────────────────────────────────────────
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Default)]
 pub struct AllSynElements {
-    pub syn_attributes:           SynAttributes,
-    pub syn_tests_mods:           SynTestsMods,
-    pub syn_functions:            SynFunctions,
-    pub syn_methods:              SynMethods,
-    pub syn_impls:                SynImpls,
-    pub syn_structs:              SynStructs,
-    pub syn_traits:               SynTraits,
-    pub syn_trait_method_sigs:    SynTraitMethodSigs,
-    pub syn_trait_method_defs:    SynTraitMethodDefs,
-    pub syn_type_aliases:         SynTypeAliases,
-    pub syn_enums:                SynEnums,
-    pub syn_unions:               SynUnions,
-    pub syn_mods:                 SynMods,
+    pub syn_attributes: SynAttributes,
+    pub syn_tests_mods: SynTestsMods,
+    pub syn_functions: SynFunctions,
+    pub syn_methods: SynMethods,
+    pub syn_impls: SynImpls,
+    pub syn_structs: SynStructs,
+    pub syn_traits: SynTraits,
+    pub syn_trait_method_sigs: SynTraitMethodSigs,
+    pub syn_trait_method_defs: SynTraitMethodDefs,
+    pub syn_type_aliases: SynTypeAliases,
+    pub syn_enums: SynEnums,
+    pub syn_unions: SynUnions,
+    pub syn_mods: SynMods,
     pub syn_expression_statements: SynExpressionStatements,
-    pub syn_use_declarations:     SynUseDeclarations,
-    pub syn_macro_definitions:    SynMacroDefinitions,
-    pub syn_macro_invocations:    SynMacroInvocations,
+    pub syn_use_declarations: SynUseDeclarations,
+    pub syn_macro_definitions: SynMacroDefinitions,
+    pub syn_macro_invocations: SynMacroInvocations,
 }
 
 #[allow(dead_code)]
 fn context() {
     const CONTEXT: &str = r#"
 //unprocessed elements.rs
+use crate::syn::syn_element::*;
 use serde::Deserialize;
-// use crate::raw_elements::*;
-// use crate::raw_syn_casting::*;
-use syntax_queries::byte_range_ordering::{ByteRange, CharactersDimension, SynPosition, SynRange};
 
+// ── Collection type aliases ───────────────────────────────────────────────────
 pub type UnprocessedAttributes = Vec<UnprocessedAttribute>;
 pub type UnprocessedTestsMods = Vec<UnprocessedTestsMod>;
 pub type UnprocessedFunctions = Vec<UnprocessedFunction>;
@@ -137,12 +134,13 @@ pub type UnprocessedTraitMethodDefs = Vec<UnprocessedTraitMethodDefinition>;
 pub type UnprocessedTypeAliases = Vec<UnprocessedTypeAlias>;
 pub type UnprocessedEnums = Vec<UnprocessedEnum>;
 pub type UnprocessedUnions = Vec<UnprocessedUnion>;
-pub type UnprocessedMods                 = Vec<UnprocessedMod>;
+pub type UnprocessedMods = Vec<UnprocessedMod>;
 pub type UnprocessedExpressionStatements = Vec<UnprocessedExpressionStatement>;
-pub type UnprocessedUseDeclarations      = Vec<UnprocessedUseDeclaration>;
-pub type UnprocessedMacroDefinitions     = Vec<UnprocessedMacroDefinition>;
-pub type UnprocessedMacroInvocations     = Vec<UnprocessedMacroInvocation>;
+pub type UnprocessedUseDeclarations = Vec<UnprocessedUseDeclaration>;
+pub type UnprocessedMacroDefinitions = Vec<UnprocessedMacroDefinition>;
+pub type UnprocessedMacroInvocations = Vec<UnprocessedMacroInvocation>;
 
+// ── Aggregate ─────────────────────────────────────────────────────────────────
 #[derive(Debug, Clone)]
 pub struct AllUnprocessedElements {
     pub unprocessed_attributes: UnprocessedAttributes,
@@ -157,57 +155,17 @@ pub struct AllUnprocessedElements {
     pub unprocessed_type_aliases: UnprocessedTypeAliases,
     pub unprocessed_enums: UnprocessedEnums,
     pub unprocessed_unions: UnprocessedUnions,
-    pub unprocessed_mods:                  UnprocessedMods,
-pub unprocessed_expression_statements: UnprocessedExpressionStatements,
-pub unprocessed_use_declarations:      UnprocessedUseDeclarations,
-pub unprocessed_macro_definitions:     UnprocessedMacroDefinitions,
-pub unprocessed_macro_invocations:     UnprocessedMacroInvocations,
+    pub unprocessed_mods: UnprocessedMods,
+    pub unprocessed_expression_statements: UnprocessedExpressionStatements,
+    pub unprocessed_use_declarations: UnprocessedUseDeclarations,
+    pub unprocessed_macro_definitions: UnprocessedMacroDefinitions,
+    pub unprocessed_macro_invocations: UnprocessedMacroInvocations,
 }
 
-pub type FilePath = String;
-
-#[derive(Debug, Deserialize, Clone)]
-pub struct SynElement {
-    pub text: String,
-
-    #[allow(dead_code)]
-    pub range: SynRange,
-}
-
-pub type MethodImplBody = SynElement;
-pub type MethodBody = SynElement;
-pub type MethodName = SynElement;
-pub type TraitBody = SynElement;
-pub type TraitMethodBody = SynElement;
-pub type TraitMethodName = SynElement;
-pub type TraitName = SynElement;
-pub type TypeAliasBody = SynElement;
-pub type TypeAliasName = SynElement;
-pub type EnumBody = SynElement;
-pub type EnumName = SynElement;
-pub type UnionBody = SynElement;
-pub type UnionName = SynElement;
-pub type TestsModBody = SynElement;
-pub type FunctionBody = SynElement;
-pub type FunctionName = SynElement;
-pub type TraitMethodSignature = SynElement;
-pub type SignatureName = SynElement;
-pub type AttributeBody = SynElement;
-pub type ImplBody = SynElement;
-pub type StructBody = SynElement;
-pub type StructName = SynElement;
-pub type ModBody                  = SynElement;
-pub type ModName                  = SynElement;
-pub type ExpressionStatementBody  = SynElement;
-pub type UseDeclarationBody       = SynElement;
-pub type MacroDefinitionBody      = SynElement;
-pub type MacroDefinitionName      = SynElement;
-pub type MacroInvocationBody      = SynElement;
-
+// ── Structs ───────────────────────────────────────────────────────────────────
 #[derive(Debug, Deserialize, Clone)]
 pub struct UnprocessedMethod {
     pub file: FilePath,
-
     pub impl_body: MethodImplBody,
     pub method_body: MethodBody,
     pub method_name: MethodName,
@@ -216,7 +174,6 @@ pub struct UnprocessedMethod {
 #[derive(Debug, Deserialize, Clone)]
 pub struct UnprocessedTraitMethodDefinition {
     pub file: FilePath,
-
     pub trait_body: TraitBody,
     pub trait_method_body: TraitMethodBody,
     pub method_name: TraitMethodName,
@@ -226,7 +183,6 @@ pub struct UnprocessedTraitMethodDefinition {
 #[derive(Debug, Deserialize, Clone)]
 pub struct UnprocessedTypeAlias {
     pub file: FilePath,
-
     pub type_body: TypeAliasBody,
     pub type_name: TypeAliasName,
 }
@@ -234,7 +190,6 @@ pub struct UnprocessedTypeAlias {
 #[derive(Debug, Deserialize, Clone)]
 pub struct UnprocessedEnum {
     pub file: FilePath,
-
     pub enum_body: EnumBody,
     pub enum_name: EnumName,
 }
@@ -242,7 +197,6 @@ pub struct UnprocessedEnum {
 #[derive(Debug, Deserialize, Clone)]
 pub struct UnprocessedUnion {
     pub file: FilePath,
-
     pub union_body: UnionBody,
     pub union_name: UnionName,
 }
@@ -250,14 +204,12 @@ pub struct UnprocessedUnion {
 #[derive(Debug, Deserialize, Clone)]
 pub struct UnprocessedTestsMod {
     pub file: FilePath,
-
     pub tests_mod_body: TestsModBody,
 }
 
 #[derive(Debug, Deserialize, Clone)]
 pub struct UnprocessedFunction {
     pub file: FilePath,
-
     pub function_body: FunctionBody,
     pub function_name: FunctionName,
 }
@@ -265,7 +217,6 @@ pub struct UnprocessedFunction {
 #[derive(Debug, Deserialize, Clone)]
 pub struct UnprocessedTrait {
     pub file: FilePath,
-
     pub trait_body: TraitBody,
     pub trait_name: TraitName,
 }
@@ -273,7 +224,6 @@ pub struct UnprocessedTrait {
 #[derive(Debug, Deserialize, Clone)]
 pub struct UnprocessedTraitMethodSignature {
     pub file: FilePath,
-
     pub trait_method_signature: TraitMethodSignature,
     pub method_signature_name: SignatureName,
     pub trait_body: TraitBody,
@@ -283,21 +233,18 @@ pub struct UnprocessedTraitMethodSignature {
 #[derive(Debug, Deserialize, Clone)]
 pub struct UnprocessedAttribute {
     pub file: FilePath,
-
     pub attribute_body: AttributeBody,
 }
 
 #[derive(Debug, Deserialize, Clone)]
 pub struct UnprocessedImpl {
     pub file: FilePath,
-
     pub impl_body: ImplBody,
 }
 
 #[derive(Debug, Deserialize, Clone)]
 pub struct UnprocessedStruct {
     pub file: FilePath,
-
     pub struct_body: StructBody,
     pub struct_name: StructName,
 }

@@ -45,7 +45,6 @@ pub fn run_ast_grep_rule(directory: &str) -> Result<String, AstGrepRunError> {
     Ok(stdout)
 }
 
-/// Put your rule YAML here (static string)
 const AST_GREP_RULE_YAML: &str = r#"id: find-all-syntactic-elements
 language: rust
 rule:

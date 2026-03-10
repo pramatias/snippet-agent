@@ -1,7 +1,9 @@
 //sig_extraction.rs
+use crate::byte_range_ordering::{
+    ByteRange, CharactersDimension, NodeMatch, SynPosition, SynRange,
+};
 use std::result::Result;
 use tree_sitter::{Node, Parser, Tree};
-use crate::byte_range_ordering::{NodeMatch, SynRange, CharactersDimension, ByteRange, SynPosition};
 
 pub struct RustParser<'a> {
     /// Borrowed source (lifetime tied to the caller's source buffer).
@@ -9,6 +11,48 @@ pub struct RustParser<'a> {
     pub tree: Tree,
     /// The piece of text to look for inside the node we want to delete.
     pub target_node_text: String,
+}
+
+///delete_node_till_end_as_match
+impl<'a> RustParser<'a> {
+    pub fn delete_node_till_end_as_match(&self) -> Option<NodeMatch> {
+        let root = self.tree.root_node();
+        let node = Self::find_node_of_kind(root, &self.target_node_text)?;
+
+        let start = node.start_byte();
+        let end = node.end_byte();
+
+        let before = self.source.get(..start).unwrap_or("").trim_end();
+        let after = self.source.get(end..).unwrap_or("");
+
+        let text = format!("{}{}", before, after).trim_end().to_string();
+
+        // The range covers the "before" portion — from source start to where
+        // the deleted node began. That's where the signature text actually lives.
+        let sig_end_byte = before.len() as u64;
+        let start_pos = self.tree.root_node().start_position();
+        let end_pos = node.start_position(); // end of signature = start of deleted node
+
+        Some(NodeMatch {
+            text,
+            range: SynRange {
+                byte_range: ByteRange {
+                    start: 0,
+                    end: sig_end_byte,
+                },
+                characters_dimension: CharactersDimension {
+                    start: SynPosition {
+                        line: start_pos.row as u64,
+                        column: start_pos.column as u64,
+                    },
+                    end: SynPosition {
+                        line: end_pos.row as u64,
+                        column: end_pos.column as u64,
+                    },
+                },
+            },
+        })
+    }
 }
 
 ///find all
@@ -337,7 +381,7 @@ impl<'a> RustParser<'a> {
 mod tests {
     use super::*;
 
-        #[test]
+    #[test]
     fn find_for_keyword() {
         let source = r#"impl<T> From<T> for Wrapper<T> {}
 "#;

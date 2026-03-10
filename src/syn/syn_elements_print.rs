@@ -1,6 +1,6 @@
 //syn_elements_print.rs
-use crate::syn::syn_elements::*;
 use crate::syn::SynElement;
+use crate::syn::syn_elements::*;
 
 fn print_header(label: &str, count: usize) {
     println!("\n=== {label} ({count}) ===");
@@ -120,7 +120,7 @@ impl AllSynElements {
             println!("    function_signature: {}", m.function_signature);
             Self::print_type_identifiers(&m.type_identifiers);
             print_syn_element("method_name", &m.method_name, 2);
-            print_syn_element("impl_body",   &m.impl_body,   2);
+            print_syn_element("impl_body", &m.impl_body, 2);
             print_syn_element("method_body", &m.method_body, 2);
         }
     }
@@ -139,11 +139,11 @@ impl AllSynElements {
     fn print_type_identifiers(ti: &TypeIdentifiers) {
         println!("    type_identifiers:");
         match &ti.concrete_types {
-            None     => println!("      concrete_types: None"),
+            None => println!("      concrete_types: None"),
             Some(ct) => println!("      concrete_types: {:?}", ct),
         }
         match &ti.type_variables {
-            None        => println!("      type_variables: None"),
+            None => println!("      type_variables: None"),
             Some(tvars) => {
                 println!("      type_variables:");
                 let mut keys: Vec<_> = tvars.keys().collect();

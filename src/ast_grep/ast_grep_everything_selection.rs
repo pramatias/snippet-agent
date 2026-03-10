@@ -382,27 +382,31 @@ pub fn extract_selections_from_ast_grep_json(
 > {
     let raw_matches: Vec<RawMatch> = serde_json::from_str(json)?;
 
-    let mut attributes:           Option<Vec<AttributeSelection>>              = None;
-    let mut tests_mods:           Option<Vec<TestsModSelection>>               = None;
-    let mut functions:            Option<Vec<FunctionSelection>>               = None;
-    let mut methods:              Option<Vec<MethodSelection>>                 = None;
-    let mut impls:                Option<Vec<ImplSelection>>                   = None;
-    let mut structs:              Option<Vec<StructSelection>>                 = None;
-    let mut traits:               Option<Vec<TraitSelection>>                  = None;
-    let mut trait_method_sigs:    Option<Vec<TraitMethodSignatureSelection>>   = None;
-    let mut trait_method_defs:    Option<Vec<TraitMethodDefinitionSelection>>  = None;
-    let mut type_aliases:         Option<Vec<TypeAliasSelection>>              = None;
-    let mut enums:                Option<Vec<EnumSelection>>                   = None;
-    let mut unions:               Option<Vec<UnionSelection>>                  = None;
-    let mut mods:                 Option<Vec<ModSelection>>                    = None;
-    let mut expression_stmts:     Option<Vec<ExpressionStatementSelection>>    = None;
-    let mut use_declarations:     Option<Vec<UseDeclarationSelection>>         = None;
-    let mut macro_definitions:    Option<Vec<MacroDefinitionSelection>>        = None;
-    let mut macro_invocations:    Option<Vec<MacroInvocationSelection>>        = None;
+    let mut attributes: Option<Vec<AttributeSelection>> = None;
+    let mut tests_mods: Option<Vec<TestsModSelection>> = None;
+    let mut functions: Option<Vec<FunctionSelection>> = None;
+    let mut methods: Option<Vec<MethodSelection>> = None;
+    let mut impls: Option<Vec<ImplSelection>> = None;
+    let mut structs: Option<Vec<StructSelection>> = None;
+    let mut traits: Option<Vec<TraitSelection>> = None;
+    let mut trait_method_sigs: Option<Vec<TraitMethodSignatureSelection>> = None;
+    let mut trait_method_defs: Option<Vec<TraitMethodDefinitionSelection>> = None;
+    let mut type_aliases: Option<Vec<TypeAliasSelection>> = None;
+    let mut enums: Option<Vec<EnumSelection>> = None;
+    let mut unions: Option<Vec<UnionSelection>> = None;
+    let mut mods: Option<Vec<ModSelection>> = None;
+    let mut expression_stmts: Option<Vec<ExpressionStatementSelection>> = None;
+    let mut use_declarations: Option<Vec<UseDeclarationSelection>> = None;
+    let mut macro_definitions: Option<Vec<MacroDefinitionSelection>> = None;
+    let mut macro_invocations: Option<Vec<MacroInvocationSelection>> = None;
 
     for m in &raw_matches {
-        let Some(meta_vars) = &m.meta_variables else { continue };
-        let Some(single_map) = &meta_vars.single else { continue };
+        let Some(meta_vars) = &m.meta_variables else {
+            continue;
+        };
+        let Some(single_map) = &meta_vars.single else {
+            continue;
+        };
         let file = m.file.as_str();
 
         macro_rules! accumulate {
@@ -416,21 +420,21 @@ pub fn extract_selections_from_ast_grep_json(
             };
         }
 
-        accumulate!(attributes,        extract_attributes);
-        accumulate!(tests_mods,        extract_tests_mods);
-        accumulate!(functions,         extract_functions);
-        accumulate!(methods,           extract_methods);
-        accumulate!(impls,             extract_impls);
-        accumulate!(structs,           extract_structs);
-        accumulate!(traits,            extract_traits);
+        accumulate!(attributes, extract_attributes);
+        accumulate!(tests_mods, extract_tests_mods);
+        accumulate!(functions, extract_functions);
+        accumulate!(methods, extract_methods);
+        accumulate!(impls, extract_impls);
+        accumulate!(structs, extract_structs);
+        accumulate!(traits, extract_traits);
         accumulate!(trait_method_sigs, extract_trait_method_signatures);
         accumulate!(trait_method_defs, extract_trait_methods);
-        accumulate!(type_aliases,      extract_type_aliases);
-        accumulate!(enums,             extract_enums);
-        accumulate!(unions,            extract_unions);
-        accumulate!(mods,              extract_mods);
-        accumulate!(expression_stmts,  extract_expression_statements);
-        accumulate!(use_declarations,  extract_use_declarations);
+        accumulate!(type_aliases, extract_type_aliases);
+        accumulate!(enums, extract_enums);
+        accumulate!(unions, extract_unions);
+        accumulate!(mods, extract_mods);
+        accumulate!(expression_stmts, extract_expression_statements);
+        accumulate!(use_declarations, extract_use_declarations);
         accumulate!(macro_definitions, extract_macro_definitions);
         accumulate!(macro_invocations, extract_macro_invocations);
     }
@@ -510,23 +514,24 @@ mod tests {
         ) = extract_selections_from_ast_grep_json(&json).expect("JSON should parse");
 
         // unwrap all the Option<Vec<...>> into Vec<...>
-        let attributes             = attributes.expect("expected attributes");
-        let tests_mods             = tests_mods.expect("expected tests_mods");
-        let functions              = functions.expect("expected functions");
-        let methods                = methods.expect("expected methods");
-        let impls                  = impls.expect("expected impls");
-        let structs                = structs.expect("expected structs");
-        let traits                 = traits.expect("expected traits");
-        let trait_method_signatures = trait_method_signatures.expect("expected trait_method_signatures");
-        let trait_method_defs      = trait_method_defs.expect("expected trait_method_defs");
-        let type_aliases           = type_aliases.expect("expected type_aliases");
-        let enums                  = enums.expect("expected enums");
-        let unions                 = unions.expect("expected unions");
-        let mods                   = mods.expect("expected mods");
-        let expression_stmts       = expression_stmts.expect("expected expression_stmts");
-        let use_declarations       = use_declarations.expect("expected use_declarations");
-        let macro_definitions      = macro_definitions.expect("expected macro_definitions");
-        let macro_invocations      = macro_invocations.expect("expected macro_invocations");
+        let attributes = attributes.expect("expected attributes");
+        let tests_mods = tests_mods.expect("expected tests_mods");
+        let functions = functions.expect("expected functions");
+        let methods = methods.expect("expected methods");
+        let impls = impls.expect("expected impls");
+        let structs = structs.expect("expected structs");
+        let traits = traits.expect("expected traits");
+        let trait_method_signatures =
+            trait_method_signatures.expect("expected trait_method_signatures");
+        let trait_method_defs = trait_method_defs.expect("expected trait_method_defs");
+        let type_aliases = type_aliases.expect("expected type_aliases");
+        let enums = enums.expect("expected enums");
+        let unions = unions.expect("expected unions");
+        let mods = mods.expect("expected mods");
+        let expression_stmts = expression_stmts.expect("expected expression_stmts");
+        let use_declarations = use_declarations.expect("expected use_declarations");
+        let macro_definitions = macro_definitions.expect("expected macro_definitions");
+        let macro_invocations = macro_invocations.expect("expected macro_invocations");
 
         // ATTRIBUTES
         assert_eq!(attributes.len(), 1, "expected one attribute selection");
@@ -654,21 +659,33 @@ mod tests {
         assert_eq!(md.mod_body_range.start.line, 42);
 
         // EXPRESSION STATEMENTS
-        assert_eq!(expression_stmts.len(), 1, "expected one expression statement selection");
+        assert_eq!(
+            expression_stmts.len(),
+            1,
+            "expected one expression statement selection"
+        );
         let expr = &expression_stmts[0];
         assert_eq!(expr.file, "sample_program.rs");
         assert_eq!(expr.expression_text, "println!(\"hello\");");
         assert_eq!(expr.expression_range.start.line, 50);
 
         // USE DECLARATIONS
-        assert_eq!(use_declarations.len(), 1, "expected one use declaration selection");
+        assert_eq!(
+            use_declarations.len(),
+            1,
+            "expected one use declaration selection"
+        );
         let use_decl = &use_declarations[0];
         assert_eq!(use_decl.file, "sample_program.rs");
         assert_eq!(use_decl.use_text, "use std::collections::HashMap;");
         assert_eq!(use_decl.use_range.start.line, 55);
 
         // MACRO DEFINITIONS
-        assert_eq!(macro_definitions.len(), 1, "expected one macro definition selection");
+        assert_eq!(
+            macro_definitions.len(),
+            1,
+            "expected one macro definition selection"
+        );
         let macro_def = &macro_definitions[0];
         assert_eq!(macro_def.file, "sample_program.rs");
         assert_eq!(macro_def.macro_name_text, "my_macro");
@@ -676,7 +693,11 @@ mod tests {
         assert_eq!(macro_def.macro_body_range.start.line, 60);
 
         // MACRO INVOCATIONS
-        assert_eq!(macro_invocations.len(), 1, "expected one macro invocation selection");
+        assert_eq!(
+            macro_invocations.len(),
+            1,
+            "expected one macro invocation selection"
+        );
         let macro_inv = &macro_invocations[0];
         assert_eq!(macro_inv.file, "sample_program.rs");
         assert_eq!(macro_inv.invocation_text, "vec![1, 2, 3]");
@@ -758,7 +779,8 @@ mod tests {
   "message": "",
   "labels": []
 }
-"###.to_string()
+"###
+        .to_string()
     }
 
     /// Returns the JSON object for the enum (capture: $ENUM_BODY / $ENUM_NAME).
@@ -852,7 +874,8 @@ mod tests {
   "message": "",
   "labels": []
 }
-"###.to_string()
+"###
+        .to_string()
     }
 
     /// Returns the JSON object for the attribute item (capture: $ATTRIBUTES).
@@ -887,7 +910,8 @@ mod tests {
   "message": "",
   "labels": []
 }
-"###.to_string()
+"###
+        .to_string()
     }
 
     /// Returns the JSON object for `struct MyType;` (capture: $STRUCT_BODY / $STRUCT_NAME).
@@ -930,7 +954,8 @@ mod tests {
   "message": "",
   "labels": []
 }
-"###.to_string()
+"###
+        .to_string()
     }
 
     /// Returns the JSON object for the impl block (capture: $IMPL_BODY).
@@ -965,7 +990,8 @@ mod tests {
   "message": "",
   "labels": []
 }
-"###.to_string()
+"###
+        .to_string()
     }
 
     /// Returns the JSON object for the trait method signature (capture: $TRAIT_METHOD_SIGNATURE / $TRAIT_METHOD_SIGNATURE_NAME / $TRAIT_BODY_WITH_METHOD_SIGNATURE / $TRAIT_NAME_METHOD_SIGNATURE).
@@ -1024,7 +1050,8 @@ mod tests {
   "message": "",
   "labels": []
 }
-"###.to_string()
+"###
+        .to_string()
     }
 
     /// Returns the JSON object for the trait declaration (capture: $TRAIT_BODY / $TRAIT_NAME).
@@ -1067,7 +1094,8 @@ mod tests {
   "message": "",
   "labels": []
 }
-"###.to_string()
+"###
+        .to_string()
     }
 
     /// Returns the JSON object for the free function `make_iter` (capture: $FUNCTION_BODY / $FUNCTION_NAME).
@@ -1110,7 +1138,8 @@ mod tests {
   "message": "",
   "labels": []
 }
-"###.to_string()
+"###
+        .to_string()
     }
 
     /// Returns the JSON object for a trait method with a body (capture: $TRAIT_METHOD_BODY / $TRAIT_METHOD_NAME / $TRAIT_BODY_WITH_METHOD / $TRAIT_NAME_WITH_METHOD).
@@ -1169,7 +1198,8 @@ mod tests {
   "message": "",
   "labels": []
 }
-"###.to_string()
+"###
+        .to_string()
     }
 
     /// Returns the JSON object for a type alias (capture: $TYPE_ALIAS_BODY / $TYPE_ALIAS_NAME).
@@ -1212,7 +1242,8 @@ mod tests {
   "message": "",
   "labels": []
 }
-"###.to_string()
+"###
+        .to_string()
     }
 
     /// Returns the JSON object for a named module (capture: $MOD_BODY / $MOD_NAME).
@@ -1255,7 +1286,8 @@ mod tests {
   "message": "",
   "labels": []
 }
-"###.to_string()
+"###
+        .to_string()
     }
 
     /// Returns the JSON object for an expression statement (capture: $EXPRESSION_STATEMENT).
@@ -1290,7 +1322,8 @@ mod tests {
   "message": "",
   "labels": []
 }
-"###.to_string()
+"###
+        .to_string()
     }
 
     /// Returns the JSON object for a use declaration (capture: $USE_DECLARATION).
@@ -1325,7 +1358,8 @@ mod tests {
   "message": "",
   "labels": []
 }
-"###.to_string()
+"###
+        .to_string()
     }
 
     /// Returns the JSON object for a macro definition (capture: $MACRO_DEFINITION_BODY / $MACRO_DEFINITION_NAME).
@@ -1368,7 +1402,8 @@ mod tests {
   "message": "",
   "labels": []
 }
-"###.to_string()
+"###
+        .to_string()
     }
 
     /// Returns the JSON object for a macro invocation (capture: $MACRO_INVOCATION).
@@ -1403,6 +1438,7 @@ mod tests {
   "message": "",
   "labels": []
 }
-"###.to_string()
+"###
+        .to_string()
     }
 }

@@ -1,8 +1,8 @@
 //syn_method.rs
 use crate::json_selection::unprocessed_elements::*;
 use crate::syn::syn_elements::*;
+use crate::syn::{FunctionSignature, ImplBody, ImplSignature, MethodBody, SynElement};
 use syntax_queries::RustParser;
-use crate::syn::{ImplBody, MethodBody};
 
 impl From<UnprocessedMethod> for SynMethod {
     fn from(u: UnprocessedMethod) -> Self {
@@ -29,36 +29,34 @@ impl From<UnprocessedMethod> for SynMethod {
 
 /// Extract the impl signature from an `ImplBody`.
 pub fn extract_impl_signature(impl_body: &ImplBody) -> ImplSignature {
-    let mut impl_signature: ImplSignature = String::new();
-
     match RustParser::new(&impl_body.text, "declaration_list") {
-        Ok(parser) => {
-            if let Some(sig) = parser.delete_node_till_end() {
-                impl_signature = sig.trim().to_string();
-            }
-        }
+        Ok(parser) => parser
+            .delete_node_till_end_as_match()
+            .map(|m| SynElement {
+                text: m.text,
+                range: m.range,
+            })
+            .unwrap_or_default(),
         Err(err_str) => {
             eprintln!("RustParser::new failed for impl_body: {}", err_str);
+            SynElement::default()
         }
     }
-
-    impl_signature
 }
 
 /// Extract the function signature from a `MethodBody`.
 pub fn extract_function_signature(method_body: &MethodBody) -> FunctionSignature {
-    let mut function_signature: FunctionSignature = String::new();
-
     match RustParser::new(&method_body.text, "block") {
-        Ok(parser) => {
-            if let Some(sig) = parser.delete_node_till_end() {
-                function_signature = sig.trim().to_string();
-            }
-        }
+        Ok(parser) => parser
+            .delete_node_till_end_as_match()
+            .map(|m| SynElement {
+                text: m.text,
+                range: m.range,
+            })
+            .unwrap_or_default(),
         Err(err_str) => {
             eprintln!("RustParser::new failed for method_body: {}", err_str);
+            SynElement::default()
         }
     }
-
-    function_signature
 }

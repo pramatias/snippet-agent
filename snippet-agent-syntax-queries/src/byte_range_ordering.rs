@@ -153,9 +153,7 @@ impl SynRange {
     pub fn merge(&self, other: &SynRange) -> SynRange {
         SynRange {
             byte_range: self.byte_range.merge(&other.byte_range),
-            characters_dimension: self
-                .characters_dimension
-                .merge(&other.characters_dimension),
+            characters_dimension: self.characters_dimension.merge(&other.characters_dimension),
         }
     }
 }
@@ -174,22 +172,59 @@ impl CharactersDimension {
     /// Produce a dimension that spans both inputs (earliest start, latest end).
     pub fn merge(&self, other: &CharactersDimension) -> CharactersDimension {
         // "earlier" start = smaller (line, column) pair
-        let start = if (self.start.line, self.start.column)
-            <= (other.start.line, other.start.column)
-        {
-            self.start.clone()
-        } else {
-            other.start.clone()
-        };
-
-        // "later" end = larger (line, column) pair
-        let end =
-            if (self.end.line, self.end.column) >= (other.end.line, other.end.column) {
-                self.end.clone()
+        let start =
+            if (self.start.line, self.start.column) <= (other.start.line, other.start.column) {
+                self.start.clone()
             } else {
-                other.end.clone()
+                other.start.clone()
             };
 
+        // "later" end = larger (line, column) pair
+        let end = if (self.end.line, self.end.column) >= (other.end.line, other.end.column) {
+            self.end.clone()
+        } else {
+            other.end.clone()
+        };
+
         CharactersDimension { start, end }
+    }
+}
+
+impl Default for SynPosition {
+    fn default() -> Self {
+        SynPosition { line: 0, column: 0 }
+    }
+}
+
+impl Default for ByteRange {
+    fn default() -> Self {
+        ByteRange { start: 0, end: 0 }
+    }
+}
+
+impl Default for CharactersDimension {
+    fn default() -> Self {
+        CharactersDimension {
+            start: SynPosition::default(),
+            end: SynPosition::default(),
+        }
+    }
+}
+
+impl Default for SynRange {
+    fn default() -> Self {
+        SynRange {
+            byte_range: ByteRange::default(),
+            characters_dimension: CharactersDimension::default(),
+        }
+    }
+}
+
+impl Default for NodeMatch {
+    fn default() -> Self {
+        NodeMatch {
+            text: String::new(),
+            range: SynRange::default(),
+        }
     }
 }

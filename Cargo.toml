@@ -31,6 +31,7 @@ walkdir = "2.5.0"
 syntax_queries = { package = "snippet-agent-syntax-queries", path = "snippet-agent-syntax-queries", version = "0.1.2" }
 
 directories = "6.0.0"
+indextree = "4.7.4"
 
 [dev-dependencies]
 tempfile = "3.10"

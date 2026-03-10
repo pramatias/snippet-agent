@@ -1,15 +1,12 @@
 //syn_attr.rs
-use crate::syn::syn_elements::SynAttribute;
-use crate::syn::file_syn_elements::FileSynElements;
-use syntax_queries::byte_range_ordering::HasByteRange;
 use crate::syn::file_syn_elements::AnyFileSynElement;
+use crate::syn::file_syn_elements::FileSynElements;
+use crate::syn::syn_elements::SynAttribute;
+use syntax_queries::byte_range_ordering::HasByteRange;
 
 ///merge_attrs
 impl SynAttribute {
-    pub fn merge_attrs(
-        attrs: Vec<SynAttribute>,
-        fse: &FileSynElements,
-    ) -> Vec<SynAttribute> {
+    pub fn merge_attrs(attrs: Vec<SynAttribute>, fse: &FileSynElements) -> Vec<SynAttribute> {
         let mut sorted = attrs;
         sorted.sort_by_key(|a| a.byte_range().start);
         let mut result: Vec<SynAttribute> = Vec::new();
@@ -49,5 +46,18 @@ impl SynAttribute {
             }
         }
         result
+    }
+}
+
+///merge with
+impl SynAttribute {
+    /// Produce a new `SynAttribute` whose body spans both `self` and `other`,
+    /// with `context` stored as the merged context lines.
+    pub fn merge_with(&self, other: &SynAttribute, context: &str) -> SynAttribute {
+        SynAttribute {
+            file: self.file.clone(),
+            attribute_body: self.attribute_body.merge(&other.attribute_body),
+            context_lines: context.to_string(),
+        }
     }
 }

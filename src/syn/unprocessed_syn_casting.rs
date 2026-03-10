@@ -1,9 +1,70 @@
 //unprocessed_syn_casting.rs
 use crate::json_selection::unprocessed_elements::*;
 use crate::syn::syn_elements::*;
+use crate::syn::syn_method::{extract_function_signature, extract_impl_signature};
 use std::collections::HashMap;
 
-// ── Macro: simple 1-to-1 field mapping (all fields must share names) ──────────
+///from_unprocessed
+impl AllSynElements {
+    pub fn from_unprocessed(
+        u: AllUnprocessedElements,
+        file_contents: &HashMap<String, String>,
+    ) -> Self {
+        Self {
+            syn_attributes: build_syn_attributes(u.unprocessed_attributes, file_contents),
+
+            // Pass-through collections (SynX = UnprocessedX type aliases)
+            syn_tests_mods: u.unprocessed_tests_mods,
+            syn_functions: u.unprocessed_functions,
+            syn_impls: u.unprocessed_impls,
+            syn_structs: u.unprocessed_structs,
+            syn_traits: u.unprocessed_traits,
+            syn_trait_method_sigs: u.unprocessed_trait_method_sigs,
+            syn_trait_method_defs: u.unprocessed_trait_method_defs,
+            syn_type_aliases: u.unprocessed_type_aliases,
+            syn_enums: u.unprocessed_enums,
+            syn_unions: u.unprocessed_unions,
+
+            // Enriched collections
+            syn_methods: u
+                .unprocessed_methods
+                .into_iter()
+                .map(SynMethod::from_unprocessed)
+                .collect(),
+
+            syn_mods: u
+                .unprocessed_mods
+                .into_iter()
+                .map(SynMod::from_unprocessed)
+                .collect(),
+
+            syn_expression_statements: u
+                .unprocessed_expression_statements
+                .into_iter()
+                .map(SynExpressionStatement::from_unprocessed)
+                .collect(),
+
+            syn_use_declarations: u
+                .unprocessed_use_declarations
+                .into_iter()
+                .map(SynUseDeclaration::from_unprocessed)
+                .collect(),
+
+            syn_macro_definitions: u
+                .unprocessed_macro_definitions
+                .into_iter()
+                .map(SynMacroDefinition::from_unprocessed)
+                .collect(),
+
+            syn_macro_invocations: u
+                .unprocessed_macro_invocations
+                .into_iter()
+                .map(SynMacroInvocation::from_unprocessed)
+                .collect(),
+        }
+    }
+}
+
 macro_rules! impl_unprocessed_to_syn {
     ($from:ty => $to:ty [$($field:ident),+ $(,)?]) => {
         impl $to {
@@ -22,109 +83,45 @@ impl_unprocessed_to_syn!(UnprocessedExpressionStatement => SynExpressionStatemen
 impl_unprocessed_to_syn!(UnprocessedUseDeclaration      => SynUseDeclaration      [use_body]);
 impl_unprocessed_to_syn!(UnprocessedMacroInvocation     => SynMacroInvocation     [invocation_body]);
 
-// ── SynMacroDefinition: field rename (macro_name → macro_definition_name) ────
-//
-// Cannot use the macro above because the field names differ between the two
-// structs.  UnprocessedMacroDefinition::macro_name maps to
-// SynMacroDefinition::macro_definition_name.
+///from unprocessed (field rename (macro_name → macro_definition_name))
 impl SynMacroDefinition {
     pub fn from_unprocessed(u: UnprocessedMacroDefinition) -> Self {
         Self {
-            file:                  u.file,
-            macro_definition_name: u.macro_name, // ← renamed field
-            macro_definition_body:            u.macro_body,
+            file: u.file,
+            macro_definition_name: u.macro_name,
+            macro_definition_body: u.macro_body,
         }
     }
 }
 
-// ── SynMethod: enrichment fields start empty / default ───────────────────────
+///from_unprocessed
 impl SynMethod {
     pub fn from_unprocessed(u: UnprocessedMethod) -> Self {
+        let impl_sig = extract_impl_signature(&u.impl_body);
+        let function_sig = extract_function_signature(&u.method_body);
+        let (type_ids, ds_name) = TypeIdentifiers::from_impl_signature(&impl_sig);
+        let ds = ds_name.unwrap_or_default();
+
         Self {
-            file:               u.file,
-            impl_body:          u.impl_body,
-            method_body:        u.method_body,
-            method_name:        u.method_name,
-            impl_signature:     String::new(),
-            function_signature: String::new(),
-            ds_structure:       String::new(),
-            type_identifiers:   TypeIdentifiers::default(),
+            file: u.file,
+            impl_body: u.impl_body,
+            method_body: u.method_body,
+            method_name: u.method_name,
+            impl_signature: impl_sig,
+            function_signature: function_sig,
+            ds_structure: ds,
+            type_identifiers: type_ids,
         }
     }
 }
 
-// ── SynAttribute: needs context_lines derived from surrounding file text ──────
+///from_unprocessed
 impl SynAttribute {
     pub fn from_unprocessed(u: UnprocessedAttribute, context: &str) -> Self {
         Self {
-            file:           u.file,
+            file: u.file,
             attribute_body: u.attribute_body,
-            context_lines:  context.to_string(),
-        }
-    }
-
-    /// Produce a new `SynAttribute` whose body spans both `self` and `other`,
-    /// with `context` stored as the merged context lines.
-    pub fn merge_with(&self, other: &SynAttribute, context: &str) -> SynAttribute {
-        SynAttribute {
-            file:           self.file.clone(),
-            attribute_body: self.attribute_body.merge(&other.attribute_body),
-            context_lines:  context.to_string(),
-        }
-    }
-}
-
-// ── AllSynElements ────────────────────────────────────────────────────────────
-impl AllSynElements {
-    pub fn from_unprocessed(
-        u: AllUnprocessedElements,
-        file_contents: &HashMap<String, String>,
-    ) -> Self {
-        Self {
-            syn_attributes: build_syn_attributes(u.unprocessed_attributes, file_contents),
-
-            // Pass-through collections (SynX = UnprocessedX type aliases)
-            syn_tests_mods:         u.unprocessed_tests_mods,
-            syn_functions:          u.unprocessed_functions,
-            syn_impls:              u.unprocessed_impls,
-            syn_structs:            u.unprocessed_structs,
-            syn_traits:             u.unprocessed_traits,
-            syn_trait_method_sigs:  u.unprocessed_trait_method_sigs,
-            syn_trait_method_defs:  u.unprocessed_trait_method_defs,
-            syn_type_aliases:       u.unprocessed_type_aliases,
-            syn_enums:              u.unprocessed_enums,
-            syn_unions:             u.unprocessed_unions,
-
-            // Enriched collections
-            syn_methods: u.unprocessed_methods
-                .into_iter()
-                .map(SynMethod::from_unprocessed)
-                .collect(),
-
-            syn_mods: u.unprocessed_mods
-                .into_iter()
-                .map(SynMod::from_unprocessed)
-                .collect(),
-
-            syn_expression_statements: u.unprocessed_expression_statements
-                .into_iter()
-                .map(SynExpressionStatement::from_unprocessed)
-                .collect(),
-
-            syn_use_declarations: u.unprocessed_use_declarations
-                .into_iter()
-                .map(SynUseDeclaration::from_unprocessed)
-                .collect(),
-
-            syn_macro_definitions: u.unprocessed_macro_definitions
-                .into_iter()
-                .map(SynMacroDefinition::from_unprocessed)
-                .collect(),
-
-            syn_macro_invocations: u.unprocessed_macro_invocations
-                .into_iter()
-                .map(SynMacroInvocation::from_unprocessed)
-                .collect(),
+            context_lines: context.to_string(),
         }
     }
 }
