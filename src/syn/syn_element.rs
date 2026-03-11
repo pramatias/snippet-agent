@@ -85,6 +85,11 @@ impl SynElement {
             .unwrap_or(false)
     }
 }
+pub trait HasPrimaryBody {
+    fn primary_body(&self) -> &SynElement;
+    fn into_primary_body(self) -> SynElement;
+}
+
 
 impl std::fmt::Display for SynElement {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {

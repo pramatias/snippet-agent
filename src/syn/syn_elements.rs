@@ -92,6 +92,28 @@ pub type SynUseDeclarations = Vec<SynUseDeclaration>;
 pub type SynMacroDefinitions = Vec<SynMacroDefinition>;
 pub type SynMacroInvocations = Vec<SynMacroInvocation>;
 
+macro_rules! impl_primary_body {
+    ($t:ty, $field:ident) => {
+        impl HasPrimaryBody for $t {
+            fn primary_body(&self) -> &SynElement { &self.$field }
+            fn into_primary_body(self) -> SynElement { self.$field }
+        }
+    };
+}
+
+impl_primary_body!(SynAttribute,                    attribute_body);
+impl_primary_body!(SynMethod,                       impl_body);
+impl_primary_body!(UnprocessedImpl,                 impl_body);
+impl_primary_body!(UnprocessedStruct,               struct_body);
+impl_primary_body!(UnprocessedTrait,                trait_body);
+impl_primary_body!(UnprocessedFunction,             function_body);
+impl_primary_body!(UnprocessedTestsMod,             tests_mod_body);
+impl_primary_body!(UnprocessedEnum,                 enum_body);
+impl_primary_body!(UnprocessedUnion,                union_body);
+impl_primary_body!(UnprocessedTypeAlias,            type_body);
+impl_primary_body!(UnprocessedTraitMethodSignature, trait_method_signature);
+impl_primary_body!(UnprocessedTraitMethodDefinition,trait_method_body);
+
 // ── Aggregate ─────────────────────────────────────────────────────────────────
 #[derive(Debug, Clone, Default)]
 pub struct AllSynElements {

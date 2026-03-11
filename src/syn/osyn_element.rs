@@ -3,6 +3,9 @@ use crate::syn::syn_element::SynElement;
 use serde::Deserialize;
 use std::sync::atomic::{AtomicU64, Ordering};
 use syntax_queries::byte_range_ordering::{ByteRange, HasByteRange};
+use crate::FilePath;
+use crate::syn::syn_elements::TypeIdentifiers;
+use crate::syn::syn_elements::DSName;
 
 static NEXT_OSYN_ID: AtomicU64 = AtomicU64::new(1);
 
@@ -51,6 +54,97 @@ pub type OsMacroDefinitionName = OsedSynElement;
 pub type OsMacroInvocationBody = OsedSynElement;
 pub type OsImplSignature = OsedSynElement;
 pub type OsFunctionSignature = OsedSynElement;
+
+#[derive(Debug, Clone)]
+pub struct OsedAttribute {
+    pub file: FilePath,
+    pub attribute_body: OsAttributeBody,
+    pub context_lines: String,
+}
+
+#[derive(Debug, Clone)]
+pub struct OsedMethod {
+    pub file: FilePath,
+    pub impl_body: OsMethodImplBody,
+    pub method_body: OsMethodBody,
+    pub method_name: OsMethodName,
+    pub impl_signature: OsImplSignature,
+    pub function_signature: OsFunctionSignature,
+    pub ds_structure: DSName,
+    pub type_identifiers: TypeIdentifiers,
+}
+
+#[derive(Debug, Clone)]
+pub struct OsedImpl {
+    pub file: FilePath,
+    pub impl_body: OsImplBody,
+}
+
+#[derive(Debug, Clone)]
+pub struct OsedStruct {
+    pub file: FilePath,
+    pub struct_body: OsStructBody,
+    pub struct_name: OsStructName,
+}
+
+#[derive(Debug, Clone)]
+pub struct OsedTrait {
+    pub file: FilePath,
+    pub trait_body: OsTraitBody,
+    pub trait_name: OsTraitName,
+}
+
+#[derive(Debug, Clone)]
+pub struct OsedFunction {
+    pub file: FilePath,
+    pub function_body: OsFunctionBody,
+    pub function_name: OsFunctionName,
+}
+
+#[derive(Debug, Clone)]
+pub struct OsedTestsMod {
+    pub file: FilePath,
+    pub tests_mod_body: OsTestsModBody,
+}
+
+#[derive(Debug, Clone)]
+pub struct OsedEnum {
+    pub file: FilePath,
+    pub enum_body: OsEnumBody,
+    pub enum_name: OsEnumName,
+}
+
+#[derive(Debug, Clone)]
+pub struct OsedUnion {
+    pub file: FilePath,
+    pub union_body: OsUnionBody,
+    pub union_name: OsUnionName,
+}
+
+#[derive(Debug, Clone)]
+pub struct OsedTypeAlias {
+    pub file: FilePath,
+    pub type_body: OsTypeAliasBody,
+    pub type_name: OsTypeAliasName,
+}
+
+#[derive(Debug, Clone)]
+pub struct OsedTraitMethodSig {
+    pub file: FilePath,
+    pub trait_method_signature: OsTraitMethodSignature,
+    pub method_signature_name: OsSignatureName,
+    pub trait_body: OsTraitBody,
+    pub trait_name: OsTraitName,
+}
+
+#[derive(Debug, Clone)]
+pub struct OsedTraitMethodDef {
+    pub file: FilePath,
+    pub trait_body: OsTraitBody,
+    pub trait_method_body: OsTraitMethodBody,
+    pub method_name: OsTraitMethodName,
+    pub trait_name: OsTraitName,
+}
 
 impl OsedSynElement {
     pub fn new(inner: SynElement) -> Self {

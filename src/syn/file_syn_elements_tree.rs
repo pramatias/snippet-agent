@@ -1,9 +1,8 @@
 // file_syn_elements_tree.rs
-use crate::AllSynElements;
-use crate::syn::FilePath;
+// use crate::AllSynElements;
+// use crate::syn::FilePath;
 use crate::syn::file_syn_elements::{AnyFileSynElement, FileSynElements};
 use indextree::{Arena, NodeId};
-use std::collections::BTreeMap;
 use syntax_queries::byte_range_ordering::HasByteRange;
 use std::collections::HashSet;
 
@@ -66,13 +65,19 @@ impl FileSynElementTree {
 
 ///remove_deeper_than
 impl FileSynElementTree {
-    pub fn remove_deeper_than(&mut self, max_depth: usize) {
+        pub fn remove_deeper_than(&mut self, max_depth: usize) {
+        // Collect only the *roots* of the excess region: nodes at exactly
+        // depth max_depth + 1.  remove_subtree already recurses into their
+        // children, so including deeper nodes would attempt a second
+        // remove_subtree on an already-removed node, which panics in
+        // indextree with "assertion failed: !parent_node.is_removed()".
         let to_remove: Vec<NodeId> = self
             .root
             .descendants(&self.arena)
             .skip(1)
-            .filter(|&id| self.arena[id].get().depth > max_depth)
+            .filter(|&id| self.arena[id].get().depth == max_depth + 1)
             .collect();
+
         for id in to_remove {
             id.remove_subtree(&mut self.arena);
         }

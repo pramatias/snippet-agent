@@ -1,10 +1,10 @@
 //all_syn_elements.rs
-use crate::AllSynElements;
-use crate::syn::FilePath;
-use crate::syn::file_syn_elements::AnyFileSynElement;
-// use crate::syn::syn_elements::{SynAttribute, SynMethod};
-use crate::FileSynElementTree;
-use std::collections::BTreeMap;
+// use crate::AllSynElements;
+// use crate::syn::FilePath;
+// use crate::syn::file_syn_elements::AnyFileSynElement;
+// // use crate::syn::syn_elements::{SynAttribute, SynMethod};
+// use crate::FileSynElementTree;
+// use std::collections::BTreeMap;
 
 // impl AllSynElements {
 //     pub fn from_file_syn_elements_map(map: FileSynElementsMap) -> Self {

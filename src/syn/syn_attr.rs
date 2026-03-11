@@ -8,20 +8,20 @@ use syntax_queries::byte_range_ordering::HasByteRange;
 impl SynAttribute {
     pub fn merge_attrs(attrs: Vec<SynAttribute>, fse: &FileSynElements) -> Vec<SynAttribute> {
         let mut sorted = attrs;
-        sorted.sort_by_key(|a| a.byte_range().start);
+        sorted.sort_by_key(|a| a.attribute_body.byte_range().start);
         let mut result: Vec<SynAttribute> = Vec::new();
         for current in sorted {
             let can_merge = result.last().map_or(false, |prev: &SynAttribute| {
                 let immediately_before = matches!(
-                    <AnyFileSynElement as HasByteRange>::immediate_before(&fse.elements, &current),
+                    <AnyFileSynElement as HasByteRange>::immediate_before(
+                        &fse.elements,
+                        &current.attribute_body,
+                    ),
                     Some(AnyFileSynElement::Attribute(_))
                 );
                 if !immediately_before {
                     return false;
                 }
-                // Only block if a *scope-creating* element contains `current`
-                // but not `prev`. Struct/union/enum bodies are excluded because
-                // their byte ranges can start mid-attribute-list.
                 !fse.elements.iter().any(|el| {
                     matches!(
                         el,
@@ -29,8 +29,8 @@ impl SynAttribute {
                             | AnyFileSynElement::Impl(_)
                             | AnyFileSynElement::Trait(_)
                             | AnyFileSynElement::Function(_)
-                    ) && el.byte_range().contains(current.byte_range())
-                        && !el.byte_range().contains(prev.byte_range())
+                    ) && el.byte_range().contains(current.attribute_body.byte_range())
+                        && !el.byte_range().contains(prev.attribute_body.byte_range())
                 })
             });
             if can_merge {
@@ -49,10 +49,8 @@ impl SynAttribute {
     }
 }
 
-///merge with
+///merge_with
 impl SynAttribute {
-    /// Produce a new `SynAttribute` whose body spans both `self` and `other`,
-    /// with `context` stored as the merged context lines.
     pub fn merge_with(&self, other: &SynAttribute, context: &str) -> SynAttribute {
         SynAttribute {
             file: self.file.clone(),
