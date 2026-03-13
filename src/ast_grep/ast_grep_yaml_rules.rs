@@ -63,9 +63,6 @@ rule:
             kind: identifier
             field: name
             pattern: $METHOD_NAME
-        - inside:
-            kind: source_file
-            stopBy: end
 
     # ------------------------------------------------------------
     # STRUCT (with captured name)
@@ -76,9 +73,6 @@ rule:
         - has:
             field: name
             pattern: $STRUCT_NAME
-        - inside:
-            kind: source_file
-            stopBy: end
 
     # ------------------------------------------------------------
     # METHOD SIGNATURES INSIDE TRAITS (no body)
@@ -98,9 +92,6 @@ rule:
               field: name
               kind: type_identifier
               pattern: $TRAIT_NAME_METHOD_SIGNATURE
-        - inside:
-            kind: source_file
-            stopBy: end
 
     # ------------------------------------------------------------
     # METHOD DEFINITIONS INSIDE TRAITS (with body)
@@ -120,9 +111,6 @@ rule:
               field: name
               kind: type_identifier
               pattern: $TRAIT_NAME_WITH_METHOD
-        - inside:
-            kind: source_file
-            stopBy: end
 
     # ------------------------------------------------------------
     # TRAIT DECLARATION (capture the trait itself)
@@ -134,9 +122,6 @@ rule:
             field: name
             kind: type_identifier
             pattern: $TRAIT_NAME
-        - inside:
-            kind: source_file
-            stopBy: end
 
     # ------------------------------------------------------------
     # TYPE ALIAS (type_item with its identifier)
@@ -148,9 +133,6 @@ rule:
             kind: type_identifier
             field: name
             pattern: $TYPE_ALIAS_NAME
-        - inside:
-            kind: source_file
-            stopBy: end
 
     # ------------------------------------------------------------
     # ENUM ITEM (capture the enum and its name)
@@ -161,9 +143,6 @@ rule:
       - has:
           kind: type_identifier
           pattern: $ENUM_NAME
-      - inside:
-          kind: source_file
-          stopBy: end
 
     # ------------------------------------------------------------
     # UNION ITEM (capture the union and its name)
@@ -175,9 +154,6 @@ rule:
           kind: type_identifier
           field: name
           pattern: $UNION_NAME
-      - inside:
-          kind: source_file
-          stopBy: end
 
     # ------------------------------------------------------------
     # MOD ITEM with identifier "tests"
@@ -189,9 +165,6 @@ rule:
             kind: identifier
             field: name
             regex: ^tests$
-        - inside:
-            kind: source_file
-            stopBy: end
 
     # ------------------------------------------------------------
     # FREE / TOP-LEVEL FUNCTION (function_item)
@@ -203,9 +176,6 @@ rule:
             kind: identifier
             field: name
             pattern: $FUNCTION_NAME
-        - inside:
-            kind: source_file
-            stopBy: end
 
     # ------------------------------------------------------------
     # ALL IMPL BLOCKS
@@ -213,9 +183,6 @@ rule:
     - all:
         - kind: impl_item
           pattern: $IMPL_BODY
-        - inside:
-            kind: source_file
-            stopBy: end
 
     # ------------------------------------------------------------
     # ATTRIBUTE ITEMS
@@ -223,9 +190,6 @@ rule:
     - all:
         - kind: attribute_item
           pattern: $ATTRIBUTES
-        - inside:
-            kind: source_file
-            stopBy: end
 
     # ------------------------------------------------------------
     # MOD ITEM (general — any named module)
@@ -237,9 +201,6 @@ rule:
             kind: identifier
             field: name
             pattern: $MOD_NAME
-        - inside:
-            kind: source_file
-            stopBy: end
 
     # ------------------------------------------------------------
     # EXPRESSION STATEMENT
@@ -247,9 +208,6 @@ rule:
     - all:
         - kind: expression_statement
           pattern: $EXPRESSION_STATEMENT
-        - inside:
-            kind: source_file
-            stopBy: end
 
     # ------------------------------------------------------------
     # USE DECLARATION
@@ -257,9 +215,6 @@ rule:
     - all:
         - kind: use_declaration
           pattern: $USE_DECLARATION
-        - inside:
-            kind: source_file
-            stopBy: end
 
     # ------------------------------------------------------------
     # MACRO DEFINITION
@@ -271,9 +226,6 @@ rule:
             kind: identifier
             field: name
             pattern: $MACRO_DEFINITION_NAME
-        - inside:
-            kind: source_file
-            stopBy: end
 
     # ------------------------------------------------------------
     # MACRO INVOCATION
@@ -283,7 +235,5 @@ rule:
           pattern: $MACRO_INVOCATION
         - inside:
             kind: expression_statement
-            inside:
-              kind: source_file
 
 "#;

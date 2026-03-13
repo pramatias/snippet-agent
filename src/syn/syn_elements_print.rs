@@ -1,19 +1,36 @@
 //syn_elements_print.rs
 use crate::syn::SynElement;
+use crate::syn::SynElementWithText;
 use crate::syn::syn_elements::*;
+use std::collections::HashMap;
+use std::sync::Arc;
 
 fn print_header(label: &str, count: usize) {
     println!("\n=== {label} ({count}) ===");
 }
 
-fn print_syn_element(label: &str, el: &SynElement, indent: usize) {
+fn print_syn_element(label: &str, el: &SynElement, file_content: &str, indent: usize) {
     let pad = "  ".repeat(indent);
-    let preview = el.text.lines().take(2).collect::<Vec<_>>().join("\n");
+    let preview = el
+        .text(file_content)
+        .lines()
+        .take(2)
+        .collect::<Vec<_>>()
+        .join("\n");
     println!("{pad}{label}:");
     println!("{pad}  preview: {:?}", preview);
 }
 
-// ── Macro for uniform single-field or multi-field collections ─────────────────
+fn print_syn_element_with_text(label: &str, el: &SynElementWithText, indent: usize) {
+    let pad = "  ".repeat(indent);
+    let preview = el.text_str().lines().take(2).collect::<Vec<_>>().join("\n");
+    println!("{pad}{label}:");
+    println!("{pad}  preview: {:?}", preview);
+}
+
+fn content<'a>(file_contents: &'a HashMap<Arc<str>, String>, file: &str) -> &'a str {
+    file_contents.get(file).map(String::as_str).unwrap_or("")
+}
 
 macro_rules! impl_print_syn_collection {
     (
@@ -21,32 +38,29 @@ macro_rules! impl_print_syn_collection {
             $( $el:ident ),+ $(,)?
         }
     ) => {
-        pub fn $method_name(&self) {
+        pub fn $method_name(&self, file_contents: &HashMap<Arc<str>, String>) {
             print_header(stringify!($field), self.$field.len());
             for (i, item) in self.$field.iter().enumerate() {
                 println!("  [{i}] file: {}", item.file);
-                $( print_syn_element(stringify!($el), &item.$el, 2); )+
+                let fc = content(file_contents, &item.file);
+                $( print_syn_element(stringify!($el), &item.$el, fc, 2); )+
             }
         }
     };
 }
 
-// ── AllSynElements print methods ──────────────────────────────────────────────
-
+///print
 impl AllSynElements {
     impl_print_syn_collection!(print_attributes => syn_attributes {
         attribute_body,
     });
-
     impl_print_syn_collection!(print_tests_mods => syn_tests_mods {
         tests_mod_body,
     });
-
     impl_print_syn_collection!(print_functions => syn_functions {
         function_name,
         function_body,
     });
-
     impl_print_syn_collection!(print_structs => syn_structs {
         struct_name,
         struct_body,
@@ -103,34 +117,38 @@ impl AllSynElements {
         invocation_body,
     });
 
-    pub fn print_impls(&self) {
+    // In print_impls:
+    pub fn print_impls(&self, file_contents: &HashMap<Arc<str>, String>) {
         print_header("syn_impls", self.syn_impls.len());
         for (i, imp) in self.syn_impls.iter().enumerate() {
             println!("  [{i}] file: {}", imp.file);
-            print_syn_element("impl_body", &imp.impl_body, 2);
+            print_syn_element_with_text("impl_body", &imp.impl_body, 2);
         }
     }
 
-    pub fn print_methods(&self) {
+    // In print_methods:
+    pub fn print_methods(&self, file_contents: &HashMap<Arc<str>, String>) {
         print_header("syn_methods", self.syn_methods.len());
         for (i, m) in self.syn_methods.iter().enumerate() {
             println!("  [{i}] file: {}", m.file);
-            println!("    impl_signature:     {}", m.impl_signature);
+            let fc = content(file_contents, &m.file);
+            println!("    impl_signature:     {}", m.impl_signature.text(fc));
             println!("    ds_structure:       {}", m.ds_structure);
-            println!("    function_signature: {}", m.function_signature);
+            println!("    function_signature: {}", m.function_signature.text(fc));
             Self::print_type_identifiers(&m.type_identifiers);
-            print_syn_element("method_name", &m.method_name, 2);
-            print_syn_element("impl_body", &m.impl_body, 2);
-            print_syn_element("method_body", &m.method_body, 2);
+            print_syn_element("method_name", &m.method_name, fc, 2);
+            print_syn_element_with_text("impl_body", &m.impl_body, 2); // no fc
+            print_syn_element("method_body", &m.method_body, fc, 2);
         }
     }
 
-    pub fn print_mods(&self) {
+    pub fn print_mods(&self, file_contents: &HashMap<Arc<str>, String>) {
         print_header("syn_mods", self.syn_mods.len());
         for (i, m) in self.syn_mods.iter().enumerate() {
             println!("  [{i}] file: {}", m.file);
-            print_syn_element("mod_name", &m.mod_name, 2);
-            print_syn_element("mod_body", &m.mod_body, 2);
+            let fc = content(file_contents, &m.file);
+            print_syn_element("mod_name", &m.mod_name, fc, 2);
+            print_syn_element("mod_body", &m.mod_body, fc, 2);
         }
     }
 

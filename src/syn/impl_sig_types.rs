@@ -626,6 +626,9 @@ impl TypeIdentifiers {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::syn::impl_sig_types::byte_range_ordering::ByteRange;
+    use crate::syn::impl_sig_types::byte_range_ordering::CharactersDimension;
+    use crate::syn::impl_sig_types::byte_range_ordering::SynRange;
 
     fn make_node(text: &str, start: u64, end: u64) -> NodeMatch {
         NodeMatch {

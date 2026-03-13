@@ -3,9 +3,9 @@ use crate::json_selection::unprocessed_elements::*;
 use crate::syn::syn_element::*;
 use serde::Deserialize;
 use std::collections::{HashMap, HashSet};
+use std::sync::Arc;
 
-// ── Type enrichment types (only needed at the syn layer) ──────────────────────
-pub type AttributeContextLines = String;
+// ── Type enrichment types ─────────────────────────────────────────────────────
 pub type DSName = String;
 pub type TypeVariable = String;
 pub type ConcreteType = String;
@@ -19,23 +19,26 @@ pub struct TypeIdentifiers {
     pub concrete_types: Option<CTypeSet>,
 }
 
-// ── Pass-through aliases (unprocessed = syn for these types) ──────────────────
-pub type SynTestsMods = UnprocessedTestsMods;
-pub type SynFunctions = UnprocessedFunctions;
-pub type SynStructs = UnprocessedStructs;
-pub type SynTraits = UnprocessedTraits;
-pub type SynTraitMethodSigs = UnprocessedTraitMethodSigs;
-pub type SynTraitMethodDefs = UnprocessedTraitMethodDefs;
-pub type SynTypeAliases = UnprocessedTypeAliases;
-pub type SynEnums = UnprocessedEnums;
-pub type SynUnions = UnprocessedUnions;
-pub type SynImpls = UnprocessedImpls;
+// ── Pass-through aliases ──────────────────────────────────────────────────────
+pub type SynTestsMods = Vec<Arc<UnprocessedTestsMod>>;
+pub type SynFunctions = Vec<Arc<UnprocessedFunction>>;
+pub type SynStructs = Vec<Arc<UnprocessedStruct>>;
+pub type SynTraits = Vec<Arc<UnprocessedTrait>>;
+pub type SynTraitMethodSigs = Vec<Arc<UnprocessedTraitMethodSignature>>;
+pub type SynTraitMethodDefs = Vec<Arc<UnprocessedTraitMethodDefinition>>;
+pub type SynTypeAliases = Vec<Arc<UnprocessedTypeAlias>>;
+pub type SynEnums = Vec<Arc<UnprocessedEnum>>;
+pub type SynUnions = Vec<Arc<UnprocessedUnion>>;
+pub type SynImpls = Vec<Arc<UnprocessedImpl>>;
 
 // ── Enriched syn structs ──────────────────────────────────────────────────────
-#[derive(Debug, Deserialize, Clone)]
+
+// Deserialize intentionally omitted: impl_body is SynElementWithText which
+// is constructed from AST grep output, not deserialized from JSON.
+#[derive(Debug, Clone)]
 pub struct SynMethod {
     pub file: FilePath,
-    pub impl_body: MethodImplBody,
+    pub impl_body: MethodImplBody, // SynElementWithText
     pub method_body: MethodBody,
     pub method_name: MethodName,
     pub impl_signature: ImplSignature,
@@ -48,7 +51,6 @@ pub struct SynMethod {
 pub struct SynAttribute {
     pub file: FilePath,
     pub attribute_body: AttributeBody,
-    pub context_lines: AttributeContextLines,
 }
 
 #[derive(Debug, Deserialize, Clone)]
@@ -84,35 +86,64 @@ pub struct SynMacroInvocation {
 }
 
 // ── Collection aliases ────────────────────────────────────────────────────────
-pub type SynMethods = Vec<SynMethod>;
-pub type SynAttributes = Vec<SynAttribute>;
-pub type SynMods = Vec<SynMod>;
-pub type SynExpressionStatements = Vec<SynExpressionStatement>;
-pub type SynUseDeclarations = Vec<SynUseDeclaration>;
-pub type SynMacroDefinitions = Vec<SynMacroDefinition>;
-pub type SynMacroInvocations = Vec<SynMacroInvocation>;
+pub type SynMethods = Vec<Arc<SynMethod>>;
+pub type SynAttributes = Vec<Arc<SynAttribute>>;
+pub type SynMods = Vec<Arc<SynMod>>;
+pub type SynExpressionStatements = Vec<Arc<SynExpressionStatement>>;
+pub type SynUseDeclarations = Vec<Arc<SynUseDeclaration>>;
+pub type SynMacroDefinitions = Vec<Arc<SynMacroDefinition>>;
+pub type SynMacroInvocations = Vec<Arc<SynMacroInvocation>>;
 
+// ── HasPrimaryBody — for range-only SynElement fields ────────────────────────
 macro_rules! impl_primary_body {
     ($t:ty, $field:ident) => {
         impl HasPrimaryBody for $t {
-            fn primary_body(&self) -> &SynElement { &self.$field }
-            fn into_primary_body(self) -> SynElement { self.$field }
+            fn primary_body(&self) -> &SynElement {
+                &self.$field
+            }
+            fn into_primary_body(self) -> SynElement {
+                self.$field
+            }
         }
     };
 }
 
-impl_primary_body!(SynAttribute,                    attribute_body);
-impl_primary_body!(SynMethod,                       impl_body);
-impl_primary_body!(UnprocessedImpl,                 impl_body);
-impl_primary_body!(UnprocessedStruct,               struct_body);
-impl_primary_body!(UnprocessedTrait,                trait_body);
-impl_primary_body!(UnprocessedFunction,             function_body);
-impl_primary_body!(UnprocessedTestsMod,             tests_mod_body);
-impl_primary_body!(UnprocessedEnum,                 enum_body);
-impl_primary_body!(UnprocessedUnion,                union_body);
-impl_primary_body!(UnprocessedTypeAlias,            type_body);
+impl_primary_body!(SynAttribute, attribute_body);
+impl_primary_body!(UnprocessedStruct, struct_body);
+impl_primary_body!(UnprocessedTrait, trait_body);
+impl_primary_body!(UnprocessedFunction, function_body);
+impl_primary_body!(UnprocessedTestsMod, tests_mod_body);
+impl_primary_body!(UnprocessedEnum, enum_body);
+impl_primary_body!(UnprocessedUnion, union_body);
+impl_primary_body!(UnprocessedTypeAlias, type_body);
 impl_primary_body!(UnprocessedTraitMethodSignature, trait_method_signature);
-impl_primary_body!(UnprocessedTraitMethodDefinition,trait_method_body);
+impl_primary_body!(UnprocessedTraitMethodDefinition, trait_method_body);
+
+// ── HasPrimaryBodyWithText — for SynElementWithText impl_body fields ─────────
+//
+// SynMethod and UnprocessedImpl carry their impl text inside the body itself
+// (captured at AST grep time) so they cannot satisfy HasPrimaryBody whose
+// return type is &SynElement.  Use this trait instead when the text is needed.
+pub trait HasPrimaryBodyWithText {
+    fn primary_body_with_text(&self) -> &SynElementWithText;
+    fn into_primary_body_with_text(self) -> SynElementWithText;
+}
+
+macro_rules! impl_primary_body_with_text {
+    ($t:ty, $field:ident) => {
+        impl HasPrimaryBodyWithText for $t {
+            fn primary_body_with_text(&self) -> &SynElementWithText {
+                &self.$field
+            }
+            fn into_primary_body_with_text(self) -> SynElementWithText {
+                self.$field
+            }
+        }
+    };
+}
+
+impl_primary_body_with_text!(SynMethod, impl_body);
+impl_primary_body_with_text!(UnprocessedImpl, impl_body);
 
 // ── Aggregate ─────────────────────────────────────────────────────────────────
 #[derive(Debug, Clone, Default)]
@@ -306,33 +337,6 @@ pub struct UnprocessedMacroInvocation {
 //byte_range_ordering.rs
 use serde::Deserialize;
 
-macro_rules! filter_range_all {
-    ($method:ident, $items:expr, $divider:expr) => {
-        $items
-            .iter()
-            .filter(|item| item.$method($divider))
-            .collect()
-    };
-}
-
-macro_rules! filter_range_immediate {
-    ($method:ident, $extremum:ident, $key:ident, $items:expr, $limit:expr) => {
-        $items
-            .iter()
-            .filter(|item| item.$method($limit))
-            .$extremum(|item| item.byte_range().$key)
-    };
-}
-
-macro_rules! filter_range_contained {
-    ($extremum:ident, $items:expr, $container:expr) => {
-        $items
-            .iter()
-            .filter(|item| $container.contains(*item))
-            .$extremum(|item| item.byte_range().start)
-    };
-}
-
 pub trait HasByteRange {
     fn byte_range(&self) -> &ByteRange;
 
@@ -346,38 +350,75 @@ pub trait HasByteRange {
         self.byte_range().contains(other.byte_range())
     }
 
+    /// All items whose range ends at or before `divider` starts.
     fn before_all<'a, T: HasByteRange>(items: &'a [T], divider: &impl HasByteRange) -> Vec<&'a T> {
-        filter_range_all!(before, items, divider)
-    }
-    fn after_all<'a, T: HasByteRange>(items: &'a [T], divider: &impl HasByteRange) -> Vec<&'a T> {
-        filter_range_all!(after, items, divider)
+        let divider_start = divider.byte_range().start;
+        // Items with start >= divider_start have end >= start >= divider_start,
+        // so they can never satisfy `end <= divider_start`.
+        let hi = items.partition_point(|x| x.byte_range().start < divider_start);
+        items[..hi]
+            .iter()
+            .filter(|x| x.byte_range().end <= divider_start)
+            .collect()
     }
 
+    /// All items whose range starts at or after `divider` ends.
+    fn after_all<'a, T: HasByteRange>(items: &'a [T], divider: &impl HasByteRange) -> Vec<&'a T> {
+        let divider_end = divider.byte_range().end;
+        let lo = items.partition_point(|x| x.byte_range().start < divider_end);
+        items[lo..].iter().collect()
+    }
+
+    /// The item immediately before `limit` (ends earliest while still before `limit`).
     fn immediate_before<'a, T: HasByteRange>(
         items: &'a [T],
         limit: &impl HasByteRange,
     ) -> Option<&'a T> {
-        filter_range_immediate!(before, max_by_key, end, items, limit)
+        let limit_start = limit.byte_range().start;
+        let hi = items.partition_point(|x| x.byte_range().start < limit_start);
+        items[..hi]
+            .iter()
+            .filter(|x| x.byte_range().end <= limit_start)
+            .max_by_key(|x| x.byte_range().end)
     }
+
+    /// The item immediately after `limit` (starts latest while still after `limit`).
     fn immediate_after<'a, T: HasByteRange>(
         items: &'a [T],
         limit: &impl HasByteRange,
     ) -> Option<&'a T> {
-        filter_range_immediate!(after, min_by_key, start, items, limit)
+        let limit_end = limit.byte_range().end;
+        let lo = items.partition_point(|x| x.byte_range().start < limit_end);
+        // Slice is sorted by start, so the first element at `lo` has the minimum start.
+        items.get(lo)
     }
 
+    /// The first (earliest-start) item fully contained within `container`.
     fn first_contained<'a, T: HasByteRange>(
         items: &'a [T],
         container: &impl HasByteRange,
     ) -> Option<&'a T> {
-        filter_range_contained!(min_by_key, items, container)
+        let range = container.byte_range();
+        let lo = items.partition_point(|x| x.byte_range().start < range.start);
+        items[lo..]
+            .iter()
+            // Once start exceeds container.end nothing further can be contained.
+            .take_while(|x| x.byte_range().start <= range.end)
+            .find(|x| x.byte_range().end <= range.end)
     }
 
+    /// The last (latest-start) item fully contained within `container`.
     fn last_contained<'a, T: HasByteRange>(
         items: &'a [T],
         container: &impl HasByteRange,
     ) -> Option<&'a T> {
-        filter_range_contained!(max_by_key, items, container)
+        let range = container.byte_range();
+        let lo = items.partition_point(|x| x.byte_range().start < range.start);
+        let hi = items.partition_point(|x| x.byte_range().start <= range.end);
+        items[lo..hi]
+            .iter()
+            .filter(|x| x.byte_range().end <= range.end)
+            .last()
     }
 }
 

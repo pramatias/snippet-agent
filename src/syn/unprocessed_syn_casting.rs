@@ -1,174 +1,248 @@
 //unprocessed_syn_casting.rs
+use crate::json_selection::raw_elements::*;
 use crate::json_selection::unprocessed_elements::*;
+use crate::syn::syn_element::*;
 use crate::syn::syn_elements::*;
-use crate::syn::syn_method::{extract_function_signature, extract_impl_signature};
+use std::sync::Arc;
+
 use std::collections::HashMap;
 
 ///from_unprocessed
 impl AllSynElements {
+    /// Build an `AllSynElements` from the raw deserialized layer.
+    ///
+    /// Pass-through collections (whose `Syn*` aliases ARE `Vec<Arc<Unprocessed*>>`)
+    /// are just wrapped in `Arc`.  Enriched structs (`SynMethod`, `SynAttribute`,
+    /// etc.) are constructed field-by-field; fields that require a later
+    /// enrichment pass (signatures, `ds_structure`, `type_identifiers`) are
+    /// left at their `Default`.
+    ///
+    /// `file_contents` is not consumed here — impl text was captured directly
+    /// from the AST grep output into `SynElementWithText` and needs no
+    /// file-contents lookup at this stage. It is retained as a parameter
+    /// because the enrichment pass that fills `impl_signature`,
+    /// `function_signature`, and `type_identifiers` will need it.
     pub fn from_unprocessed(
-        u: AllUnprocessedElements,
-        file_contents: &HashMap<String, String>,
+        all: AllUnprocessedElements,
+        file_contents: &HashMap<FilePath, String>,
     ) -> Self {
-        Self {
-            syn_attributes: build_syn_attributes(u.unprocessed_attributes, file_contents),
+        let mut out = AllSynElements::default();
 
-            // Pass-through collections (SynX = UnprocessedX type aliases)
-            syn_tests_mods: u.unprocessed_tests_mods,
-            syn_functions: u.unprocessed_functions,
-            syn_impls: u.unprocessed_impls,
-            syn_structs: u.unprocessed_structs,
-            syn_traits: u.unprocessed_traits,
-            syn_trait_method_sigs: u.unprocessed_trait_method_sigs,
-            syn_trait_method_defs: u.unprocessed_trait_method_defs,
-            syn_type_aliases: u.unprocessed_type_aliases,
-            syn_enums: u.unprocessed_enums,
-            syn_unions: u.unprocessed_unions,
+        // ── Pass-through: Syn* == Vec<Arc<Unprocessed*>> ─────────────────────
+        out.syn_tests_mods = all
+            .unprocessed_tests_mods
+            .into_iter()
+            .map(Arc::new)
+            .collect();
+        out.syn_functions = all
+            .unprocessed_functions
+            .into_iter()
+            .map(Arc::new)
+            .collect();
+        out.syn_structs = all.unprocessed_structs.into_iter().map(Arc::new).collect();
+        out.syn_traits = all.unprocessed_traits.into_iter().map(Arc::new).collect();
+        out.syn_trait_method_sigs = all
+            .unprocessed_trait_method_sigs
+            .into_iter()
+            .map(Arc::new)
+            .collect();
+        out.syn_trait_method_defs = all
+            .unprocessed_trait_method_defs
+            .into_iter()
+            .map(Arc::new)
+            .collect();
+        out.syn_type_aliases = all
+            .unprocessed_type_aliases
+            .into_iter()
+            .map(Arc::new)
+            .collect();
+        out.syn_enums = all.unprocessed_enums.into_iter().map(Arc::new).collect();
+        out.syn_unions = all.unprocessed_unions.into_iter().map(Arc::new).collect();
+        // impl_body is SynElementWithText — text was captured at extraction
+        // time and moves through here without a file-contents lookup.
+        out.syn_impls = all.unprocessed_impls.into_iter().map(Arc::new).collect();
 
-            // Enriched collections
-            syn_methods: u
-                .unprocessed_methods
-                .into_iter()
-                .map(SynMethod::from_unprocessed)
-                .collect(),
+        // ── Enriched: build from unprocessed fields ───────────────────────────
+        out.syn_attributes = all
+            .unprocessed_attributes
+            .into_iter()
+            .map(|a| {
+                Arc::new(SynAttribute {
+                    file: a.file,
+                    attribute_body: a.attribute_body,
+                })
+            })
+            .collect();
 
-            syn_mods: u
-                .unprocessed_mods
-                .into_iter()
-                .map(SynMod::from_unprocessed)
-                .collect(),
+        // impl_body is SynElementWithText and moves directly into SynMethod.
+        // Enrichment fields (impl_signature, function_signature, ds_structure,
+        // type_identifiers) are unknown at this stage; filled by a later pass.
+        out.syn_methods = all
+    .unprocessed_methods
+    .into_iter()
+    .map(|m| {
+        let file_content = file_contents
+            .get(&m.file)
+            .map(String::as_str)
+            .unwrap_or("");
+        Arc::new(SynMethod::from_unprocessed(m, file_content))
+    })
+    .collect();
 
-            syn_expression_statements: u
-                .unprocessed_expression_statements
-                .into_iter()
-                .map(SynExpressionStatement::from_unprocessed)
-                .collect(),
+        out.syn_mods = all
+            .unprocessed_mods
+            .into_iter()
+            .map(|m| {
+                Arc::new(SynMod {
+                    file: m.file,
+                    mod_name: m.mod_name,
+                    mod_body: m.mod_body,
+                })
+            })
+            .collect();
 
-            syn_use_declarations: u
-                .unprocessed_use_declarations
-                .into_iter()
-                .map(SynUseDeclaration::from_unprocessed)
-                .collect(),
+        out.syn_expression_statements = all
+            .unprocessed_expression_statements
+            .into_iter()
+            .map(|e| {
+                Arc::new(SynExpressionStatement {
+                    file: e.file,
+                    expression_body: e.expression_body,
+                })
+            })
+            .collect();
 
-            syn_macro_definitions: u
-                .unprocessed_macro_definitions
-                .into_iter()
-                .map(SynMacroDefinition::from_unprocessed)
-                .collect(),
+        out.syn_use_declarations = all
+            .unprocessed_use_declarations
+            .into_iter()
+            .map(|u| {
+                Arc::new(SynUseDeclaration {
+                    file: u.file,
+                    use_body: u.use_body,
+                })
+            })
+            .collect();
 
-            syn_macro_invocations: u
-                .unprocessed_macro_invocations
-                .into_iter()
-                .map(SynMacroInvocation::from_unprocessed)
-                .collect(),
-        }
+        out.syn_macro_definitions = all
+            .unprocessed_macro_definitions
+            .into_iter()
+            .map(|m| {
+                Arc::new(SynMacroDefinition {
+                    file: m.file,
+                    macro_definition_name: m.macro_name,
+                    macro_definition_body: m.macro_body,
+                })
+            })
+            .collect();
+
+        out.syn_macro_invocations = all
+            .unprocessed_macro_invocations
+            .into_iter()
+            .map(|m| {
+                Arc::new(SynMacroInvocation {
+                    file: m.file,
+                    invocation_body: m.invocation_body,
+                })
+            })
+            .collect();
+
+        out
     }
 }
 
-macro_rules! impl_unprocessed_to_syn {
-    ($from:ty => $to:ty [$($field:ident),+ $(,)?]) => {
-        impl $to {
-            pub fn from_unprocessed(u: $from) -> Self {
+macro_rules! impl_from_selection {
+    ($from:ty => $to:ty {
+        $( $field:ident : $wrapper:ident { $source_range:ident } ),+ $(,)?
+    }) => {
+        impl From<$from> for $to {
+            fn from(s: $from) -> Self {
                 Self {
-                    file: u.file,
-                    $($field: u.$field,)+
+                    file: s.file.into(),
+                    $(
+                        $field: $wrapper::new(s.$source_range),
+                    )+
                 }
             }
         }
     };
 }
 
-impl_unprocessed_to_syn!(UnprocessedMod                 => SynMod                 [mod_name, mod_body]);
-impl_unprocessed_to_syn!(UnprocessedExpressionStatement => SynExpressionStatement [expression_body]);
-impl_unprocessed_to_syn!(UnprocessedUseDeclaration      => SynUseDeclaration      [use_body]);
-impl_unprocessed_to_syn!(UnprocessedMacroInvocation     => SynMacroInvocation     [invocation_body]);
+impl_from_selection!(TraitMethodDefinitionSelection => UnprocessedTraitMethodDefinition {
+    trait_body:        TraitBody       { trait_body_range   },
+    trait_method_body: TraitMethodBody { method_body_range  },
+    method_name:       TraitMethodName { method_name_range  },
+    trait_name:        TraitName       { trait_name_range   },
+});
+impl_from_selection!(TypeAliasSelection => UnprocessedTypeAlias {
+    type_body: TypeAliasBody { body_range },
+    type_name: TypeAliasName { name_range },
+});
+impl_from_selection!(EnumSelection => UnprocessedEnum {
+    enum_body: EnumBody { enum_body_range },
+    enum_name: EnumName { enum_name_range },
+});
+impl_from_selection!(UnionSelection => UnprocessedUnion {
+    union_body: UnionBody { union_body_range },
+    union_name: UnionName { union_name_range },
+});
+impl_from_selection!(TestsModSelection => UnprocessedTestsMod {
+    tests_mod_body: TestsModBody { range },
+});
+impl_from_selection!(FunctionSelection => UnprocessedFunction {
+    function_body: FunctionBody { body_range },
+    function_name: FunctionName { name_range },
+});
+impl_from_selection!(TraitSelection => UnprocessedTrait {
+    trait_body: TraitBody { trait_body_range },
+    trait_name: TraitName { trait_name_range },
+});
+impl_from_selection!(TraitMethodSignatureSelection => UnprocessedTraitMethodSignature {
+    trait_method_signature: TraitMethodSignature { signature_range       },
+    method_signature_name:  SignatureName        { signature_name_range  },
+    trait_body:             TraitBody            { enclosing_trait_range },
+    trait_name:             TraitName            { trait_name_range      },
+});
+impl_from_selection!(AttributeSelection => UnprocessedAttribute {
+    attribute_body: AttributeBody { range },
+});
+impl_from_selection!(StructSelection => UnprocessedStruct {
+    struct_body: StructBody { body_range },
+    struct_name: StructName { name_range },
+});
+impl_from_selection!(ModSelection => UnprocessedMod {
+    mod_body: ModBody { mod_body_range },
+    mod_name: ModName { mod_name_range },
+});
+impl_from_selection!(ExpressionStatementSelection => UnprocessedExpressionStatement {
+    expression_body: ExpressionStatementBody { expression_range },
+});
+impl_from_selection!(UseDeclarationSelection => UnprocessedUseDeclaration {
+    use_body: UseDeclarationBody { use_range },
+});
+impl_from_selection!(MacroDefinitionSelection => UnprocessedMacroDefinition {
+    macro_body: MacroDefinitionBody { macro_body_range },
+    macro_name: MacroDefinitionName { macro_name_range },
+});
+impl_from_selection!(MacroInvocationSelection => UnprocessedMacroInvocation {
+    invocation_body: MacroInvocationBody { invocation_range },
+});
 
-///from unprocessed (field rename (macro_name → macro_definition_name))
-impl SynMacroDefinition {
-    pub fn from_unprocessed(u: UnprocessedMacroDefinition) -> Self {
+impl From<MethodSelection> for UnprocessedMethod {
+    fn from(s: MethodSelection) -> Self {
         Self {
-            file: u.file,
-            macro_definition_name: u.macro_name,
-            macro_definition_body: u.macro_body,
+            file: s.file.into(),
+            impl_body: SynElementWithText::new(s.impl_range.into(), s.impl_text),
+            method_body: MethodBody::new(s.body_range),
+            method_name: MethodName::new(s.name_range),
         }
     }
 }
 
-///from_unprocessed
-impl SynMethod {
-    pub fn from_unprocessed(u: UnprocessedMethod) -> Self {
-        let impl_sig = extract_impl_signature(&u.impl_body);
-        let function_sig = extract_function_signature(&u.method_body);
-        let (type_ids, ds_name) = TypeIdentifiers::from_impl_signature(&impl_sig);
-        let ds = ds_name.unwrap_or_default();
-
+impl From<ImplSelection> for UnprocessedImpl {
+    fn from(s: ImplSelection) -> Self {
         Self {
-            file: u.file,
-            impl_body: u.impl_body,
-            method_body: u.method_body,
-            method_name: u.method_name,
-            impl_signature: impl_sig,
-            function_signature: function_sig,
-            ds_structure: ds,
-            type_identifiers: type_ids,
+            file: s.file.into(),
+            impl_body: SynElementWithText::new(s.impl_range.into(), s.impl_text),
         }
     }
-}
-
-///from_unprocessed
-impl SynAttribute {
-    pub fn from_unprocessed(u: UnprocessedAttribute, context: &str) -> Self {
-        Self {
-            file: u.file,
-            attribute_body: u.attribute_body,
-            context_lines: context.to_string(),
-        }
-    }
-}
-
-// ── Attribute merging helper ──────────────────────────────────────────────────
-//
-// Consecutive attributes that are separated only by whitespace are merged into
-// a single SynAttribute so that multi-line attribute blocks (e.g. a `#[derive]`
-// followed by `#[serde(...)]`) are treated as one unit downstream.
-fn build_syn_attributes(
-    raw: Vec<UnprocessedAttribute>,
-    file_contents: &HashMap<String, String>,
-) -> SynAttributes {
-    let mut accumulated: SynAttributes = Vec::new();
-    let mut pending: Option<SynAttribute> = None;
-
-    for unprocessed in raw {
-        let content = file_contents
-            .get(&unprocessed.file)
-            .map(String::as_str)
-            .unwrap_or("");
-
-        let current = SynAttribute::from_unprocessed(unprocessed, content);
-
-        match pending.take() {
-            None => {
-                pending = Some(current);
-            }
-            Some(prev_owned) => {
-                if prev_owned
-                    .attribute_body
-                    .only_whitespace_between(&current.attribute_body, content)
-                {
-                    // Adjacent — keep accumulating into a merged attribute.
-                    pending = Some(prev_owned.merge_with(&current, content));
-                } else {
-                    // Gap found — flush the previous group, start a new one.
-                    accumulated.push(prev_owned);
-                    pending = Some(current);
-                }
-            }
-        }
-    }
-
-    if let Some(last) = pending {
-        accumulated.push(last);
-    }
-
-    accumulated
 }

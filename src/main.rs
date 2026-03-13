@@ -15,15 +15,16 @@ use log::error;
 use crate::path::path_resolution::read_rs_files;
 use crate::syn::syn_elements::AllSynElements;
 use std::collections::HashMap;
+use std::sync::Arc;
 
 use crate::ast_grep::ast_grep_yaml_rules::run_ast_grep_rule;
 use crate::json_selection::unprocessed_elements::AllUnprocessedElements;
 use crate::path::path_resolution::resolve_path;
 // use crate::syn::file_syn_elements::FileSynElements;
 // use crate::syn::file_syn_elements::FileSynElements;
+use crate::syn::file_syn_elements::AnyFileSynElement;
 use crate::syn::file_syn_elements::FileSynElementsMap;
-use crate::syn::file_syn_elements_tree::FileSynElementTree;
-use crate::syn::all_osed_syn_elements::AllOsedSynElements;
+use crate::syn::file_syn_elements_tree::filter_elements;
 
 #[derive(Args, Debug)]
 pub struct Verbosity {
@@ -220,7 +221,49 @@ fn main() -> Result<()> {
     Ok(())
 }
 
-pub fn run_method(args: &MethodArgs) -> Result<String> {
+//main.rs
+fn run_struct(args: &StructArgs) -> Result<()> {
+    let ag_dir = resolve_path(
+        args.file.clone(),
+        args.directory.clone(),
+        args.crate_dir,
+        args.root,
+    )
+    .map_err(|e| anyhow!("Path resolution failed: {}", e))?
+    .to_string_lossy()
+    .into_owned();
+
+    let ag_json =
+        run_ast_grep_rule(&ag_dir).map_err(|e| anyhow!("ast-grep run failed: {:?}", e))?;
+
+    let all_unprocessed = AllUnprocessedElements::from_raw_json(&ag_json)
+        .map_err(|e| anyhow!("Failed parsing ast-grep JSON: {}", e))?;
+    drop(ag_json);
+
+    let file_contents: HashMap<FilePath, String> = read_rs_files(
+        args.file.clone(),
+        args.directory.clone(),
+        args.crate_dir,
+        args.root,
+    )
+    .map_err(|e| anyhow!("Failed reading source files: {}", e))?
+    .into_iter()
+    .map(|(contents, path)| (Arc::from(path.as_str()), contents))
+    .collect();
+
+    let mut all_syn = AllSynElements::from_unprocessed(all_unprocessed, &file_contents);
+
+    all_syn.pick_blanket_impls(&file_contents);
+    all_syn.filter_by_tree_in_place(3, 2);
+
+    all_syn.print_attributes(&file_contents);
+    all_syn.print_methods(&file_contents);
+    all_syn.print_structs(&file_contents);
+
+    Ok(())
+}
+
+fn run_method(args: &MethodArgs) -> Result<String> {
     let ag_dir = resolve_path(
         args.file.clone(),
         args.directory.clone(),
@@ -243,34 +286,39 @@ pub fn run_method(args: &MethodArgs) -> Result<String> {
         error!("AllSynElements::from_json failed: {}", e);
         anyhow!("Failed parsing ast-grep JSON: {}", e)
     })?;
+    drop(ag_json);
 
-    let file_contents: HashMap<FilePath, String> =
-        read_rs_files(args.file.clone(), args.directory.clone(), args.crate_dir, args.root)
-            .map_err(|e| anyhow!("Failed reading source files: {}", e))?
-            .into_iter()
-            .map(|(contents, path)| (path, contents))
-            .collect();
+    let file_contents: HashMap<FilePath, String> = read_rs_files(
+        args.file.clone(),
+        args.directory.clone(),
+        args.crate_dir,
+        args.root,
+    )
+    .map_err(|e| anyhow!("Failed reading source files: {}", e))?
+    .into_iter()
+    .map(|(contents, path)| (Arc::from(path.as_str()), contents))
+    .collect();
 
     let mut all_syn = AllSynElements::from_unprocessed(all_unprocessed, &file_contents);
-    all_syn.pick_blanket_impls();
+
+    all_syn.pick_blanket_impls(&file_contents);
 
     let mut map = FileSynElementsMap::from_all_syn_elements(&all_syn);
-    drop(all_syn);
     map.filter_by_tree(3, 2);
 
-    let osed = AllOsedSynElements::from_file_syn_elements_map(map);
-    osed.print_attributes();
-    osed.print_methods();
-    osed.print_impls();
-    osed.print_structs();
-    osed.print_traits();
-    osed.print_functions();
-    osed.print_tests_mods();
-    osed.print_enums();
-    osed.print_unions();
-    osed.print_type_aliases();
-    osed.print_trait_method_sigs();
-    osed.print_trait_method_defs();
+    let all_filtered = AllSynElements::from_file_syn_elements_map(map);
+    all_filtered.print_attributes(&file_contents);
+    all_filtered.print_methods(&file_contents);
+    all_filtered.print_impls(&file_contents);
+    all_filtered.print_structs(&file_contents);
+    all_filtered.print_traits(&file_contents);
+    all_filtered.print_functions(&file_contents);
+    all_filtered.print_tests_mods(&file_contents);
+    all_filtered.print_enums(&file_contents);
+    all_filtered.print_unions(&file_contents);
+    all_filtered.print_type_aliases(&file_contents);
+    all_filtered.print_trait_method_sigs(&file_contents);
+    all_filtered.print_trait_method_defs(&file_contents);
 
     Ok("found method".to_string())
 }
@@ -291,83 +339,39 @@ fn run_function(args: &FunctionArgs) -> Result<()> {
 
     let all_unprocessed = AllUnprocessedElements::from_raw_json(&ag_json)
         .map_err(|e| anyhow!("Failed parsing ast-grep JSON: {}", e))?;
+    drop(ag_json);
 
-    let file_contents: HashMap<FilePath, String> =
-        read_rs_files(args.file.clone(), args.directory.clone(), args.crate_dir, args.root)
-            .map_err(|e| anyhow!("Failed reading source files: {}", e))?
-            .into_iter()
-            .map(|(contents, path)| (path, contents))
-            .collect();
-
-    let mut all_syn = AllSynElements::from_unprocessed(all_unprocessed, &file_contents);
-    all_syn.pick_blanket_impls();
-
-    let mut map = FileSynElementsMap::from_all_syn_elements(&all_syn);
-    drop(all_syn);
-    map.filter_by_tree(3, 2);
-
-    let osed = AllOsedSynElements::from_file_syn_elements_map(map);
-    osed.print_attributes();
-    osed.print_methods();
-    osed.print_impls();
-    osed.print_structs();
-    osed.print_traits();
-    osed.print_functions();
-    osed.print_tests_mods();
-    osed.print_enums();
-    osed.print_unions();
-    osed.print_type_aliases();
-    osed.print_trait_method_sigs();
-    osed.print_trait_method_defs();
-
-    Ok(())
-}
-
-//main.rs
-fn run_struct(args: &StructArgs) -> Result<()> {
-    let ag_dir = resolve_path(
+    let file_contents: HashMap<FilePath, String> = read_rs_files(
         args.file.clone(),
         args.directory.clone(),
         args.crate_dir,
         args.root,
     )
-    .map_err(|e| anyhow!("Path resolution failed: {}", e))?
-    .to_string_lossy()
-    .into_owned();
-
-    let ag_json =
-        run_ast_grep_rule(&ag_dir).map_err(|e| anyhow!("ast-grep run failed: {:?}", e))?;
-
-    let all_unprocessed = AllUnprocessedElements::from_raw_json(&ag_json)
-        .map_err(|e| anyhow!("Failed parsing ast-grep JSON: {}", e))?;
-
-    let file_contents: HashMap<FilePath, String> =
-        read_rs_files(args.file.clone(), args.directory.clone(), args.crate_dir, args.root)
-            .map_err(|e| anyhow!("Failed reading source files: {}", e))?
-            .into_iter()
-            .map(|(contents, path)| (path, contents))
-            .collect();
+    .map_err(|e| anyhow!("Failed reading source files: {}", e))?
+    .into_iter()
+    .map(|(contents, path)| (Arc::from(path.as_str()), contents))
+    .collect();
 
     let mut all_syn = AllSynElements::from_unprocessed(all_unprocessed, &file_contents);
-    all_syn.pick_blanket_impls();
+
+    all_syn.pick_blanket_impls(&file_contents);
 
     let mut map = FileSynElementsMap::from_all_syn_elements(&all_syn);
-    drop(all_syn);
     map.filter_by_tree(3, 2);
 
-    let osed = AllOsedSynElements::from_file_syn_elements_map(map);
-    osed.print_attributes();
-    osed.print_methods();
-    // osed.print_impls();
-    // osed.print_structs();
-    // osed.print_traits();
-    // osed.print_functions();
-    // osed.print_tests_mods();
-    // osed.print_enums();
-    // osed.print_unions();
-    // osed.print_type_aliases();
-    // osed.print_trait_method_sigs();
-    // osed.print_trait_method_defs();
+    let all_filtered = AllSynElements::from_file_syn_elements_map(map);
+    all_filtered.print_attributes(&file_contents);
+    all_filtered.print_methods(&file_contents);
+    all_filtered.print_impls(&file_contents);
+    all_filtered.print_structs(&file_contents);
+    all_filtered.print_traits(&file_contents);
+    all_filtered.print_functions(&file_contents);
+    all_filtered.print_tests_mods(&file_contents);
+    all_filtered.print_enums(&file_contents);
+    all_filtered.print_unions(&file_contents);
+    all_filtered.print_type_aliases(&file_contents);
+    all_filtered.print_trait_method_sigs(&file_contents);
+    all_filtered.print_trait_method_defs(&file_contents);
 
     Ok(())
 }

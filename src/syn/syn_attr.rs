@@ -10,6 +10,7 @@ impl SynAttribute {
         let mut sorted = attrs;
         sorted.sort_by_key(|a| a.attribute_body.byte_range().start);
         let mut result: Vec<SynAttribute> = Vec::new();
+
         for current in sorted {
             let can_merge = result.last().map_or(false, |prev: &SynAttribute| {
                 let immediately_before = matches!(
@@ -29,17 +30,20 @@ impl SynAttribute {
                             | AnyFileSynElement::Impl(_)
                             | AnyFileSynElement::Trait(_)
                             | AnyFileSynElement::Function(_)
-                    ) && el.byte_range().contains(current.attribute_body.byte_range())
+                    ) && el
+                        .byte_range()
+                        .contains(current.attribute_body.byte_range())
                         && !el.byte_range().contains(prev.attribute_body.byte_range())
                 })
             });
+
             if can_merge {
                 let prev = result.pop().unwrap();
                 let merged_body = prev.attribute_body.merge(&current.attribute_body);
                 result.push(SynAttribute {
                     file: prev.file,
                     attribute_body: merged_body,
-                    context_lines: String::new(),
+                    // context_lines removed — use attribute_body.text(file_content) at call site
                 });
             } else {
                 result.push(current);
@@ -51,11 +55,10 @@ impl SynAttribute {
 
 ///merge_with
 impl SynAttribute {
-    pub fn merge_with(&self, other: &SynAttribute, context: &str) -> SynAttribute {
+    pub fn merge_with(&self, other: &SynAttribute) -> SynAttribute {
         SynAttribute {
             file: self.file.clone(),
             attribute_body: self.attribute_body.merge(&other.attribute_body),
-            context_lines: context.to_string(),
         }
     }
 }

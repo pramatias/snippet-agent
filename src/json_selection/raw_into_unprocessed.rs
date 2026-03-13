@@ -1,11 +1,7 @@
+//raw_into_unprocessed.rs
 use crate::ast_grep::ast_grep_everything_selection::extract_selections_from_ast_grep_json;
 use crate::json_selection::unprocessed_elements::*;
 
-/// Converts a raw extracted value (Option<Vec<_>>) into a typed Vec
-/// by unwrapping, iterating, and mapping Into::into.
-///
-/// Usage:
-///   collect_unprocessed!(source_var => TargetType)
 macro_rules! collect_unprocessed {
     ($source:expr => $target_type:ty) => {
         $source

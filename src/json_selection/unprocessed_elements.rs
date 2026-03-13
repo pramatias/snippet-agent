@@ -21,7 +21,6 @@ pub type UnprocessedUseDeclarations = Vec<UnprocessedUseDeclaration>;
 pub type UnprocessedMacroDefinitions = Vec<UnprocessedMacroDefinition>;
 pub type UnprocessedMacroInvocations = Vec<UnprocessedMacroInvocation>;
 
-// ── Aggregate ─────────────────────────────────────────────────────────────────
 #[derive(Debug, Clone)]
 pub struct AllUnprocessedElements {
     pub unprocessed_attributes: UnprocessedAttributes,
@@ -43,8 +42,13 @@ pub struct AllUnprocessedElements {
     pub unprocessed_macro_invocations: UnprocessedMacroInvocations,
 }
 
-// ── Structs ───────────────────────────────────────────────────────────────────
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Clone)]
+pub struct UnprocessedImpl {
+    pub file: FilePath,
+    pub impl_body: ImplBody,
+}
+
+#[derive(Debug, Clone)]
 pub struct UnprocessedMethod {
     pub file: FilePath,
     pub impl_body: MethodImplBody,
@@ -115,12 +119,6 @@ pub struct UnprocessedTraitMethodSignature {
 pub struct UnprocessedAttribute {
     pub file: FilePath,
     pub attribute_body: AttributeBody,
-}
-
-#[derive(Debug, Deserialize, Clone)]
-pub struct UnprocessedImpl {
-    pub file: FilePath,
-    pub impl_body: ImplBody,
 }
 
 #[derive(Debug, Deserialize, Clone)]

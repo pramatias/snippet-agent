@@ -13,8 +13,11 @@ members = [
     "snippet-agent-syntax-queries",
 ]
 
+[profile.release]
+debug = true
+
 [dependencies]
-serde = { version = "1.0", features = ["derive"] }
+serde = { version = "1.0", features = ["derive" , "rc"] }
 serde_json = "1.0"
 clap = "4.5.23"
 log = "0.4"
@@ -32,6 +35,7 @@ syntax_queries = { package = "snippet-agent-syntax-queries", path = "snippet-age
 
 directories = "6.0.0"
 indextree = "4.7.4"
+rayon = "1.11.0"
 
 [dev-dependencies]
 tempfile = "3.10"
